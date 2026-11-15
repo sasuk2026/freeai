@@ -50,6 +50,8 @@ Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥�
 > ② **免费额度但需注册免费 Key** —— OpenRouter `:free`、Api.Airforce、Pollinations 新域名、Kilo、BlockRun、NVIDIA NIM、Groq、Cerebras、Gemini、Mistral、Cloudflare、Ollama Cloud、Zhipu 等。已从各站 `/models` 里按官方免费标记（`tier:free` / `isFree` / `pricing=0` / `billing_mode=free`）筛出 96 条、跨站去重 **77 个真模型**，排除 embedding / 图像 / TTS 与社区自定义条目，收录在 `catalog_free_tier.json` 与网页「免费额度真模型」独立分区。**需自备该站免费 Key，本网关不代管，未逐条匿名实测**；无 Key 实测 27 站全部 401/402/429；
 > ③ **标准模型名兼容映射** —— 从上述真实清单取主流系列名，经 llmfreeapikey 兼容层逐条实测出字，本目录标「兼容别名」。**注意：该站 /models 只返回 1 个模型 `free-ai`，且传入任意名字（含不存在的名字）都返回同一底座的回答，所以这 218 条是名字、不是 218 个模型。**
 >
+> ④ **匿名层补挖结果（2026-11-15 串行慢测）** —— 对 Pollinations 老端点逐个问身份（每次间隔 46 秒绕开限流）：18 个候选里只有 `openai-fast` / `gpt-oss-20b` 真出字，二者已在目录内且自报均为 "ChatGPT, OpenAI"；其余 16 个（`mistral` / `llama` / `deepseek-reasoning` / `gemini` / `claude` / `qwen` 等简名）全部 `404 NOT_FOUND`。并发时看到的 402 只是「每 IP 45 秒 1 次」限流，优先级高于模型名校验，**不能据此推断模型存在**——上一轮该推断已证伪。另测到 `https://api.binjie.fun/api/generateStream`（Yqcloud）普通 POST 免 key 出字，但非 OpenAI 协议、需适配，未收进目录。**因此匿名免 key 层没有新增真模型，39 个原生 ID 仍是全部。**
+>
 > 第 ① 层只有几十个，不是找得不够，而是无限免费推理本身不可持续。**264 是可调用 ID 数，不是模型种类数**；严格按不同底层模型计数只有 39 个原生 ID（且跨站可能重复）。
 > **每一条都真实发过一次对话请求并成功返回内容**，没有编造地址、没把失效链接标成可用。
 > 网页里每条都标了类型（独立模型 / 官方别名 / 兼容别名 / 自动路由）和真实上游，并按系列分组展示。
