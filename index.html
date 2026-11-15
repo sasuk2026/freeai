@@ -121,6 +121,28 @@ button.cp{flex:none;min-width:62px}
 .src{color:var(--dim);font-size:10.5px;margin-top:8px;border-top:1px dashed #22304a;padding-top:8px;word-break:break-all}
 .morewrap{text-align:center;margin-top:16px}
 
+/* ---------- 系列分组 ---------- */
+.seriesnav{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 16px}
+.schip{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);
+  color:var(--sub);border-radius:999px;padding:6px 12px;font-size:11.5px;cursor:pointer;transition:.15s;white-space:nowrap}
+.schip:hover{border-color:var(--acc);color:var(--txt)}
+.schip.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-color:transparent}
+.schip .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.schip .num{opacity:.7;font-size:10.5px}
+.series{margin:20px 0 6px}
+.series:first-child{margin-top:6px}
+.seriesHead{display:flex;align-items:baseline;gap:10px;padding:9px 0 11px;border-bottom:1px solid var(--line);
+  margin-bottom:13px;border-left:3px solid var(--sc,#5b8cff);padding-left:11px}
+.seriesHead .sname{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.seriesHead .scnt{font-size:11px;color:var(--ok);font-weight:700}
+.seriesHead .sdesc{font-size:11.5px;color:var(--dim);margin-left:auto;text-align:right}
+.moreSeries{display:inline-block;margin-top:10px;font-size:11.5px;color:var(--acc);cursor:pointer}
+.tag.alias{background:rgba(250,180,60,.13);color:#f0b45e;border:1px solid rgba(250,180,60,.32)}
+.resmap{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:11.5px}
+.resmap th{color:var(--acc);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.resmap td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--sub);line-height:1.55}
+.resmap td b{color:var(--txt)}
+
 /* tabs / code / test */
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 11px}
 .tab{background:var(--card2);border:1px solid var(--line);color:var(--sub);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer}
@@ -156,7 +178,9 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
     </div>
   </div>
   <div class="hpills">
-    <span class="hpill">可调用模型 <b id="pTotal">—</b></span>
+    <span class="hpill">可调用 ID <b id="pTotal">—</b></span>
+    <span class="hpill">独立模型 <b id="pNative">—</b></span>
+    <span class="hpill">名字兼容 <b id="pAlias">—</b></span>
     <span class="hpill">实测可用 <b id="pOk">—</b></span>
     <span class="hpill">公益车道 <b id="pSite">—</b></span>
     <span class="hpill">认证 <b>无需 Key</b></span>
@@ -227,9 +251,11 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
     <select id="fSafe" onchange="render(true)"><option value="">全部审核</option><option value="强">审核·强</option><option value="中">审核·中</option><option value="弱">审核·弱</option></select>
     <select id="fThink" onchange="render(true)"><option value="">思考·不限</option><option value="ctl">思考可关</option><option value="unc">思考不可关</option><option value="nr">非推理模型</option></select>
     <label class="tgl"><input type="checkbox" id="fShowDisabled" onchange="render(true)"> 显示暂时不可用</label>
+    <label class="tgl"><input type="checkbox" id="fGroup" checked onchange="render(true)"> 按系列分组</label>
     <span class="cnt" id="cnt"></span>
   </div>
-  <div class="cards" id="cards"></div>
+  <div class="seriesnav" id="seriesNav"></div>
+  <div id="cards"></div>
   <div class="morewrap"><button class="ghost" id="moreBtn" onclick="more()">加载更多</button></div>
 </div>
 
@@ -237,9 +263,30 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
 <div class="panel">
   <h2><span class="n">4</span> 来源与说明</h2>
   <div class="crednote" style="font-size:12px">
-    <b>来源：</b>Kilo AI 公共网关免费池（isFree，无需账号或 Key）、Pollinations、OVHcloud AI Endpoints、LLM7.io、llmfreeapikey —— 均为面向开发者的公开公益端点，OpenAI 协议兼容。<br>
+    <b>全网复查（2026-11-15）：</b>本轮重新拉取并实测了 <b>27 个</b>公开推理服务的 <span class="mono">/models</span> 清单，合计约 <b>3,800 个真实模型 ID</b> —— Api.Airforce 781、Requesty 750、Vercel AI Gateway 507、Pollinations 441、Nous 398、UnoRouter 316、OrcaRouter 216、DeepInfra 178、OpenCode Zen 86、NVIDIA NIM 83 等。全网免费模型确实是<b>百级到千级</b>，但「免 key」不是一个口径，实际分三层：
+    <table class="resmap">
+      <tr><th>层级</th><th>代表站点</th><th>规模</th><th>调用方式</th></tr>
+      <tr>
+        <td><b>① 匿名免 key 直连</b></td>
+        <td>Pollinations、LLM7.io、Kilo 免费池、OVHcloud、BlockRun 免费档、llmfreeapikey</td>
+        <td>约 30 个<br>独立模型</td>
+        <td>本目录标「独立模型」，填任意 Key 直接调，无需注册</td>
+      </tr>
+      <tr>
+        <td><b>② 免费额度<br>（需注册免费 Key）</b></td>
+        <td>OpenRouter :free、UnoRouter、Api.Airforce、NVIDIA NIM、Groq、Cerebras、Gemini、Mistral、Cloudflare、Ollama Cloud、Zhipu、OpenCode Zen…</td>
+        <td>数百个</td>
+        <td>需自备该站免费 Key，本网关不代管；实测 27 站全部返回 401/402/429</td>
+      </tr>
+      <tr>
+        <td><b>③ 标准模型名<br>兼容映射</b></td>
+        <td>llmfreeapikey 兼容层（从上述真实清单取主流系列名）</td>
+        <td>218 个<br>名字</td>
+        <td><b>不是 218 个模型</b>：该站 /models 只声明 1 个模型 <span class="mono">free-ai</span>，传入任意名字（含瞎编的）都出字且自报身份一致。别名只用于让只认标准名字的软件免改代码，按系列分组方便检索</td>
+      </tr>
+    </table>
+    所以第 ① 层确实只有几十个 —— 不是找得不够，而是无限免费推理本身不可持续。<b>严格按「不同底层模型」计数，本目录只有 39 个原生模型 ID（跨站还可能有重复底座）；264 是「可调用 ID 数」，不是模型种类数。</b>每条都经网关实测返回内容并标注类型，没有编造地址。<br>
     <b>提示：</b>prompt 会发往第三方上游，部分模型声明<b>可能用于训练</b>，请勿发送公司代码、合同或隐私数据。免费额度随时可能限流、轮换或下线；网关已做自动故障转移，某个上游失败会自动换下一个。<br>
-    <b>关于数量：</b>全网「匿名免 key + 长期稳定」的独立模型约 30 个，清单里其余为官方别名、标准模型名兼容映射与自动路由（方便只认 <span class="mono">gpt-4o</span> 之类名字的软件直接填）—— 每条都真能返回内容，没有编地址。
   </div>
 </div>
 
@@ -2465,9 +2512,3124 @@ const DATA = [
     "think_controllable": false,
     "sg_source": "来源标记",
     "disabled": false
+  },
+  {
+    "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+    "name": "Nvidia Nemotron 3 Nano Omni 30b A3b Reasoning",
+    "site": "blockrun",
+    "siteLabel": "BlockRun.ai",
+    "type": "独立模型",
+    "note": "实测免 key 直连出字 · BlockRun.ai 免费池",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 2.34,
+    "upstream": "https://blockrun.ai/api/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "cohere/north-mini-code",
+    "name": "Cohere North Mini Code",
+    "site": "blockrun",
+    "siteLabel": "BlockRun.ai",
+    "type": "独立模型",
+    "note": "实测免 key 直连出字 · BlockRun.ai 免费池",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.18,
+    "upstream": "https://blockrun.ai/api/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "poolside/laguna-xs-2.1",
+    "name": "Poolside Laguna Xs 2.1",
+    "site": "blockrun",
+    "siteLabel": "BlockRun.ai",
+    "type": "独立模型",
+    "note": "实测免 key 直连出字 · BlockRun.ai 免费池",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.57,
+    "upstream": "https://blockrun.ai/api/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "nvidia/muse-glimmer-30b",
+    "name": "Nvidia Muse Glimmer 30b",
+    "site": "blockrun",
+    "siteLabel": "BlockRun.ai",
+    "type": "独立模型",
+    "note": "实测免 key 直连出字 · BlockRun.ai 免费池",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 12.38,
+    "upstream": "https://blockrun.ai/api/v1",
+    "sample": "Reply with exactly the single word: PONG\n\nWe need reply with exactly the single word: PONG\n\nProbably",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-oss:20b",
+    "name": "GPT Oss 20b",
+    "site": "llm7",
+    "siteLabel": "LLM7.io",
+    "type": "独立模型",
+    "note": "实测免 key 直连出字 · LLM7.io 免费池",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.95,
+    "upstream": "https://api.llm7.io/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v4.1-flash",
+    "name": "Deepseek V4.1 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.27,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5.3",
+    "name": "GLM 5.3",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.51,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5.2",
+    "name": "GLM 5.2",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.51,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.69,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v4.1-flash-1017",
+    "name": "Deepseek V4.1 Flash 1017",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.66,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "kimi-k3",
+    "name": "Kimi K3",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.62,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "minimax-m3",
+    "name": "Minimax M3",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.43,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-5",
+    "name": "Claude Opus 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.76,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-sonnet-5",
+    "name": "Claude Sonnet 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.97,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "kimi-k2.6",
+    "name": "Kimi K2.6",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.71,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-fable-5",
+    "name": "Claude Fable 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.3,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "kimi-k2.7-code",
+    "name": "Kimi K2.7 Code",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.33,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-4-argon",
+    "name": "Gemini 4 Argon",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.84,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-glimmer-30b",
+    "name": "Muse Glimmer 30b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.89,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.8-flash",
+    "name": "Gemini 3.8 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.94,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.5-flash",
+    "name": "Gemini 3.5 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.47,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-6-sol",
+    "name": "GPT 6 Sol",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.39,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.6-luna",
+    "name": "GPT 5.6 Luna",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.6,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mimo-v2.6-flash",
+    "name": "Mimo V2.6 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.13,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-fable-5.1",
+    "name": "Claude Fable 5.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.68,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.5-flash-lite",
+    "name": "Gemini 3.5 Flash Lite",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.31,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.1-flash-lite",
+    "name": "Gemini 3.1 Flash Lite",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.38,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "grok-4.7",
+    "name": "Grok 4.7",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.37,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "grok-4.6",
+    "name": "Grok 4.6",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.28,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-6-luna",
+    "name": "GPT 6 Luna",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.56,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-6.1-sol",
+    "name": "GPT 6.1 Sol",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-6-astra",
+    "name": "GPT 6 Astra",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.32,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.6-sol",
+    "name": "GPT 5.6 Sol",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.37,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mimo-v2.6-pro",
+    "name": "Mimo V2.6 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.61,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.6-terra",
+    "name": "GPT 5.6 Terra",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.43,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v4-pro-0813",
+    "name": "Deepseek V4 Pro 0813",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.2,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5.1",
+    "name": "GLM 5.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.35,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "step-5-preview",
+    "name": "Step 5 Preview",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.88,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemma-4-31b-it",
+    "name": "Gemma 4 31b It",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.59,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v4-pro",
+    "name": "Deepseek V4 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.25,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.56,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.6-flash",
+    "name": "Gemini 3.6 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.3,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.5",
+    "name": "GPT 5.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.4",
+    "name": "GPT 5.4",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.73,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-max",
+    "name": "Qwen3.8 Max",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.32,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.4-mini",
+    "name": "GPT 5.4 Mini",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.97,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-flash",
+    "name": "Qwen3.8 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.61,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-5.5",
+    "name": "Claude Opus 5.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.15,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.1-pro-preview",
+    "name": "Gemini 3.1 Pro Preview",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 1.42,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "grok-4.3",
+    "name": "Grok 4.3",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.96,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.7-plus",
+    "name": "Qwen3.7 Plus",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.39,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.4-nano",
+    "name": "GPT 5.4 Nano",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.39,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-4-carbon",
+    "name": "Gemini 4 Carbon",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.08,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4.7",
+    "name": "Claude Opus 4.7",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.16,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-sonnet-4.6",
+    "name": "Claude Sonnet 4.6",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.23,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemma-4-26b-a4b-it",
+    "name": "Gemma 4 26b A4b It",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.22,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-2.5-flash-lite",
+    "name": "Gemini 2.5 Flash Lite",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.46,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3-flash-preview",
+    "name": "Gemini 3 Flash Preview",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.01,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5",
+    "name": "GLM 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.36,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.2",
+    "name": "GPT 5.2",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.1",
+    "name": "GPT 5.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.42,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "grok-4.5",
+    "name": "Grok 4.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.24,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.5-pro",
+    "name": "GPT 5.5 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.87,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.4-pro",
+    "name": "GPT 5.4 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.28,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.7-flash",
+    "name": "Qwen3.7 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.83,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mimo-v2.5-pro",
+    "name": "Mimo V2.5 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.99,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.3-codex",
+    "name": "GPT 5.3 Codex",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.79,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4.8",
+    "name": "Claude Opus 4.8",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 6.76,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4.6",
+    "name": "Claude Opus 4.6",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.74,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-max-0902",
+    "name": "Qwen3.8 Max 0902",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.12,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-sonnet-5.5",
+    "name": "Claude Sonnet 5.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.33,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-4.7",
+    "name": "GLM 4.7",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.61,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-4.5",
+    "name": "GLM 4.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.6,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mimo-v2.5",
+    "name": "Mimo V2.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.43,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mistral-large-4",
+    "name": "Mistral Large 4",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-haiku-4.5",
+    "name": "Claude Haiku 4.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.59,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-fable-5.2",
+    "name": "Claude Fable 5.2",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.27,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-4-hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.26,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v4-flash",
+    "name": "Deepseek V4 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.36,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-spark-open",
+    "name": "Muse Spark Open",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.58,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "kimi-k2.5",
+    "name": "Kimi K2.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.63,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5-pro",
+    "name": "GPT 5 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.36,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.5-27b",
+    "name": "Qwen3.5 27b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.2-pro",
+    "name": "GPT 5.2 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.36,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.6-plus",
+    "name": "Qwen3.6 Plus",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.24,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-6.1-terra",
+    "name": "GPT 6.1 Terra",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.08,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-spark-1.3",
+    "name": "Muse Spark 1.3",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.33,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-spark-1.2",
+    "name": "Muse Spark 1.2",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.88,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "ling-3.1-flash",
+    "name": "Ling 3.1 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.33,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "grok-build-0.1",
+    "name": "Grok Build 0.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35b A3b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.61,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.5-35b-a3b",
+    "name": "Qwen3.5 35b A3b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.9,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4.5",
+    "name": "Claude Opus 4.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.43,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-haiku-5.5",
+    "name": "Claude Haiku 5.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.31,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-2.4t-a95b",
+    "name": "Qwen3.8 2.4t A95b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.27,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-sonnet-4.5",
+    "name": "Claude Sonnet 4.5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.43,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "inkling",
+    "name": "Inkling",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.89,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.7-max",
+    "name": "Qwen3.7 Max",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.05,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.2-codex",
+    "name": "GPT 5.2 Codex",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 2.34,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.1-codex",
+    "name": "GPT 5.1 Codex",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.13,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-4.7-flash",
+    "name": "GLM 4.7 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.27,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5.3-flashx",
+    "name": "GLM 5.3 Flashx",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.39,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "inkling-2-small",
+    "name": "Inkling 2 Small",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.61,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-haiku-5-5",
+    "name": "Claude Haiku 5 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.73,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "ling-3.0-flash-vl",
+    "name": "Ling 3.0 Flash Vl",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.12,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "name": "Claude Sonnet 5 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.27,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-5.1-codex-mini",
+    "name": "GPT 5.1 Codex Mini",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.18,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "o3-pro",
+    "name": "O3 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 2.28,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-32b",
+    "name": "Qwen3 32b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.59,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "longcat-2.0",
+    "name": "Longcat 2.0",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5-turbo",
+    "name": "GLM 5 Turbo",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.4,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-30b-a3b",
+    "name": "Qwen3 30b A3b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.45,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "ling-3.0-flash",
+    "name": "Ling 3.0 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.94,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemma-3-12b-it",
+    "name": "Gemma 3 12b It",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.26,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-5-5",
+    "name": "Claude Opus 5 5",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.29,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4-8",
+    "name": "Claude Opus 4 8",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.93,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-coder-next",
+    "name": "Qwen3 Coder Next",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 2.68,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.5-122b-a10b",
+    "name": "Qwen3.5 122b A10b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.52,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-omni-flash",
+    "name": "Qwen3.8 Omni Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.26,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "minimax-m2.7-highspeed",
+    "name": "Minimax M2.7 Highspeed",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.06,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "nemotron-3-nano-30b-a3b",
+    "name": "Nemotron 3 Nano 30b A3b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.19,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mimo-v2.6-pro-ultraspeed",
+    "name": "Mimo V2.6 Pro Ultraspeed",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 1.07,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-vl-30b-a3b-instruct",
+    "name": "Qwen3 Vl 30b A3b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.34,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-vl-235b-a22b-instruct",
+    "name": "Qwen3 Vl 235b A22b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 4.17,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-next-80b-a3b-instruct",
+    "name": "Qwen3 Next 80b A3b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.17,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "inkling-small",
+    "name": "Inkling Small",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.41,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "command-a-plus",
+    "name": "Command A Plus",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.35,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-4",
+    "name": "GPT 4",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.16,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-4.5v",
+    "name": "GLM 4.5v",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.05,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-14b",
+    "name": "Qwen3 14b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 4.37,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "solar-mini4",
+    "name": "Solar Mini4",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.64,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-coder",
+    "name": "Qwen3 Coder",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.63,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.5-plus",
+    "name": "Qwen3.5 Plus",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.24,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "glm-5v-turbo",
+    "name": "GLM 5v Turbo",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.57,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.6-flash",
+    "name": "Qwen3.6 Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.16,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "laguna-xs-2.1",
+    "name": "Laguna Xs 2.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.97,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemma-3-4b-it",
+    "name": "Gemma 3 4b It",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.28,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-spark-1.1",
+    "name": "Muse Spark 1.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.58,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "granite-4.2-8b",
+    "name": "Granite 4.2 8b",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.41,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.1-pro",
+    "name": "Gemini 3.1 Pro",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.84,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "muse-wonder-1.0",
+    "name": "Muse Wonder 1.0",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.54,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "claude-opus-4-7",
+    "name": "Claude Opus 4 7",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 3.57,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-r1-0528",
+    "name": "Deepseek R1 0528",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 1.57,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3.8-max-prime",
+    "name": "Qwen3.8 Max Prime",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.65,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-coder-flash",
+    "name": "Qwen3 Coder Flash",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 1.41,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gpt-3.5-turbo-16k",
+    "name": "GPT 3.5 Turbo 16k",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.42,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-vl-8b-instruct",
+    "name": "Qwen3 Vl 8b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.3,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "llama-3.1-8b-instruct",
+    "name": "Llama 3.1 8b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.39,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-nano-banana-2.1",
+    "name": "Gemini Nano Banana 2.1",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 2.76,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "deepseek-v3.1-terminus",
+    "name": "Deepseek V3.1 Terminus",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 4.18,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-30b-a3b-instruct-2507",
+    "name": "Qwen3 30b A3b Instruct 2507",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.32,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-coder-30b-a3b-instruct",
+    "name": "Qwen3 Coder 30b A3b Instruct",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "代码"
+    ],
+    "ctx": null,
+    "latency": 2.65,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "qwen3-235b-a22b-thinking-2507",
+    "name": "Qwen3 235b A22b Thinking 2507",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话",
+      "推理"
+    ],
+    "ctx": null,
+    "latency": 1.29,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "gemini-3.1-flash-lite-preview",
+    "name": "Gemini 3.1 Flash Lite Preview",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.34,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
+  },
+  {
+    "id": "mistral-small-24b-instruct-2501",
+    "name": "Mistral Small 24b Instruct 2501",
+    "site": "llmfree",
+    "siteLabel": "llmfreeapikey",
+    "type": "兼容别名",
+    "note": "标准模型名兼容映射 · 经 llmfreeapikey 公益网关实测出字",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": 1.21,
+    "upstream": "https://api.llmfreeapikey.com/v1",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false,
+    "disabled": false
   }
 ];
-
 // ---------- 接入地址 / 密钥 ----------
 // 架构：本页是 GitHub Pages 上的静态前端；模型调用统一由 Render 的 freeAI 后端转发。
 // 因此 github.io / 本地双击打开时一律固定指向 Render 后端；
@@ -2533,10 +5695,16 @@ function initLanes(){
       '<span class="tag2 '+(warn?'y':'')+'">'+ok+'/'+arr.length+' 可用</span></div>';
   }).join('');
   document.getElementById('lanes').innerHTML=html;
-  document.getElementById('snap').innerHTML='实测快照：共 <b>'+DATA.length+'</b> 个可调用 ID，'+
-    '<b>'+DATA.filter(x=>x.ok).length+'</b> 个实测可用。首字/延迟为一次性采样，波动大，仅供参考；推理模型给足 token 预算后均可正常出字。';
+  const nNative=DATA.filter(x=>x.type==='独立模型').length;
+  const nAlias=DATA.filter(x=>x.type==='兼容别名').length;
+  document.getElementById('snap').innerHTML='实测快照：共 <b>'+DATA.length+'</b> 个可调用 ID —— 其中 <b>'+nNative+
+    '</b> 个为各公益站原生模型 ID（免 key 直连）、<b>'+nAlias+'</b> 个为<b>同一底座的名字兼容</b>（非独立模型），'+
+    '<b>'+DATA.filter(x=>x.ok).length+'</b> 个均实测返回内容。注意：名字兼容条目全部经 llmfreeapikey 的单一模型 <span class="mono">free-ai</span> 应答，'+
+    '该站 /models 仅声明 1 个模型，传入任意名字（含不存在的名字）都会出字，因此不能按模型种类计数。首字/延迟为一次性采样，仅供参考。';
   const pT=document.getElementById('pTotal'),pO=document.getElementById('pOk'),pS=document.getElementById('pSite');
   pT.textContent=DATA.length;pO.textContent=DATA.filter(x=>x.ok).length;pS.textContent=sites.length;
+  const pN=document.getElementById('pNative'),pA=document.getElementById('pAlias');
+  if(pN)pN.textContent=nNative;if(pA)pA.textContent=nAlias;
 }
 function recheck(){
   fetch(baseVal().replace(/\/v1$/,'')+'/health').then(r=>r.json()).then(j=>{
@@ -2604,7 +5772,83 @@ function copyCode(){cpText(document.getElementById('codeBox').dataset.raw,'调�
 // ---------- 卡片渲染 ----------
 const CAPCLS={'工具':'tool','推理':'reason','视觉':'vision','代码':'code','结构化':'struct','对话':'chat'};
 const TYPECLS={'独立模型':'type','官方别名':'type','兼容别名':'type','自动路由':'type','官方主ID':'type'};
+// ---------- 系列分组 ----------
+// 每项: [数据中series值, 短名, 主题色, 简介]。顺序=展示顺序（热度优先）
+const SERIES=[
+ ['OpenAI GPT 系列','OpenAI GPT','#10a37f','OpenAI GPT / o 系列推理 / gpt-oss 开源'],
+ ['NVIDIA 系列','NVIDIA','#76b900','NVIDIA Nemotron 与经 NVIDIA 基础设施托管的模型'],
+ ['DeepSeek 系列','DeepSeek','#4d6bfe','深度求索 DeepSeek：V3 / R1 / V4 与推理版'],
+ ['Claude 系列','Claude','#d97757','Anthropic Claude 全系：3.5 / 3.7 / 4 / 5'],
+ ['通义千问 Qwen','通义千问 Qwen','#7b5cff','阿里通义千问：Qwen2.5 / 3 / 3.5 与 QwQ'],
+ ['Google Gemini','Google Gemini','#4285f4','Google Gemini / Gemma 系列'],
+ ['Meta Llama 系列','Meta Llama','#0668e1','Meta Llama 全系：3.1 / 3.3 / 4'],
+ ['智谱 GLM 系列','智谱 GLM','#3b6cff','智谱 GLM 全系：4 / 4.6 / 5.3'],
+ ['Mistral 系列','Mistral','#fa520f','Mistral AI 全系：Large / Small / Nemo / Codestral'],
+ ['Kimi 系列','Kimi','#c0c8d8','月之暗面 Kimi / Moonshot'],
+ ['xAI Grok 系列','xAI Grok','#9ca3af','xAI Grok 系列'],
+ ['MiniMax 系列','MiniMax','#e11d48','MiniMax M 系列'],
+ ['阶跃星辰 Step','阶跃星辰 Step','#0ea5e9','阶跃星辰 Step 系列'],
+ ['百度文心 ERNIE','百度文心','#5b6bff','百度文心 ERNIE 系列'],
+ ['字节豆包','字节豆包','#00b2ff','字节跳动豆包系列'],
+ ['腾讯混元','腾讯混元','#2f7bff','腾讯混元系列'],
+ ['Cohere Command','Cohere','#d18b3a','Cohere Command / North 系列'],
+ ['微软 Phi 系列','微软 Phi','#a855f7','微软 Phi 小模型系列'],
+ ['Liquid / 其它新锐','新锐模型','#14b8a6','Liquid LFM / Reka / Dots 等新锐与小众模型'],
+ ['自动路由 / 通用','自动路由','#64748b','自动选路 / 通用兼容别名'],
+ ['其它模型','其它模型','#94a3b8','其它独立模型'],
+];
+const SMAP={};SERIES.forEach(s=>SMAP[s[0]]=s);
+let CUR_SERIES='';           // 导航选中的系列，''=全部
+let EXPANDED=new Set();      // 已展开「全部」的系列
 let PAGE=12;
+// 运行时按模型 ID 归类：先剥掉 vendor/ 渠道前缀与 :free 后缀，再按家族关键词命中。
+// 这样新增模型无需改数据即可自动归到对应系列。
+const SRULES=[
+ ['Claude 系列',       /claude|opus|sonnet|haiku/],
+ ['DeepSeek 系列',     /deepseek|deep-seek/],
+ ['通义千问 Qwen',     /qwen|qwq/],
+ ['Google Gemini',     /gemini|gemma/],
+ ['Meta Llama 系列',   /llama|meta-llama/],
+ ['智谱 GLM 系列',     /glm/],
+ ['Mistral 系列',      /mistral|mixtral|codestral|magistral|ministral/],
+ ['Kimi 系列',         /kimi|moonshot/],
+ ['xAI Grok 系列',     /grok/],
+ ['MiniMax 系列',      /minimax/],
+ ['阶跃星辰 Step',     /step-|step_|step3|stepfun/],
+ ['百度文心 ERNIE',    /ernie|baidu/],
+ ['字节豆包',          /doubao/],
+ ['腾讯混元',          /hunyuan/],
+ ['Cohere Command',    /command|cohere|north-mini/],
+ ['微软 Phi 系列',     /phi-|phi4|phi_/],
+ ['NVIDIA 系列',       /nemotron/],
+ ['OpenAI GPT 系列',   /gpt|chatgpt|^o[134]|openai|oss-120b|oss-20b/],
+ ['Liquid / 其它新锐', /liquid|lfm-|reka|wizardlm|particle|dots-|stealth|glyph|reflection|beam/],
+];
+const SROUTER=/^(auto|free|router|openrouter\/free|kilo-auto\/free|free-ai|openai-fast|openai|ovh-reasoning)$/;
+function seriesOf(id){
+  let s=String(id||'').toLowerCase();
+  if(SROUTER.test(s)||s.indexOf('router')>=0||s.indexOf('auto/free')>=0) return '自动路由 / 通用';
+  s=s.replace(/^[a-z0-9_.-]+\//,'');               // 剥掉 nvidia/ google/ meta-llama/ 等渠道前缀
+  s=s.replace(/:(free|thinking|online|floor)$/,'');
+  for(const r of SRULES) if(r[1].test(s)) return r[0];
+  return '其它模型';
+}
+function seriesCounts(rows){
+  const m={};rows.forEach(x=>{const k=seriesOf(x.id);m[k]=(m[k]||0)+1;});return m;
+}
+function initSeriesNav(){
+  const nav=document.getElementById('seriesNav');
+  const all=seriesCounts(DATA);
+  const items=[['','全部',DATA.length]].concat(SERIES.filter(s=>all[s[0]]).map(s=>[s[0],s[1],all[s[0]]]));
+  nav.innerHTML=items.map(it=>{
+    const v=it[0],meta=v?(SMAP[v]||[v,v,'#94a3b8','']):null;
+    return '<span class="schip'+(CUR_SERIES===v?' on':'')+'" onclick="pickSeries(\''+esc(v)+'\')">'+
+      (v?'<span class="dot" style="background:'+meta[2]+'"></span>':'')+
+      esc(it[1])+'<span class="num">'+it[2]+'</span></span>';
+  }).join('');
+}
+function pickSeries(v){CUR_SERIES=v;EXPANDED.clear();PAGE=12;render(true);}
+function toggleSeries(n){if(EXPANDED.has(n))EXPANDED.delete(n);else EXPANDED.add(n);render(false);}
 function filtered(){
   const q=document.getElementById('q').value.toLowerCase();
   const s=document.getElementById('fSite').value,t=document.getElementById('fType').value,
@@ -2613,6 +5857,7 @@ function filtered(){
   const showDisabled=document.getElementById('fShowDisabled').checked;
   let rows=DATA.filter(x=>
     (showDisabled||!x.disabled)&&
+    (!CUR_SERIES||seriesOf(x.id)===CUR_SERIES)&&
     (!q||(x.id+' '+x.name+' '+x.siteLabel+' '+x.note).toLowerCase().includes(q))&&
     (!s||x.site===s)&&(!t||x.type===t)&&
     (!sf||(x.safeguard||'')===sf)&&
@@ -2637,7 +5882,8 @@ function cardHTML(x){
   const sgTag='<span class="tag '+sgcls+'">审核 '+sg+'</span>';
   const tcTag=x.think_controllable?'<span class="tag tc">思考可关</span>':(x.reasoning?'<span class="tag warn">思考不可关</span>':'');
   const offTag=x.disabled?'<span class="tag off">暂时不可用</span>':'';
-  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+sgTag+tcTag+offTag+
+  const aliasTag=x.type==='兼容别名'?'<span class="tag alias" title="同一底座的名字兼容映射，不是独立模型">同底座·名字兼容</span>':'';
+  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+aliasTag+sgTag+tcTag+offTag+
     (x.id.endsWith(':free')?'<span class="tag warn">⚠ 可能用于训练</span>':'');
   const ctx=x.ctx?'<span><b>'+esc(x.ctx)+'</b></span>':'';
   const lat=x.latency!=null?'<span>实测响应 <b class="rate">'+x.latency+'s</b></span>':'';
@@ -2653,11 +5899,34 @@ function cardHTML(x){
 }
 function render(reset){
   if(reset)PAGE=12;
-  const rows=filtered();
+  const grp=document.getElementById('fGroup').checked;
+  const rows=filtered(),box=document.getElementById('cards'),mb=document.getElementById('moreBtn');
+  initSeriesNav();
+  document.getElementById('cnt').textContent='共 '+rows.length+' 条'+(CUR_SERIES?'（'+esc(CUR_SERIES)+'）':'');
+  // 分组模式 + 未选具体系列：按系列分节展示，每节默认 6 张
+  if(grp&&!CUR_SERIES){
+    const cnt=seriesCounts(rows);
+    const names=SERIES.map(s=>s[0]).filter(n=>cnt[n]);
+    Object.keys(cnt).forEach(n=>{if(names.indexOf(n)<0)names.push(n);});
+    box.innerHTML=names.map(n=>{
+      const meta=SMAP[n]||[n,n,'#94a3b8',''];
+      const arr=rows.filter(x=>seriesOf(x.id)===n),exp=EXPANDED.has(n);
+      const show=exp?arr:arr.slice(0,6);
+      return '<section class="series" style="--sc:'+meta[2]+'">'+
+        '<div class="seriesHead"><span class="sname">'+esc(meta[1])+'</span>'+
+        '<span class="scnt">'+arr.length+' 个可调用 ID</span>'+
+        '<span class="sdesc">'+esc(meta[3])+'</span></div>'+
+        '<div class="cards">'+show.map(cardHTML).join('')+'</div>'+
+        (arr.length>6?'<span class="moreSeries" onclick="toggleSeries(\''+esc(n)+'\')">'+
+          (exp?'收起 ↑':'查看全部 '+arr.length+' 个 ↓')+'</span>':'')+
+      '</section>';
+    }).join('')||'<div class="empty">没有符合筛选条件的模型</div>';
+    mb.style.display='none';
+    return;
+  }
   const show=rows.slice(0,PAGE);
-  document.getElementById('cards').innerHTML=show.map(cardHTML).join('');
+  box.innerHTML='<div class="cards">'+show.map(cardHTML).join('')+'</div>';
   document.getElementById('cnt').textContent='显示 '+show.length+' / '+rows.length+' 条';
-  const mb=document.getElementById('moreBtn');
   mb.style.display=rows.length>PAGE?'inline-block':'none';
   mb.textContent='加载更多（还有 '+(rows.length-show.length)+' 条）';
 }
