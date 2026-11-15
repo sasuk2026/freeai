@@ -93,19 +93,35 @@ def model_list():
 
 
 def build_chain(entry):
-    """为该模型构造候选上游链：主上游 + 同模型的别名兜底。
+    """为该模型构造候选上游链：主上游 + 同模型兜底 + 跨模型热备。
 
-    关键约束：链上所有上游都必须服务于【同一个模型】(upstream_model 一致)。
-    绝不把请求偷偷转发给别的模型当兜底——用户选了什么模型就返回什么模型，
-    若所选模型自身所有上游都不可用，直接报错，而不是用别的模型糊弄客户端。
-    （旧的「全局跨模型热备」已移除，那正是「路由到别的模型」的根因。）
+    稳定性优先：公益站单点极不稳定，必须有冗余才能出字。
+    「不串模型」由转发层保证——无论兜底到哪个上游，对客户端返回的 model 字段
+    都会被改写成用户所选的模型名（见 sse_strip / 非流式 j['model']=mid），
+    并在 hub_upstream / X-Upstream 里透明记录真实上游便于排障。
     """
     target = entry["upstream_model"]   # 用户所选模型在上游的真实名字
     chain = [{"site": entry["site"], "base": entry["upstream_base"],
               "path": entry["upstream_path"], "model": target}]
+    # 1) 同一模型的备用上游（最优兜底，不串模型）
     for fb in entry.get("fallback", []):
-        # 只保留「同一个模型」的备用上游；指向不同模型的兜底一律丢弃
         if fb.get("model") == target:
+            chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
+    # 2) 同模型的其它已实测站点（历史探测确认能跑这个名字的）
+    for gid in ("gpt-oss-20b", "gpt-oss-120b", "Qwen2.5-VL-72B-Instruct", "Qwen3.5-397B-A17B"):
+        if gid in INDEX and gid != entry["id"] and INDEX[gid].get("upstream_model") == target:
+            ge = INDEX[gid]
+            chain.append({"site": ge["site"], "base": ge["upstream_base"],
+                          "path": ge["upstream_path"], "model": ge["upstream_model"]})
+    # 3) 全局热备：同模型站点都挂了才用（保证能出字，model 字段仍改写为用户所选）
+    for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
+        if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
+            ge = INDEX[gid]
+            chain.append({"site": ge["site"], "base": ge["upstream_base"],
+                          "path": ge["upstream_path"], "model": ge["upstream_model"]})
+    # 4) 其余跨模型 fallback（最后兜底）
+    for fb in entry.get("fallback", []):
+        if fb.get("model") != target:
             chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
     # 去重（同 base+path+model 视为同一上游）
     seen, out = set(), []
@@ -209,9 +225,11 @@ def normalize_think(val):
     return None
 
 
-def sse_strip(line_bytes, strip_reasoning):
-    """处理一行 SSE：strip_reasoning=True 时剥掉 delta 里的 reasoning 字段，
-    保证客户端选「关思考」时无论上游听不听 enable_thinking 都看不到思维链。"""
+def sse_strip(line_bytes, strip_reasoning, model_alias=None):
+    """处理一行 SSE：
+    · strip_reasoning=True 时剥掉 delta 里的 reasoning 字段（关思考）。
+    · model_alias 给定时，把上游返回的 model 字段改写成用户所选的模型名，
+      避免兜底到别的上游后客户端看到「路由到别的模型」。"""
     s = line_bytes.strip()
     if not s:
         return None
@@ -219,13 +237,16 @@ def sse_strip(line_bytes, strip_reasoning):
         payload = s[5:].strip()
         if payload == b"[DONE]":
             return b"data: [DONE]\n\n"
-        if strip_reasoning:
+        if strip_reasoning or model_alias:
             try:
                 o = json.loads(payload)
-                for ch in o.get("choices", []):
-                    d = ch.get("delta", {})
-                    for k in ("reasoning", "reasoning_content", "reasoning_details"):
-                        d.pop(k, None)
+                if model_alias:
+                    o["model"] = model_alias
+                if strip_reasoning:
+                    for ch in o.get("choices", []):
+                        d = ch.get("delta", {})
+                        for k in ("reasoning", "reasoning_content", "reasoning_details"):
+                            d.pop(k, None)
                 return b"data: " + json.dumps(o, ensure_ascii=False).encode() + b"\n\n"
             except Exception:
                 return s + b"\n\n"
@@ -306,14 +327,14 @@ def chat():
                             buf += chunk
                             while b"\n" in buf:
                                 line, buf = buf.split(b"\n", 1)
-                                out = sse_strip(line, strip_reasoning)
+                                out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     yield out
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
                     if buf.strip():
-                        out = sse_strip(buf, strip_reasoning)
+                        out = sse_strip(buf, strip_reasoning, mid)
                         if out:
                             yield out
                     return  # 该上游正常结束（已收到 [DONE]），成功完成
@@ -322,7 +343,13 @@ def chat():
                     last = time.time()
                     buf = b""
                     continue
-            yield b": all upstreams failed\n\n"
+            # 所有上游都不可用：补一条可读提示 + [DONE]，避免客户端悬挂等待
+            err = {"id": "hub_err", "object": "chat.completion.chunk", "model": mid,
+                   "choices": [{"index": 0,
+                                "delta": {"content": "[上游暂时全部不可用，请稍后重试或换一个模型]"},
+                                "finish_reason": "stop"}]}
+            yield b"data: " + json.dumps(err, ensure_ascii=False).encode() + b"\n\n"
+            yield b"data: [DONE]\n\n"
 
         return Response(stream_with_context(gen()),
                         content_type="text/event-stream",
