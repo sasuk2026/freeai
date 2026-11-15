@@ -14,7 +14,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "openai",
@@ -31,7 +32,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-oss",
@@ -48,7 +50,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gpt-oss-20b",
@@ -65,7 +68,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "ovh-reasoning",
@@ -82,7 +86,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gpt-oss-120b",
@@ -100,7 +105,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "gpt-oss-20b",
@@ -118,7 +124,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Qwen3.5-397B-A17B",
@@ -136,7 +143,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Qwen3.6-27B",
@@ -154,7 +162,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Qwen3.8-27B",
@@ -172,7 +181,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Qwen3.5-9B",
@@ -190,7 +200,8 @@
   "reasoning": true,
   "safeguard": "强",
   "think_controllable": true,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -208,7 +219,8 @@
   "reasoning": false,
   "safeguard": "强",
   "think_controllable": false,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "Qwen2.5-VL-72B-Instruct",
@@ -226,7 +238,8 @@
   "reasoning": false,
   "safeguard": "强",
   "think_controllable": false,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  },
  {
   "id": "DeepSeek-V4-Flash-0731",
@@ -243,7 +256,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "codestral-latest",
@@ -260,7 +274,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "glm-5.3-flash",
@@ -277,7 +292,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "mistral-Nemo-Instruct-2407",
@@ -294,7 +310,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "minimax-m2.7",
@@ -311,7 +328,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "kilo-auto/free",
@@ -328,7 +346,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "openrouter/free",
@@ -345,7 +364,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -362,7 +382,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3.5-super-vl:free",
@@ -379,7 +400,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3.5-lightning:free",
@@ -396,7 +418,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -413,7 +436,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "baidu/ernie-5.5-flash-preview:free",
@@ -430,7 +454,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "liquid/lfm-3-1.7b:free",
@@ -447,7 +472,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "particle-ai/particle-1:free",
@@ -464,7 +490,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "dots-studio/dots-3-note-preview:free",
@@ -481,7 +508,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "cohere/north-mini-code:free",
@@ -498,7 +526,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "stealth/glyph-cluster",
@@ -515,7 +544,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "reflection/beam-free",
@@ -532,7 +562,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "free-ai",
@@ -549,7 +580,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4o",
@@ -580,7 +612,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4o-mini",
@@ -611,7 +644,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4-turbo",
@@ -642,7 +676,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4.1",
@@ -673,7 +708,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4.1-mini",
@@ -704,7 +740,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-4.1-nano",
@@ -735,7 +772,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-5",
@@ -766,7 +804,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-5-mini",
@@ -797,7 +836,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gpt-5-nano",
@@ -828,7 +868,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "o1",
@@ -859,7 +900,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "o1-mini",
@@ -890,7 +932,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "o3",
@@ -921,7 +964,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "o3-mini",
@@ -952,7 +996,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "o4-mini",
@@ -983,7 +1028,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "chatgpt-4o-latest",
@@ -1014,7 +1060,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-3-5-sonnet",
@@ -1045,7 +1092,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-3-5-haiku",
@@ -1076,7 +1124,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-3-7-sonnet",
@@ -1107,7 +1156,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "claude-opus-4",
@@ -1138,7 +1188,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-sonnet-4",
@@ -1169,7 +1220,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-haiku-4",
@@ -1200,7 +1252,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "claude-3-opus",
@@ -1231,7 +1284,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "gemini-2.0-flash",
@@ -1262,7 +1316,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gemini-2.5-flash",
@@ -1293,7 +1348,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gemini-2.5-pro",
@@ -1324,7 +1380,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gemini-3-pro",
@@ -1355,7 +1412,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gemini-3-flash",
@@ -1386,7 +1444,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "gemma-3-27b-it",
@@ -1417,7 +1476,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "deepseek-chat",
@@ -1448,7 +1508,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "deepseek-reasoner",
@@ -1479,7 +1540,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "deepseek-v3",
@@ -1510,7 +1572,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "deepseek-r1",
@@ -1541,7 +1604,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "deepseek-v3.2",
@@ -1572,7 +1636,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "qwen-plus",
@@ -1603,7 +1668,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "qwen-max",
@@ -1634,7 +1700,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "qwen-turbo",
@@ -1665,7 +1732,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "qwen3-235b-a22b",
@@ -1696,7 +1764,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "qwen2.5-72b-instruct",
@@ -1727,7 +1796,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "qwq-plus",
@@ -1758,7 +1828,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "llama-3.3-70b-instruct",
@@ -1789,7 +1860,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "llama-4-maverick",
@@ -1820,7 +1892,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "llama-4-scout",
@@ -1851,7 +1924,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "llama-3.1-405b-instruct",
@@ -1882,7 +1956,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "mistral-large-latest",
@@ -1913,7 +1988,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "mistral-small-latest",
@@ -1944,7 +2020,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "mixtral-8x7b-instruct",
@@ -1975,7 +2052,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "magistral-medium",
@@ -2006,7 +2084,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "glm-4-plus",
@@ -2037,7 +2116,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "glm-4.6",
@@ -2068,7 +2148,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "glm-4.5-air",
@@ -2099,7 +2180,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "kimi-k2",
@@ -2130,7 +2212,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "moonshot-v1-8k",
@@ -2161,7 +2244,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "grok-3",
@@ -2192,7 +2276,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "grok-3-mini",
@@ -2223,7 +2308,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "grok-4",
@@ -2254,7 +2340,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "command-r-plus",
@@ -2285,7 +2372,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "phi-4",
@@ -2316,7 +2404,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "弱",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "ernie-4.5-turbo",
@@ -2347,7 +2436,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "doubao-pro-32k",
@@ -2378,7 +2468,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "hunyuan-turbo",
@@ -2409,7 +2500,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "minimax-m1",
@@ -2440,7 +2532,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "step-3",
@@ -2471,7 +2564,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nemotron-70b",
@@ -2502,7 +2596,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "reka-flash",
@@ -2533,7 +2628,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "wizardlm-2",
@@ -2564,7 +2660,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "auto",
@@ -2595,7 +2692,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "free",
@@ -2626,7 +2724,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "router",
@@ -2657,7 +2756,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/gpt-oss-120b",
@@ -2674,7 +2774,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "弱",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3-super-120b",
@@ -2691,7 +2792,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3-ultra-550b",
@@ -2708,7 +2810,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "中",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3.5-lightning",
@@ -2725,7 +2828,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/nemotron-3.5-bolt",
@@ -2742,7 +2846,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "中",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/step-3.7-flash",
@@ -2759,7 +2864,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "disabled": false
  },
  {
   "id": "nvidia/mistral-nemotron",
@@ -2776,7 +2882,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "nvidia/minimax-m3.1-flash",
@@ -2793,7 +2900,8 @@
   "ok": true,
   "reasoning": false,
   "safeguard": "强",
-  "think_controllable": false
+  "think_controllable": false,
+  "disabled": false
  },
  {
   "id": "Meta-Llama-3_3-70B-Instruct",
@@ -2811,6 +2919,7 @@
   "reasoning": false,
   "safeguard": "强",
   "think_controllable": false,
-  "sg_source": "来源标记"
+  "sg_source": "来源标记",
+  "disabled": false
  }
 ]
