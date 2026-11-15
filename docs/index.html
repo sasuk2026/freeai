@@ -344,7 +344,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "gpt-oss-120b",
@@ -363,8 +363,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
+    "safeguard": "强",
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "gpt-oss-20b",
@@ -383,8 +384,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
+    "safeguard": "强",
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "Qwen3.5-397B-A17B",
@@ -403,7 +405,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "Qwen3.6-27B",
@@ -421,8 +424,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
+    "safeguard": "强",
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "Qwen3.8-27B",
@@ -440,8 +444,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
+    "safeguard": "强",
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "Qwen3.5-9B",
@@ -460,7 +465,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "sg_source": "来源标记"
   },
   {
     "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -478,8 +484,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
+    "safeguard": "强",
+    "think_controllable": false,
+    "sg_source": "来源标记"
   },
   {
     "id": "Qwen2.5-VL-72B-Instruct",
@@ -498,8 +505,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
+    "safeguard": "强",
+    "think_controllable": false,
+    "sg_source": "来源标记"
   },
   {
     "id": "DeepSeek-V4-Flash-0731",
@@ -556,7 +564,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "mistral-Nemo-Instruct-2407",
@@ -594,7 +602,7 @@ const DATA = [
     "sample": "PONG<minimax:tool_call> <minimax:tool_call> <error> The user",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "kilo-auto/free",
@@ -673,7 +681,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nvidia/nemotron-3.5-lightning:free",
@@ -693,7 +701,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -714,7 +722,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "baidu/ernie-5.5-flash-preview:free",
@@ -734,7 +742,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "liquid/lfm-3-1.7b:free",
@@ -791,7 +799,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "cohere/north-mini-code:free",
@@ -1058,7 +1066,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "o1-mini",
@@ -1077,7 +1085,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "o3",
@@ -1096,7 +1104,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "o3-mini",
@@ -1115,7 +1123,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "o4-mini",
@@ -1210,7 +1218,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "claude-opus-4",
@@ -1970,7 +1978,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "doubao-pro-32k",
@@ -2008,7 +2016,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "minimax-m1",
@@ -2046,7 +2054,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nemotron-70b",
@@ -2241,7 +2249,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nvidia/nemotron-3.5-bolt",
@@ -2261,7 +2269,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nvidia/step-3.7-flash",
@@ -2281,7 +2289,7 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": true
   },
   {
     "id": "nvidia/mistral-nemotron",
@@ -2340,8 +2348,9 @@ const DATA = [
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
     "sample": "PONG",
     "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
+    "safeguard": "强",
+    "think_controllable": false,
+    "sg_source": "来源标记"
   }
 ];
 
