@@ -81,7 +81,20 @@ HOTSPARE_IDS = ("gpt-oss",                        # pollinations  弱
 
 def load_catalog():
     with open(CATALOG_PATH, encoding="utf-8") as f:
-        return json.load(f)
+        base = json.load(f)
+    # 合并「匿名免 key 真模型」（AI Horde / Yqcloud 等非 OpenAI 协议端点，由网关代转）
+    anon_path = os.path.join(BASE_DIR, "catalog_anon_real.json")
+    if os.path.exists(anon_path):
+        try:
+            with open(anon_path, encoding="utf-8") as f:
+                anon = json.load(f)
+            seen = {e["id"] for e in base}
+            for e in anon:
+                if e["id"] not in seen:
+                    base.append(e)
+        except Exception as ex:
+            print("[freeai] anon catalog load failed:", ex)
+    return base
 
 
 CATALOG = load_catalog()
@@ -108,7 +121,8 @@ def model_list():
              "verified": bool(e.get("ok")),
              "reasoning": bool(e.get("reasoning")),
              "think_controllable": bool(e.get("think_controllable")),
-             "safeguard": e.get("safeguard", "未知")}
+             "safeguard": e.get("safeguard", "未知"),
+            "adapter": e.get("adapter")}
             for e in CATALOG if not e.get("disabled")]
 
 
@@ -354,6 +368,213 @@ def call_upstream(c, body, read_timeout=None):
     return last, round(time.time() - t0, 2)
 
 
+
+# ---------------------------------------------------------------------------
+# 匿名免 key「非 OpenAI 协议」真模型适配器
+#   这些端点背后是真实、互不相同的底层模型，但协议不是 /v1/chat/completions：
+#     · aihorde : AI Horde 志愿者算力，异步提交 + 轮询；apikey 用官方公开匿名
+#                 标识 0000000000（非用户私有 Key，无需注册、无需自备）
+#     · yqcloud : binjie 镜像，纯文本 POST，背后是阶跃星辰 Step 真模型
+#   网关代做协议转换 + 匿名鉴权，用户填一个 model ID 即可，零配置。
+# ---------------------------------------------------------------------------
+ANON_API_KEY = "0000000000"
+HORDE_API = "https://aihorde.net/api/v2"
+YQCLOUD_URL = "https://api.binjie.fun/api/generateStream"
+HORDE_BUDGET = int(os.environ.get("HUB_HORDE_BUDGET", "58"))
+HORDE_POLL = float(os.environ.get("HUB_HORDE_POLL", "2.2"))
+
+
+def _messages_to_prompt(messages):
+    parts = []
+    for m in messages or []:
+        role = m.get("role", "user")
+        c = m.get("content") or ""
+        if isinstance(c, list):
+            c = " ".join(str(x.get("text", "")) for x in c if isinstance(x, dict))
+        c = str(c)
+        if role == "system":
+            parts.append("### System:\n" + c)
+        elif role == "assistant":
+            parts.append("### Response:\n" + c)
+        else:
+            parts.append("### Instruction:\n" + c)
+    if not parts:
+        parts.append("### Instruction:\nHello")
+    return "\n\n".join(parts) + "\n\n### Response:\n"
+
+
+def _last_user_text(messages):
+    for m in reversed(messages or []):
+        if m.get("role") == "user":
+            c = m.get("content") or ""
+            if isinstance(c, list):
+                c = " ".join(str(x.get("text", "")) for x in c if isinstance(x, dict))
+            return str(c)
+    return _messages_to_prompt(messages)
+
+
+def _clean_generation(text):
+    text = (text or "").strip()
+    for marker in ("### Instruction:", "### Response:", "### Note:",
+                   "### Question:", "### System:"):
+        i = text.find(marker, 1)
+        if i > 0:
+            text = text[:i]
+    return text.strip()
+
+
+def _call_yqcloud(entry, messages):
+    payload = {
+        "prompt": _last_user_text(messages),
+        "userId": "#/chat/%d" % int(time.time() * 1000),
+        "network": True, "system": "", "withoutContext": False, "stream": False,
+    }
+    h = {"User-Agent": "Mozilla/5.0", "Content-Type": "application/json",
+         "accept": "application/json, text/plain, */*",
+         "origin": "https://chat9.yqcloud.top", "referer": "https://chat9.yqcloud.top/"}
+    r = requests.post(YQCLOUD_URL, json=payload, headers=h,
+                      timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
+    if r.status_code != 200:
+        return None, "yqcloud:%d" % r.status_code
+    text = r.text.strip()
+    if not text or "no permission" in text.lower():
+        return None, "yqcloud:empty_or_denied"
+    return text, "step (StepFun)"
+
+
+def _call_horde(entry, messages, max_tokens):
+    model = entry["upstream_model"]
+    try:
+        mt = max(32, min(int(max_tokens or 96), 512))
+    except (TypeError, ValueError):
+        mt = 96
+    payload = {
+        "prompt": _messages_to_prompt(messages),
+        "params": {"max_length": mt, "max_context_length": 2048,
+                   "temperature": 0.7, "top_p": 0.9},
+        "models": [model],
+    }
+    h = {"User-Agent": "Mozilla/5.0", "Content-Type": "application/json",
+         "apikey": ANON_API_KEY}
+    wid = None
+    for attempt in range(4):
+        try:
+            r = requests.post(HORDE_API + "/generate/text/async", json=payload,
+                              headers=h, timeout=(CONNECT_TIMEOUT, 15))
+        except Exception as ex:
+            return None, "horde_submit:" + str(ex)[:50]
+        if r.status_code in (200, 202):
+            wid = r.json().get("id")
+            break
+        if r.status_code == 429:
+            time.sleep(0.7)
+            continue
+        return None, "horde_submit:%d" % r.status_code
+    if not wid:
+        return None, "horde_submit:no_id"
+    deadline = time.time() + HORDE_BUDGET
+    while time.time() < deadline:
+        time.sleep(HORDE_POLL)
+        try:
+            s = requests.get(HORDE_API + "/generate/text/status/" + wid,
+                             headers={"User-Agent": "Mozilla/5.0"},
+                             timeout=(CONNECT_TIMEOUT, 10)).json()
+        except Exception:
+            continue
+        if s.get("faulted"):
+            return None, "horde:faulted"
+        if s.get("done"):
+            gens = s.get("generations") or []
+            if not gens:
+                return None, "horde:no_generation"
+            text = _clean_generation(gens[0].get("text"))
+            if not text:
+                return None, "horde:empty"
+            return text, gens[0].get("model") or model
+    return None, "horde:queue_timeout"
+
+
+def _anon_result(entry, body):
+    msgs = body.get("messages") or []
+    if entry.get("adapter") == "yqcloud":
+        return _call_yqcloud(entry, msgs)
+    return _call_horde(entry, msgs, body.get("max_tokens"))
+
+
+def _anon_completion(mid, text, site, real_model):
+    return {"id": "chatcmpl-anon", "object": "chat.completion",
+            "created": int(time.time()), "model": mid,
+            "choices": [{"index": 0,
+                         "message": {"role": "assistant", "content": text},
+                         "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            "hub_upstream": site, "hub_real_model": real_model}
+
+
+def _serve_adapter(entry, body, mid):
+    site = entry.get("site", entry.get("adapter", "anon"))
+    # 流式：后台线程跑真实调用，主线程持续发 SSE 心跳，拿到结果后一次性交付
+    if body.get("stream"):
+        def gen():
+            box = {}
+            def work():
+                box["text"], box["model"] = _anon_result(entry, body)
+            th = threading.Thread(target=work, daemon=True)
+            th.start()
+            last = time.time()
+            while th.is_alive():
+                if time.time() - last > HEARTBEAT_IDLE:
+                    yield b": keepalive\n\n"
+                    last = time.time()
+                time.sleep(0.5)
+            text = box.get("text")
+            if not text:
+                err = {"id": "hub_err", "object": "chat.completion.chunk", "model": mid,
+                       "choices": [{"index": 0,
+                                    "delta": {"content": "[匿名上游暂时不可用，请稍后重试或换一个模型]"},
+                                    "finish_reason": "stop"}]}
+                yield b"data: " + json.dumps(err, ensure_ascii=False).encode() + b"\n\n"
+                yield b"data: [DONE]\n\n"
+                return
+            head = {"id": "chatcmpl-anon", "object": "chat.completion.chunk",
+                    "created": int(time.time()), "model": mid,
+                    "choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": None}]}
+            yield b"data: " + json.dumps(head, ensure_ascii=False).encode() + b"\n\n"
+            bodyc = {"id": "chatcmpl-anon", "object": "chat.completion.chunk",
+                     "created": int(time.time()), "model": mid,
+                     "choices": [{"index": 0, "delta": {"content": text}, "finish_reason": None}]}
+            yield b"data: " + json.dumps(bodyc, ensure_ascii=False).encode() + b"\n\n"
+            tail = {"id": "chatcmpl-anon", "object": "chat.completion.chunk",
+                    "created": int(time.time()), "model": mid,
+                    "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}]}
+            yield b"data: " + json.dumps(tail, ensure_ascii=False).encode() + b"\n\n"
+            yield b"data: [DONE]\n\n"
+        return Response(stream_with_context(gen()), content_type="text/event-stream",
+                        headers={"Cache-Control": "no-cache", "X-Upstream": site,
+                                 "X-Accel-Buffering": "no"})
+
+    # 非流式
+    t0 = time.time()
+    try:
+        text, real_model = _anon_result(entry, body)
+    except Exception as ex:
+        text, real_model = None, str(ex)[:60]
+    if not text:
+        with LOCK:
+            HEALTH[mid]["last_ok"] = False
+            HEALTH[mid]["fails"] += 1
+        return jsonify({"error": {"message": "anon upstream failed",
+                                  "type": "upstream_error",
+                                  "detail": str(real_model)}}), 502
+    lat = round(time.time() - t0, 2)
+    with LOCK:
+        HEALTH[mid]["last_ok"] = True
+        HEALTH[mid]["latency"] = lat
+        HEALTH[mid]["fails"] = 0
+    return jsonify(_anon_completion(mid, text, site, real_model))
+
+
+
 @app.route("/v1/models", methods=["GET"])
 def v1_models():
     if not check_auth():
@@ -396,6 +617,10 @@ def chat():
     # 保证「关」在任何上游都真能隐藏思维链（部分上游不认 enable_thinking）。
     # 用规范化后的值判断，避免 APP 传字符串 "false" 时被漏判为「不剥离」。
     strip_reasoning = (think is False)
+
+    # 匿名免 key、非 OpenAI 协议的真模型（AI Horde / Yqcloud）：由网关代做协议转换
+    if entry.get("adapter"):
+        return _serve_adapter(entry, body, mid)
 
     # 流式：逐上游尝试；一旦某上游开始吐数据就转发；若该上游中途断开，自动切到下一个上游继续，
     #       期间用 SSE 注释心跳保活，避免代理层无数据超时掐断连接。
