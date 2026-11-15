@@ -59,11 +59,24 @@ CONNECT_TIMEOUT = int(os.environ.get("HUB_CONNECT_TIMEOUT", "8"))
 READ_TIMEOUT = int(os.environ.get("HUB_READ_TIMEOUT", "22"))      # 单上游首字节/每次读取上限
 STREAM_READ_TIMEOUT = int(os.environ.get("HUB_STREAM_READ_TIMEOUT", "25"))  # 流式首字节/读取上限(有心跳保活,不必太长)
 CHAIN_BUDGET = int(os.environ.get("HUB_CHAIN_BUDGET", "48"))      # 整条链总时间预算(秒)，保证及时给答复
-# 严格模式(默认1)：禁止跨模型兜底，选什么模型就返回什么模型，绝不串到统一护栏底座。
-# 设 0 才启用跨模型热备（会重新出现「所有敏感请求收敛成同一句 I'm sorry」）。
-STRICT_MODEL = os.environ.get("HUB_STRICT_MODEL", "1") != "0"
+# 严格模式(设 1 开启，默认关闭)：连「技术救急兜底」都禁用，宁可失败也绝不串模型。
+# 默认关闭 = 稳定优先：仅在【技术失败】时才跨站点救急；【内容拒答】一律如实返回、绝不切换。
+# 这样既不会「换模型也没用/全灭」，也不会「所有敏感请求收敛成同一句 I'm sorry」。
+STRICT_MODEL = os.environ.get("HUB_STRICT_MODEL", "0") == "1"
 # 流式模式下，若上游超过这么久没推任何数据，主动发一条 SSE 注释心跳，防止代理层（Render/Cloudflare）无数据超时掐断
 HEARTBEAT_IDLE = int(os.environ.get("HUB_HEARTBEAT_IDLE", "15"))
+
+# 可安全切换/重试的「技术性失败」HTTP 状态：模型并没有给出回答，换端点不会串掉用户意图。
+# 注意：200 + 拒答文本(I'm sorry / can't comply)【不在此列】——那是模型自己的回答，必须如实返回。
+RETRY_STATUS = {402, 408, 409, 425, 429, 500, 502, 503, 504}
+# 单端点对瞬时限流的重试次数（402/429 常是瞬时额度，短退避后重试即过）
+UPSTREAM_RETRIES = int(os.environ.get("HUB_UPSTREAM_RETRIES", "2"))
+# 跨站点「技术救急」端点：仅当所选模型的全部自身上游都【技术失败】时才启用。
+# 刻意分散在 4 个不同站点 + 选开源/弱护栏底座，避免限流集中，也避免收敛到带强护栏的商业底座。
+HOTSPARE_IDS = ("gpt-oss",                        # pollinations  弱
+                "nvidia/nemotron-3-ultra-550b",  # blockrun      中
+                "Meta-Llama-3_3-70B-Instruct",   # ovhcloud      开源 Llama
+                "glm-5.3-flash")                 # llm7
 
 
 def load_catalog():
@@ -100,43 +113,64 @@ def model_list():
 
 
 def build_chain(entry):
-    """为该模型构造候选上游链。
+    """为该模型构造候选上游链，分两层：
 
-    默认【严格模式】：只用所选模型自己的上游（主上游 + 同模型的备用端点），
-    绝不跨模型兜底。原因：跨模型兜底会把敏感/受限请求悄悄收敛到同一个自带
-    护栏的通用底座（openai-fast 等），导致「无论选什么模型都吐同一句 I'm sorry」，
-    并且本身就是「路由到别的模型」。选什么模型就如实反映什么模型的行为。
+    · 自身层(relief=False)：主上游 + 同模型备用端点。选什么模型就用什么模型，
+      一旦这些端点给出【任何有效回答】(哪怕是模型自己的拒答 I'm sorry)，立即
+      如实返回，绝不往后切 —— 这保证「选啥是啥」且不会把敏感请求收敛到统一底座。
+    · 救急层(relief=True)：仅当自身层全部【技术失败】(402/429/5xx/超时/断连/空流)
+      时才按顺序走到。刻意分散到 4 个不同站点，专治「某个公益站整体限流导致
+      换什么模型都全灭」。救急只在「模型压根没回答」时启用，不扭曲内容。
 
-    稳定性由「同模型多端点 + 短超时 + 整链时间预算」保证，不依赖跨模型串台。
-    若确实需要最大化可用性，可设 HUB_STRICT_MODEL=0 重新启用跨模型热备。
+    设 HUB_STRICT_MODEL=1 可完全禁用救急层（宁可失败也绝不串模型）。
     """
     target = entry["upstream_model"]   # 用户所选模型在上游的真实名字
-    chain = [{"site": entry["site"], "base": entry["upstream_base"],
-              "path": entry["upstream_path"], "model": target}]
+    own = [{"site": entry["site"], "base": entry["upstream_base"],
+            "path": entry["upstream_path"], "model": target, "relief": False}]
     # 1) 同一模型的备用上游（最优兜底，不串模型）
     for fb in entry.get("fallback", []):
         if fb.get("model") == target:
-            chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
+            own.append({"site": fb["site"], "base": fb["base"], "path": fb["path"],
+                        "model": fb["model"], "relief": False})
     # 2) 同模型的其它已实测站点（历史探测确认能跑这个名字的）
     for gid in ("gpt-oss-20b", "gpt-oss-120b", "Qwen2.5-VL-72B-Instruct", "Qwen3.5-397B-A17B"):
         if gid in INDEX and gid != entry["id"] and INDEX[gid].get("upstream_model") == target:
             ge = INDEX[gid]
-            chain.append({"site": ge["site"], "base": ge["upstream_base"],
-                          "path": ge["upstream_path"], "model": ge["upstream_model"]})
+            own.append({"site": ge["site"], "base": ge["upstream_base"],
+                        "path": ge["upstream_path"], "model": ge["upstream_model"], "relief": False})
 
-    # 3/4) 跨模型兜底：默认关闭（STRICT_MODEL=1）。仅显式关闭时才追加。
-    if not STRICT_MODEL:
-        for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
-            if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
-                ge = INDEX[gid]
-                chain.append({"site": ge["site"], "base": ge["upstream_base"],
-                              "path": ge["upstream_path"], "model": ge["upstream_model"]})
-        for fb in entry.get("fallback", []):
-            if fb.get("model") != target:
-                chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
-    # 去重（同 base+path+model 视为同一上游）
-    seen, out = set(), []
-    for c in chain:
+    def dedup(chain):
+        seen, out = set(), []
+        for c in chain:
+            k = (c["base"], c["path"], c["model"])
+            if k not in seen:
+                seen.add(k); out.append(c)
+        return out
+
+    own = dedup(own)
+    if STRICT_MODEL:
+        return own
+
+    # 3) 跨站点技术救急：分散在 4 个不同站点、开源/弱护栏底座，避免限流集中与统一拒答
+    relief = []
+    for gid in HOTSPARE_IDS:
+        ge = INDEX.get(gid)
+        if ge and not ge.get("disabled"):
+            relief.append({"site": ge["site"], "base": ge["upstream_base"],
+                           "path": ge["upstream_path"], "model": ge["upstream_model"], "relief": True})
+    # 4) catalog 里其它已实测可用的跨模型 fallback（更靠后），
+    #    但剔除 openai-fast / openrouter/free 这类「通用护栏底座」——它们正是过去
+    #    「所有敏感请求收敛成同一句 I'm sorry」的元凶，绝不进救急层。
+    GENERIC = ("openai-fast", "openrouter/free", "free-ai", "kilo-auto/free", "auto", "free")
+    for fb in entry.get("fallback", []):
+        m = fb.get("model")
+        if m and m != target and m not in GENERIC:
+            relief.append({"site": fb["site"], "base": fb["base"], "path": fb["path"],
+                           "model": m, "relief": True})
+    # 救急层去重，且不与自身层重复
+    seen = {(c["base"], c["path"], c["model"]) for c in own}
+    out = list(own)
+    for c in dedup(relief):
         k = (c["base"], c["path"], c["model"])
         if k not in seen:
             seen.add(k); out.append(c)
@@ -265,16 +299,53 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
     return s + b"\n\n"
 
 
+def sse_has_content(line_bytes):
+    """判断一行 SSE 是否吐出了【非空 content】。用于区分：
+    · 有效回答(含模型自己的拒答 I'm sorry / can't comply) → True，必须如实返回、绝不切换上游
+    · 空流 / 只有 reasoning / 只有 role 首块 / 报错 JSON → False，视为技术失败可切换
+    注意：拒答文本也是 content，会被判 True —— 这正是「不把敏感请求收敛到统一底座」的关键。"""
+    s = line_bytes.strip()
+    if not s.startswith(b"data:"):
+        return False
+    p = s[5:].strip()
+    if not p or p == b"[DONE]":
+        return False
+    try:
+        o = json.loads(p)
+    except Exception:
+        return False
+    if o.get("error"):
+        return False
+    for ch in o.get("choices", []) or []:
+        c = (ch.get("delta", {}) or {}).get("content")
+        if c:
+            return True
+    return False
+
+
 def call_upstream(c, body, read_timeout=None):
+    """调用单个上游。对瞬时限流(402/429/5xx)做短退避重试——公益站 402 常是
+    瞬时额度，重试即过；这是消除「换模型也没用」的第一道。注意只对【HTTP 状态】
+    重试，绝不对「200 但内容是拒答」重试（那是模型的回答，必须如实返回）。"""
     url = c["base"] + c["path"] if c["path"] else c["base"]
     payload = dict(body)
     payload["model"] = c["model"]
     rt = read_timeout if read_timeout else (STREAM_READ_TIMEOUT if body.get("stream") else READ_TIMEOUT)
     t0 = time.time()
-    r = requests.post(url, json=payload, headers=HEADERS,
-                      timeout=(CONNECT_TIMEOUT, rt),
-                      stream=bool(body.get("stream")))
-    return r, round(time.time() - t0, 2)
+    last = None
+    for attempt in range(UPSTREAM_RETRIES + 1):
+        last = requests.post(url, json=payload, headers=HEADERS,
+                             timeout=(CONNECT_TIMEOUT, rt),
+                             stream=bool(body.get("stream")))
+        if last.status_code in RETRY_STATUS and attempt < UPSTREAM_RETRIES:
+            try:
+                last.close()
+            except Exception:
+                pass
+            time.sleep(0.4 * (attempt + 1))   # 0.4s / 0.8s 短退避
+            continue
+        break
+    return last, round(time.time() - t0, 2)
 
 
 @app.route("/v1/models", methods=["GET"])
@@ -326,12 +397,17 @@ def chat():
         chain = build_chain(entry)
 
         def gen():
-            last = time.time()
-            buf = b""
             for c in chain:
+                last = time.time()
+                buf = b""
+                got_content = False       # 该上游是否吐出过有效回答(含拒答)
                 try:
                     r, _ = call_upstream(c, body)
-                    if r.status_code != 200:
+                    if r.status_code != 200:      # 技术失败(402/429/5xx) → 切下一个(含救急层)
+                        try:
+                            r.close()
+                        except Exception:
+                            pass
                         continue
                     for chunk in r.iter_content(chunk_size=512):
                         if chunk:
@@ -339,6 +415,8 @@ def chat():
                             buf += chunk
                             while b"\n" in buf:
                                 line, buf = buf.split(b"\n", 1)
+                                if sse_has_content(line):
+                                    got_content = True   # 拒答文本也算有效回答，绝不切换
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     yield out
@@ -346,16 +424,28 @@ def chat():
                             yield b": keepalive\n\n"
                             last = time.time()
                     if buf.strip():
+                        if sse_has_content(buf):
+                            got_content = True
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
                             yield out
-                    return  # 该上游正常结束（已收到 [DONE]），成功完成
+                    if got_content:
+                        # 有效回答已交付(哪怕是模型自己的拒答)：立即结束，绝不串到别的模型，
+                        # 也不再触发救急层 —— 这是「选啥是啥」+「不收敛成统一拒答」的关键。
+                        yield b"data: [DONE]\n\n"
+                        return
+                    # 200 但空流/只有 reasoning/报错 JSON：视为技术失败，切下一个
+                    yield (": upstream %s empty, switching...\n\n" % c["site"]).encode()
+                    continue
                 except Exception:
+                    # 中途断流：若已吐出过内容就当作完成(避免拼接两个上游的输出)，否则切换
+                    if got_content:
+                        yield b"data: [DONE]\n\n"
+                        return
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
-                    last = time.time()
                     buf = b""
                     continue
-            # 所有上游都不可用：补一条可读提示 + [DONE]，避免客户端悬挂等待
+            # 自身层 + 救急层全部技术失败：补一条可读提示 + [DONE]，避免客户端悬挂等待
             err = {"id": "hub_err", "object": "chat.completion.chunk", "model": mid,
                    "choices": [{"index": 0,
                                 "delta": {"content": "[上游暂时全部不可用，请稍后重试或换一个模型]"},
