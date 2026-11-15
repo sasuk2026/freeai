@@ -188,6 +188,23 @@ def apply_think(body, model_id, think):
         body["reasoning"] = {"enabled": False}
 
 
+def normalize_think(val):
+    """把客户端可能传的各种写法统一成 True/False/None：
+       JSON 布尔、字符串 'true'/'false'、数字 1/0 都认。"""
+    if val is None or val is True or val is False:
+        return val
+    if isinstance(val, str):
+        s = val.strip().lower()
+        if s in ("true", "1", "yes", "on"):
+            return True
+        if s in ("false", "0", "no", "off"):
+            return False
+        return None
+    if isinstance(val, (int, float)):
+        return bool(val)
+    return None
+
+
 def sse_strip(line_bytes, strip_reasoning):
     """处理一行 SSE：strip_reasoning=True 时剥掉 delta 里的 reasoning 字段，
     保证客户端选「关思考」时无论上游听不听 enable_thinking 都看不到思维链。"""
@@ -254,10 +271,11 @@ def chat():
     entry = INDEX.get(mid) or INDEX.get("auto") or CATALOG[0]
 
     # 思考模式开关（网关自定义参数，取出后翻译，不作为参数名污染上游）
-    think = body.pop("think", None)
+    think = normalize_think(body.pop("think", None))
     apply_think(body, entry["id"], think)
     # 客户端明确「关思考」时，网关在转发层剥掉上游的 reasoning 字段，
     # 保证「关」在任何上游都真能隐藏思维链（部分上游不认 enable_thinking）。
+    # 用规范化后的值判断，避免 APP 传字符串 "false" 时被漏判为「不剥离」。
     strip_reasoning = (think is False)
 
     # 流式：逐上游尝试；一旦某上游开始吐数据就转发；若该上游中途断开，自动切到下一个上游继续，
