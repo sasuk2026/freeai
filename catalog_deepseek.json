@@ -1,0 +1,1469 @@
+[
+ {
+  "id": "deepseek-v4.1-flash",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "airforce",
+   "blockrun",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "llm7",
+   "modelscope",
+   "nous",
+   "nvidia",
+   "nvidia_nim",
+   "ollama_cloud",
+   "opencode",
+   "openrouter",
+   "orcarouter",
+   "pollinations_gen",
+   "requesty",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 19,
+  "free": [
+   "pollinations_gen:category=text & !paid_only",
+   "routeway::free 变体"
+  ],
+  "isFree": true,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "custom"
+  ],
+  "officialName": "DeepSeek V4.1 Flash",
+  "rawIds": [
+   "deepinfra/deepseek-v4.1-flash",
+   "deepseek-ai/DeepSeek-V4.1-Flash",
+   "deepseek-ai/deepseek-v4.1-flash",
+   "deepseek-v4.1-flash"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4-flash",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "pollinations_gen",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 11,
+  "free": [
+   "pollinations_gen:category=text & !paid_only"
+  ],
+  "isFree": true,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "custom"
+  ],
+  "officialName": "DeepSeek V4 Flash",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V4-Flash",
+   "deepseek-v4-flash",
+   "deepseek/deepseek-v4-flash"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4.1-flash-free",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "opencode",
+   "orcarouter"
+  ],
+  "nSites": 2,
+  "free": [
+   "opencode::free 变体",
+   "orcarouter:pricing=0"
+  ],
+  "isFree": true,
+  "ctx": null,
+  "owned": [
+   "DeepSeek",
+   "opencode"
+  ],
+  "officialName": "DeepSeek V4.1 Flash Free",
+  "rawIds": [
+   "deepseek-v4.1-flash-free",
+   "deepseek/deepseek-v4.1-flash-free"
+  ],
+  "aliasNote": "",
+  "kind": "免费变体",
+  "base": "deepseek-v4.1-flash",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-r1-distill-qwen-32b",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "unorouter"
+  ],
+  "nSites": 1,
+  "free": [
+   "unorouter::free 变体"
+  ],
+  "isFree": true,
+  "ctx": 80000,
+  "owned": [
+   "custom"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-r1-distill-qwen-32b:free"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-free",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "orcarouter"
+  ],
+  "nSites": 1,
+  "free": [
+   "orcarouter::free 变体"
+  ],
+  "isFree": true,
+  "ctx": null,
+  "owned": [
+   "DeepSeek"
+  ],
+  "officialName": "DeepSeek: DeepSeek V4 Flash (Free)",
+  "rawIds": [
+   "deepseek/deepseek-v4-flash-free"
+  ],
+  "aliasNote": "",
+  "kind": "免费变体",
+  "base": "deepseek-v4-flash",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-pro",
+  "series": "DeepSeek V4 Pro",
+  "sites": [
+   "airforce",
+   "blockrun",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "llm7",
+   "modelscope",
+   "nous",
+   "opencode",
+   "openrouter",
+   "orcarouter",
+   "pollinations_gen",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 15,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048600,
+  "owned": [
+   "DeepSeek",
+   "deepinfra"
+  ],
+  "officialName": "DeepSeek V4 Pro",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V4-Pro",
+   "deepseek-v4-pro",
+   "deepseek/deepseek-v4-pro"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4.1-flash-1017",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "airforce",
+   "chutes",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "modelscope",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "pollinations_gen",
+   "requesty",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 14,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "chutes"
+  ],
+  "officialName": "DeepSeek V4.1 Flash 1017",
+  "rawIds": [
+   "deepinfra/deepseek-v4.1-flash-1017",
+   "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "deepseek-v4.1-flash-1017",
+   "deepseek/deepseek-v4.1-flash-1017"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4-flash-0731",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "llm7",
+   "modelscope",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "requesty",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 13,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "custom"
+  ],
+  "officialName": "DeepSeek V4 Flash 0731",
+  "rawIds": [
+   "DeepSeek-V4-Flash-0731",
+   "deepinfra/deepseek-v4-flash-0731",
+   "deepseek-ai/DeepSeek-V4-Flash-0731",
+   "deepseek-v4-flash-0731"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4-pro-0813",
+  "series": "DeepSeek V4 Pro",
+  "sites": [
+   "airforce",
+   "chutes",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "modelscope",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "requesty",
+   "routeway",
+   "unorouter",
+   "vercelgw"
+  ],
+  "nSites": 13,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "chutes"
+  ],
+  "officialName": "DeepSeek V4 Pro 0813",
+  "rawIds": [
+   "deepinfra/deepseek-v4-pro-0813",
+   "deepseek-ai/DeepSeek-V4-Pro-0813",
+   "deepseek-v4-pro-0813",
+   "deepseek/deepseek-v4-pro-0813"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4-flash-vision-exp",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "blockrun",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "pollinations_gen",
+   "routeway",
+   "vercelgw"
+  ],
+  "nSites": 10,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "deepinfra"
+  ],
+  "officialName": "DeepSeek V4 Flash Vision",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+   "deepseek-v4-flash-vision-exp",
+   "deepseek/deepseek-v4-flash-vision-exp"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v4-flash",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-chat",
+  "series": "DeepSeek Chat（官方别名）",
+  "sites": [
+   "airforce",
+   "blockrun",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter",
+   "orcarouter",
+   "requesty"
+  ],
+  "nSites": 8,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek Chat (V4.1 Flash)",
+  "rawIds": [
+   "deepseek-chat",
+   "deepseek/deepseek-chat"
+  ],
+  "aliasNote": "DeepSeek V3 / V4.1 Flash（官方 chat 别名，具体版本随站点）",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3.2",
+  "series": "DeepSeek V3.2",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "kilo",
+   "nous",
+   "openrouter",
+   "requesty",
+   "routeway",
+   "vercelgw"
+  ],
+  "nSites": 8,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepinfra",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek V3.2",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V3.2",
+   "deepseek-v3.2",
+   "deepseek/deepseek-v3.2",
+   "vertex/deepseek-v3.2"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-r1-0528",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter",
+   "routeway"
+  ],
+  "nSites": 7,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepinfra",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek: R1 0528",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-R1-0528",
+   "deepseek-r1-0528",
+   "deepseek/deepseek-r1-0528"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3.1-terminus",
+  "series": "DeepSeek V3.1",
+  "sites": [
+   "airforce",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter",
+   "routeway",
+   "unorouter"
+  ],
+  "nSites": 7,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "custom",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek: DeepSeek V3.1 Terminus",
+  "rawIds": [
+   "deepseek-v3.1-terminus",
+   "deepseek/deepseek-v3.1-terminus"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-r1",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "airforce",
+   "infron",
+   "kilo",
+   "requesty",
+   "routeway",
+   "vercelgw"
+  ],
+  "nSites": 6,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepseek",
+   "deepseek-ai"
+  ],
+  "officialName": "DeepSeek-R1",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-R1",
+   "deepseek-r1",
+   "deepseek/deepseek-r1"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3.1",
+  "series": "DeepSeek V3.1",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "infron",
+   "requesty",
+   "routeway",
+   "vercelgw"
+  ],
+  "nSites": 6,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepinfra",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek V3.1",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-V3.1",
+   "deepseek-ai/DeepSeek-V3.1",
+   "deepseek-v3.1",
+   "deepseek/deepseek-v3.1"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-chat-v3-0324",
+  "series": "DeepSeek V3",
+  "sites": [
+   "airforce",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter"
+  ],
+  "nSites": 5,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "DeepSeek: DeepSeek V3 0324",
+  "rawIds": [
+   "deepseek-chat-v3-0324",
+   "deepseek/deepseek-chat-v3-0324"
+  ],
+  "aliasNote": "DeepSeek V3 0324 官方别名",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-chat-v3.1",
+  "series": "DeepSeek V3.1",
+  "sites": [
+   "airforce",
+   "infron",
+   "kilo",
+   "nous",
+   "openrouter"
+  ],
+  "nSites": 5,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "DeepSeek: DeepSeek V3.1",
+  "rawIds": [
+   "deepseek-chat-v3.1",
+   "deepseek/deepseek-chat-v3.1"
+  ],
+  "aliasNote": "DeepSeek V3.1 官方别名",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3.2-exp",
+  "series": "DeepSeek V3.2",
+  "sites": [
+   "airforce",
+   "kilo",
+   "nous",
+   "openrouter",
+   "routeway"
+  ],
+  "nSites": 5,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "deepseek",
+   "deepseek-ai"
+  ],
+  "officialName": "DeepSeek: DeepSeek V3.2 Exp",
+  "rawIds": [
+   "deepseek-v3.2-exp",
+   "deepseek/deepseek-v3.2-exp"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v3.2",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-reasoner",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "airforce",
+   "blockrun",
+   "orcarouter",
+   "requesty"
+  ],
+  "nSites": 4,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "DeepSeek",
+   "deepseek"
+  ],
+  "officialName": "DeepSeek Reasoner (V4.1 Flash)",
+  "rawIds": [
+   "deepseek-reasoner",
+   "deepseek/deepseek-reasoner"
+  ],
+  "aliasNote": "DeepSeek R1 / V4.1 Flash（官方 reasoner 别名）",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-flash-latest",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "kilo",
+   "nous",
+   "openrouter"
+  ],
+  "nSites": 3,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "DeepSeek: DeepSeek Flash Latest",
+  "rawIds": [
+   "~deepseek/deepseek-flash-latest"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-pro-latest",
+  "series": "DeepSeek 其它",
+  "sites": [
+   "kilo",
+   "nous",
+   "openrouter"
+  ],
+  "nSites": 3,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "DeepSeek: DeepSeek Pro Latest",
+  "rawIds": [
+   "~deepseek/deepseek-pro-latest"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3",
+  "series": "DeepSeek V3",
+  "sites": [
+   "airforce",
+   "deepinfra",
+   "requesty"
+  ],
+  "nSites": 3,
+  "free": [],
+  "isFree": false,
+  "ctx": 131072,
+  "owned": [
+   "deepinfra",
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-V3",
+   "deepseek-ai/DeepSeek-V3",
+   "deepseek-v3"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4-flash-latest",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "kilo",
+   "nous",
+   "openrouter"
+  ],
+  "nSites": 3,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "DeepSeek: DeepSeek V4 Flash Latest",
+  "rawIds": [
+   "~deepseek/deepseek-v4-flash-latest"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4.1-flash-1017-fast",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "kilo",
+   "routeway",
+   "vercelgw"
+  ],
+  "nSites": 3,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "deepseek",
+   "deepseek-ai"
+  ],
+  "officialName": "DeepSeek V4.1 Flash 1017 Fast",
+  "rawIds": [
+   "deepseek-v4.1-flash-1017-fast",
+   "deepseek/deepseek-v4.1-flash-1017-fast"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v4.1-flash-1017",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-coder-6.7b-instruct",
+  "series": "DeepSeek Coder",
+  "sites": [
+   "nvidia",
+   "nvidia_nim"
+  ],
+  "nSites": 2,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "deepseek-ai"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-ai/deepseek-coder-6.7b-instruct"
+  ],
+  "aliasNote": "",
+  "kind": "代码专用",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-r1-distill-llama-70b",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "infron",
+   "requesty"
+  ],
+  "nSites": 2,
+  "free": [],
+  "isFree": false,
+  "ctx": 131072,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+   "deepseek/deepseek-r1-distill-llama-70b"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3-0324",
+  "series": "DeepSeek V3",
+  "sites": [
+   "routeway",
+   "unorouter"
+  ],
+  "nSites": 2,
+  "free": [],
+  "isFree": false,
+  "ctx": 163840,
+  "owned": [
+   "custom",
+   "deepseek-ai"
+  ],
+  "officialName": "DeepSeek: DeepSeek V3 0324",
+  "rawIds": [
+   "deepseek-v3-0324"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v3.2-thinking",
+  "series": "DeepSeek V3.2",
+  "sites": [
+   "kilo",
+   "vercelgw"
+  ],
+  "nSites": 2,
+  "free": [],
+  "isFree": false,
+  "ctx": 128000,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "DeepSeek V3.2 Thinking",
+  "rawIds": [
+   "deepseek/deepseek-v3.2-thinking"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v3.2",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek-v4.1-flash-fast",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "kilo",
+   "vercelgw"
+  ],
+  "nSites": 2,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "DeepSeek V4.1 Flash Fast",
+  "rawIds": [
+   "deepseek/deepseek-v4.1-flash-fast"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v4.1-flash",
+  "trust": "跨站互证"
+ },
+ {
+  "id": "deepseek",
+  "series": "DeepSeek 其它",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 65536,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-ocr",
+  "series": "DeepSeek-OCR",
+  "sites": [
+   "infron"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 8200,
+  "owned": [],
+  "officialName": "",
+  "rawIds": [
+   "deepseek/deepseek-ocr"
+  ],
+  "aliasNote": "",
+  "kind": "专用模型(OCR)",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-ocr-251023",
+  "series": "DeepSeek-OCR",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 8192,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-ocr-251023"
+  ],
+  "aliasNote": "",
+  "kind": "专用模型(OCR)",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-r1-250528",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 8192,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-r1-250528"
+  ],
+  "aliasNote": "DeepSeek R1 0528 官方别名",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-r1-turbo",
+  "series": "DeepSeek R1 / 推理系",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "novita/deepseek/deepseek-r1-turbo"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3-1-think-250821",
+  "series": "DeepSeek V3",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 128000,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v3-1-think-250821"
+  ],
+  "aliasNote": "DeepSeek V3.1 Thinking 官方别名",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3-250324",
+  "series": "DeepSeek V3",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 8192,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v3-250324"
+  ],
+  "aliasNote": "DeepSeek V3 0324 官方别名",
+  "kind": "官方别名",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3.1-nex-n1",
+  "series": "DeepSeek V3.1",
+  "sites": [
+   "routeway"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 131072,
+  "owned": [
+   "nex-agi"
+  ],
+  "officialName": "Nex AGI: DeepSeek V3.1 Nex N1",
+  "rawIds": [
+   "deepseek-v3.1-nex-n1"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3.1flex",
+  "series": "DeepSeek V3.1",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-V3.1:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3.2-speciale",
+  "series": "DeepSeek V3.2",
+  "sites": [
+   "airforce"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 8192,
+  "owned": [
+   "deepseek"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v3.2-speciale"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v3.2",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3.2-tee",
+  "series": "DeepSeek V3.2",
+  "sites": [
+   "chutes"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 131072,
+  "owned": [
+   "sglang"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V3.2-TEE"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v3.2",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v3flex",
+  "series": "DeepSeek V3",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-ai/DeepSeek-V3:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-0424",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4-flash-0424",
+   "novita/deepseek/deepseek-v4-flash-0424",
+   "parasail/deepseek-v4-flash-0424"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-0424flex",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4-flash-0424:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-0731-tee",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "chutes"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "sglang"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-ai/DeepSeek-V4-Flash-0731-TEE"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "deepseek-v4-flash-0731",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-0731flex",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4-flash-0731:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-0731us",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "nous"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "DeepSeek: DeepSeek V4 Flash",
+  "rawIds": [
+   "deepseek/deepseek-v4-flash-0731:US"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash-vision-exp-cybersecurity",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "routeway"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [
+   "deepseek-ai"
+  ],
+  "officialName": "DeepSeek: DeepSeek V4 Flash Vision Exp Cybersecurity",
+  "rawIds": [
+   "deepseek-v4-flash-vision-exp-cybersecurity"
+  ],
+  "aliasNote": "",
+  "kind": "实验/速度变体",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-flash0731",
+  "series": "DeepSeek V4 Flash",
+  "sites": [
+   "llm7"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v4-flash:0731"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-pro-0424",
+  "series": "DeepSeek V4 Pro",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4-pro-0424",
+   "nebius/deepseek-v4-pro-0424",
+   "tensorx/deepseek-v4-pro-0424"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-pro-0424flex",
+  "series": "DeepSeek V4 Pro",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4-pro-0424:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4-pro0813",
+  "series": "DeepSeek V4 Pro",
+  "sites": [
+   "ollama_cloud"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "ollama"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v4-pro:0813"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4.1-flash-1017-abliterated",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "infron"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "",
+  "rawIds": [
+   "deepseek/deepseek-v4.1-flash-1017-abliterated"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4.1-flash1017",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "ollama_cloud"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "ollama"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepseek-v4.1-flash:1017"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4.1-flashflex",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "deepinfra/deepseek-v4.1-flash:flex"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek-v4.1-flashus",
+  "series": "DeepSeek V4.1 Flash",
+  "sites": [
+   "nous"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": 1048576,
+  "owned": [],
+  "officialName": "DeepSeek: DeepSeek V4.1 Flash",
+  "rawIds": [
+   "deepseek/deepseek-v4.1-flash:US"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ },
+ {
+  "id": "deepseek_v3",
+  "series": "DeepSeek V3",
+  "sites": [
+   "requesty"
+  ],
+  "nSites": 1,
+  "free": [],
+  "isFree": false,
+  "ctx": null,
+  "owned": [
+   "system"
+  ],
+  "officialName": "",
+  "rawIds": [
+   "novita/deepseek/deepseek_v3"
+  ],
+  "aliasNote": "",
+  "kind": "主模型",
+  "base": "",
+  "trust": "仅单站声明"
+ }
+]
