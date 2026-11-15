@@ -1,0 +1,15 @@
+# Render Blueprint —— 发布为网站 freeai
+# 不含任何密钥。若需给网关加访问口令，在 Render 控制台手动加环境变量
+# HUB_ACCESS_TOKEN（可选；不设置则完全开放，任意 API Key 均可调用）。
+services:
+  - type: web
+    name: freeai
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: HUB_TIMEOUT
+        value: "60"
