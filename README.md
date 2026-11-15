@@ -7,7 +7,8 @@
 
 | 层 | 承载 | 地址 |
 |---|---|---|
-| 前端网页控制台 | **GitHub Pages**（纯静态，仓库 `docs/`） | **https://sasuk2026.github.io/freeai/** |
+| 前端网页控制台（根域名，推荐） | **GitHub Pages 用户级站点**（仓库 `sasuk2026.github.io`，根目录 `index.html`） | **https://sasuk2026.github.io/** |
+| 前端网页控制台（项目页，同内容） | **GitHub Pages**（本仓库 `docs/`） | **https://sasuk2026.github.io/freeai/** |
 | 后端 API 网关 | **Render** Web Service `freeai` | **https://freeai-f9v0.onrender.com** |
 | OpenAI 调用地址 (Base URL) | 由后端提供，前端面板自动填入 | **`https://freeai-f9v0.onrender.com/v1`** |
 | API Key（密钥） | 上游免 key，任意非空值均可 | **`sk-freeai`** |
