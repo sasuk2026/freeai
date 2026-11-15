@@ -1,7 +1,29 @@
-# FreeLLM Hub · 免 key 公益大模型聚合网关
+# freeai · 免 key 公益大模型聚合网关（OpenAI 兼容）
 
 把散落在各处的**公开、匿名免 key、OpenAI 兼容**的公益大模型端点，聚合成一个统一地址。
 不用注册、不用自己的 API Key，改一个 `base_url` 就能在任意 OpenAI 客户端里调用。
+
+## 已上线 🚀
+
+| 项目 | 值 |
+|---|---|
+| 网站 / 控制台 | **https://freeai-f9v0.onrender.com** |
+| OpenAI 调用地址 (Base URL) | **`https://freeai-f9v0.onrender.com/v1`** |
+| API Key（密钥） | **`sk-freeai`**（上游免 key，任意非空值均可） |
+| 部署 | Render Web Service `freeai`，源仓库 `sasuk2026/freeai`，自动部署已开启 |
+
+```python
+from openai import OpenAI
+client = OpenAI(base_url="https://freeai-f9v0.onrender.com/v1", api_key="sk-freeai")
+r = client.chat.completions.create(
+    model="gpt-4o",  # 或网页清单里任意模型 ID（点击可复制）
+    messages=[{"role": "user", "content": "你好"}],
+)
+print(r.choices[0].message.content)
+```
+
+网页顶部有「OpenAI 接入凭证」面板，Base URL 与 API Key 都能一键复制，并给出
+Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥自动填成线上值）。
 
 ## 实测结论（2026-11-15）
 
@@ -42,24 +64,15 @@ python3 gateway.py            # 默认 http://0.0.0.0:8000
 
 ## 在任何地方调用
 
-```python
-from openai import OpenAI
-client = OpenAI(base_url="http://localhost:8000/v1", api_key="sk-随便填")
-r = client.chat.completions.create(
-    model="gpt-4o",                      # 或清单里任意 ID
-    messages=[{"role": "user", "content": "你好"}],
-)
-print(r.choices[0].message.content)
-```
+Cherry Studio / NextChat / LobeChat / ChatBox / Cursor / Cline 等：
+API 地址填 `https://freeai-f9v0.onrender.com/v1`，API Key 随便填非空字符串（如 `sk-freeai`），
+协议选 OpenAI，模型从网页清单挑（点击模型 ID 即可复制名字）。
 
 ```bash
-curl http://localhost:8000/v1/chat/completions \
+curl https://freeai-f9v0.onrender.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"gpt-4o","messages":[{"role":"user","content":"你好"}]}'
 ```
-
-Cherry Studio / NextChat / LobeChat / ChatBox / Cursor / Cline 等：
-API 地址填 `.../v1`，API Key 随便填非空字符串，协议选 OpenAI，模型从网页清单挑。
 
 接口清单：
 
@@ -67,18 +80,18 @@ API 地址填 `.../v1`，API Key 随便填非空字符串，协议选 OpenAI，�
 |---|---|---|
 | GET | `/v1/models` | 模型列表（OpenAI 格式，含实测标记） |
 | POST | `/v1/chat/completions` | 对话补全，支持 `stream`、`messages` 多轮、自动故障转移 |
-| GET | `/health` | 运行期健康状态 |
+| GET | `/health` `/healthz` | 运行期健康状态 |
 | GET | `/catalog.json` | 完整实测数据 |
 | GET | `/` | 网页控制台 |
 
-## 部署到公网（这样才能在别的地方调用）
+## 部署
 
-仓库已带 `render.yaml` 和 `Dockerfile`，推到 GitHub 后在 Render 选 **Blueprint / Import**
-即可一键创建 Web Service；也可任意支持 Docker/Python 的平台。
+仓库已带 `render.yaml` 和 `Dockerfile`，Render 上以 Docker Web Service 方式运行，
+推到 `main` 分支会自动触发部署。
 
 ```bash
-docker build -t freellm-hub .
-docker run -p 8000:8000 freellm-hub
+docker build -t freeai .
+docker run -p 8000:8000 freeai
 ```
 
 **安全提示**
@@ -93,7 +106,7 @@ docker run -p 8000:8000 freellm-hub
 
 | 文件 | 用途 |
 |---|---|
-| `gateway.py` | 聚合网关（Flask），统一 /v1 协议 + 故障转移 |
-| `index.html` | 网页控制台：模型清单、状态、调用示例、一键复制 |
-| `catalog.json` | 100 条模型的完整实测数据 |
+| `gateway.py` | 聚合网关（Flask），统一 /v1 协议 + 故障转移 + CORS |
+| `index.html` | 网页控制台：接入凭证面板、卡片式模型清单、一键复制、在线测试 |
+| `catalog.json` / `catalog_web.json` | 100 条模型的完整实测数据 / 网页展示数据 |
 | `requirements.txt` / `render.yaml` / `Dockerfile` | 部署配置 |
