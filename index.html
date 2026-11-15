@@ -106,6 +106,10 @@ button.cp{flex:none;min-width:62px}
 .tag.chat{background:#2a2f40;color:#aab6d0}
 .tag.warn{background:#3a2418;color:#ffb08a;border:1px solid #5c3a24}
 .tag.type{background:#1a2740;color:#9fc0ff}
+.tag.sg3{background:#3a1820;color:#ff9bb0;border:1px solid #5c2438}
+.tag.sg2{background:#3a3218;color:#ffd98a;border:1px solid #5c4c24}
+.tag.sg1{background:#16331f;color:#8fe3b0;border:1px solid #1c5a34}
+.tag.tc{background:#15324a;color:#7fd4ff;border:1px solid #1c4a6a}
 .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11px;margin-top:auto;padding-top:4px}
 .meta b{color:var(--sub);font-weight:600}
 .meta .rate{color:var(--ok)}
@@ -177,11 +181,17 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
       </div>
     </div>
     <div class="credfoot">
+      <input id="testModel" class="mono" placeholder="模型 ID" value="gpt-oss-120b" spellcheck="false" style="width:190px">
+      <select id="testThink" title="思考模式开关">
+        <option value="">思考：跟随默认</option>
+        <option value="true">思考：开</option>
+        <option value="false">思考：关</option>
+      </select>
       <button class="ghost mini" onclick="testApi()">▶ 在线试一句</button>
       <button class="ghost mini" data-copy="baseUrl">复制地址</button>
       <button class="ghost mini" data-copy="apiKey">复制密钥</button>
     </div>
-    <div class="crednote">说明：上游公益端点本身<b>无需任何密钥</b>，因此 API Key 一栏填 <b>任意非空值</b>都能调用；此处给出 <span class="mono">sk-freeai</span> 作为统一占位值，方便客户端必填校验时直接粘贴。若部署时在 Render 设置了 <span class="mono">HUB_ACCESS_TOKEN</span>，则改为填该口令。</div>
+    <div class="crednote">说明：上游公益端点本身<b>无需任何密钥</b>，因此 API Key 一栏填 <b>任意非空值</b>都能调用；此处给出 <span class="mono">sk-freeai</span> 作为统一占位值，方便客户端必填校验时直接粘贴。若部署时在 Render 设置了 <span class="mono">HUB_ACCESS_TOKEN</span>，则改为填该口令。思考开关仅对推理模型有效，关不掉的多为上游限制（卡片标「思考不可关」）。</div>
   </div>
   <div id="testOut" class="testout" style="display:none"></div>
 
@@ -200,7 +210,7 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
 <!-- 模型卡片 -->
 <div class="panel">
   <h2><span class="n">3</span> 免费模型清单</h2>
-  <p class="hint">每条都真实发过一次对话请求验证。点模型 ID 任意位置即可<b>复制模型名</b>。带 <span class="mono">:free</span> 的为 Kilo 公共网关免费池模型，无需账号或 Key。</p>
+  <p class="hint">每条都真实发过一次对话请求验证。点模型 ID 任意位置即可<b>复制模型名</b>。带 <span class="mono">:free</span> 的为 Kilo 公共网关免费池模型，无需账号或 Key。<b>审核</b>标签：强=有安全护栏、弱=几乎无（更自由）；<b>思考可关</b>标记该推理模型能否在调用时关闭思维链（关不掉多为上游限制）。</p>
   <div class="filters">
     <input id="q" placeholder="搜索免费模型（名称 / ID / 来源）" oninput="render(true)">
     <select id="fSite" onchange="render(true)"><option value="">全部车道</option></select>
@@ -210,6 +220,8 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
       <option value="lat">响应速度（快→慢）</option>
       <option value="name">名称（A→Z）</option>
     </select>
+    <select id="fSafe" onchange="render(true)"><option value="">全部审核</option><option value="强">审核·强</option><option value="中">审核·中</option><option value="弱">审核·弱</option></select>
+    <select id="fThink" onchange="render(true)"><option value="">思考·不限</option><option value="ctl">思考可关</option><option value="unc">思考不可关</option><option value="nr">非推理模型</option></select>
     <span class="cnt" id="cnt"></span>
   </div>
   <div class="cards" id="cards"></div>
@@ -250,7 +262,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.42,
     "upstream": "https://text.pollinations.ai/openai",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "openai",
@@ -266,7 +281,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.27,
     "upstream": "https://text.pollinations.ai/openai",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "gpt-oss",
@@ -283,7 +301,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.33,
     "upstream": "https://text.pollinations.ai/openai",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "gpt-oss-20b",
@@ -300,7 +321,10 @@ const DATA = [
     "ctx": null,
     "latency": 0.78,
     "upstream": "https://text.pollinations.ai/openai",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "ovh-reasoning",
@@ -317,7 +341,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.02,
     "upstream": "https://text.pollinations.ai/openai",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "gpt-oss-120b",
@@ -334,7 +361,10 @@ const DATA = [
     "ctx": "131K 上下文",
     "latency": 1.37,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "gpt-oss-20b",
@@ -351,7 +381,10 @@ const DATA = [
     "ctx": "131K 上下文",
     "latency": 1.88,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.5-397B-A17B",
@@ -367,7 +400,10 @@ const DATA = [
     "ctx": "262K 上下文",
     "latency": 7.62,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.6-27B",
@@ -383,7 +419,10 @@ const DATA = [
     "ctx": "262K 上下文",
     "latency": 1.34,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.8-27B",
@@ -399,7 +438,10 @@ const DATA = [
     "ctx": "262K 上下文",
     "latency": 13.5,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.5-9B",
@@ -415,7 +457,10 @@ const DATA = [
     "ctx": "262K 上下文",
     "latency": 5.57,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -431,7 +476,10 @@ const DATA = [
     "ctx": "131K 上下文",
     "latency": 0.83,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "Qwen2.5-VL-72B-Instruct",
@@ -448,7 +496,10 @@ const DATA = [
     "ctx": "32K 上下文",
     "latency": 1.4,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "DeepSeek-V4-Flash-0731",
@@ -464,7 +515,10 @@ const DATA = [
     "ctx": "400K 上下文",
     "latency": 46.0,
     "upstream": "https://api.llm7.io/v1",
-    "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. r"
+    "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. r",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "codestral-latest",
@@ -480,7 +534,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llm7.io/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "glm-5.3-flash",
@@ -496,7 +553,10 @@ const DATA = [
     "ctx": null,
     "latency": 3.87,
     "upstream": "https://api.llm7.io/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "mistral-Nemo-Instruct-2407",
@@ -512,7 +572,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.9,
     "upstream": "https://api.llm7.io/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "minimax-m2.7",
@@ -528,7 +591,10 @@ const DATA = [
     "ctx": null,
     "latency": 4.72,
     "upstream": "https://api.llm7.io/v1",
-    "sample": "PONG<minimax:tool_call> <minimax:tool_call> <error> The user"
+    "sample": "PONG<minimax:tool_call> <minimax:tool_call> <error> The user",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "kilo-auto/free",
@@ -544,7 +610,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.57,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "openrouter/free",
@@ -560,7 +629,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.23,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -577,7 +649,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.78,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-super-vl:free",
@@ -595,7 +670,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.5,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning:free",
@@ -612,7 +690,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.85,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -630,7 +711,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.38,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "baidu/ernie-5.5-flash-preview:free",
@@ -647,7 +731,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.77,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "liquid/lfm-3-1.7b:free",
@@ -663,7 +750,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.55,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "particle-ai/particle-1:free",
@@ -679,7 +769,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.7,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "dots-studio/dots-3-note-preview:free",
@@ -695,7 +788,10 @@ const DATA = [
     "ctx": null,
     "latency": 2.19,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "cohere/north-mini-code:free",
@@ -712,7 +808,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.11,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "stealth/glyph-cluster",
@@ -728,7 +827,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.92,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "reflection/beam-free",
@@ -744,7 +846,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.0,
     "upstream": "https://api.kilo.ai/api/gateway",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "free-ai",
@@ -760,7 +865,10 @@ const DATA = [
     "ctx": "32K 上下文",
     "latency": 1.48,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-4o",
@@ -776,7 +884,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.66,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4o-mini",
@@ -792,7 +903,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.23,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4-turbo",
@@ -808,7 +922,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.42,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1",
@@ -824,7 +941,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.18,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1-mini",
@@ -840,7 +960,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.41,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1-nano",
@@ -856,7 +979,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.41,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-5",
@@ -872,7 +998,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.29,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-5-mini",
@@ -888,7 +1017,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.39,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-5-nano",
@@ -904,7 +1036,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.33,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "o1",
@@ -920,7 +1055,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o1-mini",
@@ -936,7 +1074,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.23,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o3",
@@ -952,7 +1093,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o3-mini",
@@ -968,7 +1112,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o4-mini",
@@ -984,7 +1131,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.29,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "chatgpt-4o-latest",
@@ -1000,7 +1150,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.19,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-5-sonnet",
@@ -1016,7 +1169,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.36,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-5-haiku",
@@ -1032,7 +1188,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.2,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-7-sonnet",
@@ -1048,7 +1207,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.35,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-opus-4",
@@ -1064,7 +1226,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.24,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-sonnet-4",
@@ -1080,7 +1245,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-haiku-4",
@@ -1096,7 +1264,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-opus",
@@ -1112,7 +1283,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.43,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gemini-2.0-flash",
@@ -1128,7 +1302,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.34,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-2.5-flash",
@@ -1144,7 +1321,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.12,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-2.5-pro",
@@ -1160,7 +1340,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "gemini-3-pro",
@@ -1176,7 +1359,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-3-flash",
@@ -1192,7 +1378,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemma-3-27b-it",
@@ -1208,7 +1397,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.24,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "deepseek-chat",
@@ -1224,7 +1416,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.27,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "deepseek-reasoner",
@@ -1240,7 +1435,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "deepseek-v3",
@@ -1256,7 +1454,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.36,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "deepseek-r1",
@@ -1272,7 +1473,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.2,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "deepseek-v3.2",
@@ -1288,7 +1492,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-plus",
@@ -1304,7 +1511,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.16,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-max",
@@ -1320,7 +1530,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.28,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-turbo",
@@ -1336,7 +1549,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.33,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "qwen3-235b-a22b",
@@ -1352,7 +1568,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.35,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "qwen2.5-72b-instruct",
@@ -1368,7 +1587,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.34,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "qwq-plus",
@@ -1384,7 +1606,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.19,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "llama-3.3-70b-instruct",
@@ -1400,7 +1625,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.27,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-4-maverick",
@@ -1416,7 +1644,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.28,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-4-scout",
@@ -1432,7 +1663,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.23,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-3.1-405b-instruct",
@@ -1448,7 +1682,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.28,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "mistral-large-latest",
@@ -1464,7 +1701,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.28,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "mistral-small-latest",
@@ -1480,7 +1720,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.13,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "mixtral-8x7b-instruct",
@@ -1496,7 +1739,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.35,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "magistral-medium",
@@ -1512,7 +1758,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.23,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4-plus",
@@ -1528,7 +1777,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4.6",
@@ -1544,7 +1796,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4.5-air",
@@ -1560,7 +1815,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.28,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "kimi-k2",
@@ -1576,7 +1834,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.38,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "moonshot-v1-8k",
@@ -1592,7 +1853,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.33,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "grok-3",
@@ -1608,7 +1872,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.03,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "grok-3-mini",
@@ -1624,7 +1891,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.27,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "grok-4",
@@ -1640,7 +1910,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "command-r-plus",
@@ -1656,7 +1929,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.12,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "phi-4",
@@ -1672,7 +1948,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.33,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "ernie-4.5-turbo",
@@ -1688,7 +1967,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.17,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "doubao-pro-32k",
@@ -1704,7 +1986,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.17,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "hunyuan-turbo",
@@ -1720,7 +2005,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "minimax-m1",
@@ -1736,7 +2024,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.34,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "step-3",
@@ -1752,7 +2043,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.3,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nemotron-70b",
@@ -1768,7 +2062,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.2,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "reka-flash",
@@ -1784,7 +2081,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.32,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "wizardlm-2",
@@ -1800,7 +2100,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.33,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "auto",
@@ -1816,7 +2119,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.31,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "free",
@@ -1832,7 +2138,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.07,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "router",
@@ -1848,7 +2157,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.27,
     "upstream": "https://api.llmfreeapikey.com/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/gpt-oss-120b",
@@ -1865,7 +2177,10 @@ const DATA = [
     "ctx": 131072,
     "latency": 1.59,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "nvidia/nemotron-3-super-120b",
@@ -1882,7 +2197,10 @@ const DATA = [
     "ctx": 131072,
     "latency": 5.3,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b",
@@ -1900,7 +2218,10 @@ const DATA = [
     "ctx": 1000000,
     "latency": 1.5,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning",
@@ -1917,7 +2238,10 @@ const DATA = [
     "ctx": 1000000,
     "latency": 2.66,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-bolt",
@@ -1934,7 +2258,10 @@ const DATA = [
     "ctx": 131072,
     "latency": 1.15,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/step-3.7-flash",
@@ -1951,7 +2278,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.99,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nvidia/mistral-nemotron",
@@ -1968,7 +2298,10 @@ const DATA = [
     "ctx": null,
     "latency": 1.72,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nvidia/minimax-m3.1-flash",
@@ -1985,7 +2318,10 @@ const DATA = [
     "ctx": 1048576,
     "latency": 1.5,
     "upstream": "https://blockrun.ai/api/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "Meta-Llama-3_3-70B-Instruct",
@@ -2002,7 +2338,10 @@ const DATA = [
     "ctx": 131072,
     "latency": 1.8,
     "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "sample": "PONG"
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   }
 ];
 
@@ -2146,10 +2485,13 @@ let PAGE=12;
 function filtered(){
   const q=document.getElementById('q').value.toLowerCase();
   const s=document.getElementById('fSite').value,t=document.getElementById('fType').value,
-        sort=document.getElementById('fSort').value;
+        sort=document.getElementById('fSort').value,
+        sf=document.getElementById('fSafe').value,tf=document.getElementById('fThink').value;
   let rows=DATA.filter(x=>
     (!q||(x.id+' '+x.name+' '+x.siteLabel+' '+x.note).toLowerCase().includes(q))&&
-    (!s||x.site===s)&&(!t||x.type===t));
+    (!s||x.site===s)&&(!t||x.type===t)&&
+    (!sf||(x.safeguard||'')===sf)&&
+    (!tf||(tf==='ctl'?(x.think_controllable===true):(tf==='unc'?(x.reasoning===true&&!x.think_controllable):(x.reasoning!==true)))));
   if(sort==='lat') rows.sort((a,b)=>(a.latency==null?9e9:a.latency)-(b.latency==null?9e9:b.latency));
   else if(sort==='name') rows.sort((a,b)=>a.id.localeCompare(b.id));
   else rows.sort((a,b)=>{
@@ -2165,7 +2507,11 @@ function cardHTML(x){
   const st=x.ok?'<span class="st ok">实测可用</span>':(think?'<span class="st think">推理受限</span>':'<span class="st think">限流</span>');
   const caps=x.caps.map(c=>'<span class="tag '+(CAPCLS[c]||'chat')+'">'+esc(c)+'</span>').join('');
   const tcls=TYPECLS[x.type]||'chat';
-  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+
+  const sg=typeof x.safeguard==='string'?x.safeguard:'未知';
+  const sgcls=sg==='强'?'sg3':(sg==='中'?'sg2':'sg1');
+  const sgTag='<span class="tag '+sgcls+'">审核 '+sg+'</span>';
+  const tcTag=x.think_controllable?'<span class="tag tc">思考可关</span>':(x.reasoning?'<span class="tag warn">思考不可关</span>':'');
+  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+sgTag+tcTag+
     (x.id.endsWith(':free')?'<span class="tag warn">⚠ 可能用于训练</span>':'');
   const ctx=x.ctx?'<span><b>'+esc(x.ctx)+'</b></span>':'';
   const lat=x.latency!=null?'<span>实测响应 <b class="rate">'+x.latency+'s</b></span>':'';
@@ -2202,14 +2548,21 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;',
 // ---------- 在线测试 ----------
 async function testApi(){
   const out=document.getElementById('testOut');out.style.display='block';
+  const model=document.getElementById('testModel').value.trim()||'gpt-4o';
+  const tk=document.getElementById('testThink').value;
   out.innerHTML='<span style="color:var(--sub)">正在请求 '+baseVal()+'/chat/completions …</span>';
   try{
+    const body={model:model,messages:[{role:'user',content:'用一句话介绍你自己'}]};
+    if(tk!=='') body.think=(tk==='true');
     const r=await fetch(baseVal()+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'gpt-4o',messages:[{role:'user',content:'用一句话介绍你自己'}]})});
+      body:JSON.stringify(body)});
     const j=await r.json();
-    const c=(j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||JSON.stringify(j.error||j);
+    const m=(j.choices&&j.choices[0]&&j.choices[0].message)||{};
+    const rc=(m.reasoning_content||m.reasoning||'');
+    const c=m.content||rc||JSON.stringify(j.error||j);
     out.innerHTML='<div style="background:#0b1120;border:1px solid var(--line);border-radius:9px;padding:12px;color:#a8e5c9">'+
-      '<b style="color:var(--ok)">✓ 通了</b>　上游 <span class="mono">'+esc(j.hub_upstream||'—')+'</span>　'+(j.hub_latency||'')+'s<br><br>'+esc(c)+'</div>';
+      '<b style="color:var(--ok)">✓ 通了</b>　上游 <span class="mono">'+esc(j.hub_upstream||'—')+'</span>　'+(j.hub_latency||'')+'s　'+
+      '思考：'+(rc&&rc.length?'<b style="color:#c4a8ff">有</b>':'<b style="color:#7fe3b4">无</b>')+'<br><br>'+esc(c)+'</div>';
   }catch(e){out.innerHTML='<div style="color:var(--bad)">请求失败：'+esc(e.message)+'（Render 免费层闲置后冷启动约需 30-60 秒，稍后点「在线试一句」重试即可）</div>';}
 }
 
