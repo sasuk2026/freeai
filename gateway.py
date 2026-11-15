@@ -59,6 +59,9 @@ CONNECT_TIMEOUT = int(os.environ.get("HUB_CONNECT_TIMEOUT", "8"))
 READ_TIMEOUT = int(os.environ.get("HUB_READ_TIMEOUT", "22"))      # 单上游首字节/每次读取上限
 STREAM_READ_TIMEOUT = int(os.environ.get("HUB_STREAM_READ_TIMEOUT", "25"))  # 流式首字节/读取上限(有心跳保活,不必太长)
 CHAIN_BUDGET = int(os.environ.get("HUB_CHAIN_BUDGET", "48"))      # 整条链总时间预算(秒)，保证及时给答复
+# 严格模式(默认1)：禁止跨模型兜底，选什么模型就返回什么模型，绝不串到统一护栏底座。
+# 设 0 才启用跨模型热备（会重新出现「所有敏感请求收敛成同一句 I'm sorry」）。
+STRICT_MODEL = os.environ.get("HUB_STRICT_MODEL", "1") != "0"
 # 流式模式下，若上游超过这么久没推任何数据，主动发一条 SSE 注释心跳，防止代理层（Render/Cloudflare）无数据超时掐断
 HEARTBEAT_IDLE = int(os.environ.get("HUB_HEARTBEAT_IDLE", "15"))
 
@@ -97,12 +100,15 @@ def model_list():
 
 
 def build_chain(entry):
-    """为该模型构造候选上游链：主上游 + 同模型兜底 + 跨模型热备。
+    """为该模型构造候选上游链。
 
-    稳定性优先：公益站单点极不稳定，必须有冗余才能出字。
-    「不串模型」由转发层保证——无论兜底到哪个上游，对客户端返回的 model 字段
-    都会被改写成用户所选的模型名（见 sse_strip / 非流式 j['model']=mid），
-    并在 hub_upstream / X-Upstream 里透明记录真实上游便于排障。
+    默认【严格模式】：只用所选模型自己的上游（主上游 + 同模型的备用端点），
+    绝不跨模型兜底。原因：跨模型兜底会把敏感/受限请求悄悄收敛到同一个自带
+    护栏的通用底座（openai-fast 等），导致「无论选什么模型都吐同一句 I'm sorry」，
+    并且本身就是「路由到别的模型」。选什么模型就如实反映什么模型的行为。
+
+    稳定性由「同模型多端点 + 短超时 + 整链时间预算」保证，不依赖跨模型串台。
+    若确实需要最大化可用性，可设 HUB_STRICT_MODEL=0 重新启用跨模型热备。
     """
     target = entry["upstream_model"]   # 用户所选模型在上游的真实名字
     chain = [{"site": entry["site"], "base": entry["upstream_base"],
@@ -117,16 +123,17 @@ def build_chain(entry):
             ge = INDEX[gid]
             chain.append({"site": ge["site"], "base": ge["upstream_base"],
                           "path": ge["upstream_path"], "model": ge["upstream_model"]})
-    # 3) 全局热备：同模型站点都挂了才用（保证能出字，model 字段仍改写为用户所选）
-    for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
-        if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
-            ge = INDEX[gid]
-            chain.append({"site": ge["site"], "base": ge["upstream_base"],
-                          "path": ge["upstream_path"], "model": ge["upstream_model"]})
-    # 4) 其余跨模型 fallback（最后兜底）
-    for fb in entry.get("fallback", []):
-        if fb.get("model") != target:
-            chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
+
+    # 3/4) 跨模型兜底：默认关闭（STRICT_MODEL=1）。仅显式关闭时才追加。
+    if not STRICT_MODEL:
+        for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
+            if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
+                ge = INDEX[gid]
+                chain.append({"site": ge["site"], "base": ge["upstream_base"],
+                              "path": ge["upstream_path"], "model": ge["upstream_model"]})
+        for fb in entry.get("fallback", []):
+            if fb.get("model") != target:
+                chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
     # 去重（同 base+path+model 视为同一上游）
     seen, out = set(), []
     for c in chain:
