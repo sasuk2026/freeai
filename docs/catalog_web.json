@@ -114,8 +114,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "gpt-oss-20b",
@@ -134,8 +135,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.5-397B-A17B",
@@ -154,7 +156,8 @@
   "sample": "PONG",
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.6-27B",
@@ -172,8 +175,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.8-27B",
@@ -191,8 +195,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.5-9B",
@@ -211,7 +216,8 @@
   "sample": "PONG",
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -229,8 +235,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen2.5-VL-72B-Instruct",
@@ -249,8 +256,9 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  },
  {
   "id": "DeepSeek-V4-Flash-0731",
@@ -2091,7 +2099,8 @@
   "upstream": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   "sample": "PONG",
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  }
 ]
