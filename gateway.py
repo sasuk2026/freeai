@@ -93,18 +93,21 @@ def model_list():
 
 
 def build_chain(entry):
-    """为该模型构造候选上游链：主上游 + 别名兜底 + 全局热备"""
+    """为该模型构造候选上游链：主上游 + 同模型的别名兜底。
+
+    关键约束：链上所有上游都必须服务于【同一个模型】(upstream_model 一致)。
+    绝不把请求偷偷转发给别的模型当兜底——用户选了什么模型就返回什么模型，
+    若所选模型自身所有上游都不可用，直接报错，而不是用别的模型糊弄客户端。
+    （旧的「全局跨模型热备」已移除，那正是「路由到别的模型」的根因。）
+    """
+    target = entry["upstream_model"]   # 用户所选模型在上游的真实名字
     chain = [{"site": entry["site"], "base": entry["upstream_base"],
-              "path": entry["upstream_path"], "model": entry["upstream_model"]}]
+              "path": entry["upstream_path"], "model": target}]
     for fb in entry.get("fallback", []):
-        chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
-    # 全局热备：任意请求失败后依次尝试这些已实测可用的通用上游
-    for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
-        if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
-            ge = INDEX[gid]
-            chain.append({"site": ge["site"], "base": ge["upstream_base"],
-                          "path": ge["upstream_path"], "model": ge["upstream_model"]})
-    # 去重
+        # 只保留「同一个模型」的备用上游；指向不同模型的兜底一律丢弃
+        if fb.get("model") == target:
+            chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
+    # 去重（同 base+path+model 视为同一上游）
     seen, out = set(), []
     for c in chain:
         k = (c["base"], c["path"], c["model"])
