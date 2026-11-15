@@ -151,9 +151,15 @@ def build_chain(entry):
     if STRICT_MODEL:
         return own
 
-    # 3) 跨站点技术救急：分散在 4 个不同站点、开源/弱护栏底座，避免限流集中与统一拒答
+    # 3) 跨站点技术救急：分散在 4 个不同站点、开源/弱护栏底座，避免限流集中与统一拒答。
+    #    按模型 id 稳定打散「救急起点」，让不同模型的救急第一站不同 —— 这样即使多个
+    #    模型的自身上游同时技术失败，也不会齐刷刷落到同一个救急端点吐同样的拒答。
     relief = []
-    for gid in HOTSPARE_IDS:
+    order = list(HOTSPARE_IDS)
+    if order:
+        rot = sum(ord(ch) for ch in entry["id"]) % len(order)
+        order = order[rot:] + order[:rot]
+    for gid in order:
         ge = INDEX.get(gid)
         if ge and not ge.get("disabled"):
             relief.append({"site": ge["site"], "base": ge["upstream_base"],
