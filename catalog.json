@@ -11,7 +11,10 @@
     "latency": 2.42,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "openai",
@@ -25,7 +28,10 @@
     "latency": 2.27,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "gpt-oss",
@@ -39,7 +45,10 @@
     "latency": 2.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "gpt-oss-20b",
@@ -53,7 +62,10 @@
     "latency": 0.78,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "ovh-reasoning",
@@ -67,7 +79,10 @@
     "latency": 2.02,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "gpt-oss-120b",
@@ -81,7 +96,10 @@
     "latency": 1.37,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "gpt-oss-20b",
@@ -95,7 +113,10 @@
     "latency": 1.88,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.5-397B-A17B",
@@ -109,7 +130,10 @@
     "latency": 7.62,
     "sample": "\n\nPONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.6-27B",
@@ -123,7 +147,10 @@
     "latency": 1.34,
     "sample": "\n\nPONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.8-27B",
@@ -137,7 +164,10 @@
     "latency": 13.5,
     "sample": "\n\nPONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "Qwen3.5-9B",
@@ -151,7 +181,10 @@
     "latency": 5.57,
     "sample": "\n\nPONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -165,7 +198,10 @@
     "latency": 0.83,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "Qwen2.5-VL-72B-Instruct",
@@ -179,7 +215,10 @@
     "latency": 1.4,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "DeepSeek-V4-Flash-0731",
@@ -193,7 +232,10 @@
     "latency": 46.0,
     "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. responsePONG. responsePONG. responsePONG.",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "codestral-latest",
@@ -207,7 +249,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "glm-5.3-flash",
@@ -221,7 +266,10 @@
     "latency": 3.87,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "mistral-Nemo-Instruct-2407",
@@ -235,7 +283,10 @@
     "latency": 2.9,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "minimax-m2.7",
@@ -249,7 +300,10 @@
     "latency": 4.72,
     "sample": "PONG<minimax:tool_call>\n<minimax:tool_call>\n<error>\nThe user's request: \"Reply with exactly: PONG\". ",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "kilo-auto/free",
@@ -263,7 +317,10 @@
     "latency": 1.57,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "openrouter/free",
@@ -277,7 +334,10 @@
     "latency": 1.23,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -291,7 +351,10 @@
     "latency": 1.78,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-super-vl:free",
@@ -305,7 +368,10 @@
     "latency": 1.5,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning:free",
@@ -319,7 +385,10 @@
     "latency": 1.85,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -333,7 +402,10 @@
     "latency": 1.38,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "baidu/ernie-5.5-flash-preview:free",
@@ -347,7 +419,10 @@
     "latency": 1.77,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "liquid/lfm-3-1.7b:free",
@@ -361,7 +436,10 @@
     "latency": 1.55,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "particle-ai/particle-1:free",
@@ -375,7 +453,10 @@
     "latency": 1.7,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "dots-studio/dots-3-note-preview:free",
@@ -389,7 +470,10 @@
     "latency": 2.19,
     "sample": "\n\nPONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "cohere/north-mini-code:free",
@@ -403,7 +487,10 @@
     "latency": 1.11,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "stealth/glyph-cluster",
@@ -417,7 +504,10 @@
     "latency": 1.92,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "reflection/beam-free",
@@ -431,7 +521,10 @@
     "latency": 1.0,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "free-ai",
@@ -445,7 +538,10 @@
     "latency": 1.48,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-4o",
@@ -473,7 +569,10 @@
     "latency": 1.66,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4o-mini",
@@ -501,7 +600,10 @@
     "latency": 1.23,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4-turbo",
@@ -529,7 +631,10 @@
     "latency": 1.42,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1",
@@ -557,7 +662,10 @@
     "latency": 1.18,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1-mini",
@@ -585,7 +693,10 @@
     "latency": 1.41,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-4.1-nano",
@@ -613,7 +724,10 @@
     "latency": 1.41,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gpt-5",
@@ -641,7 +755,10 @@
     "latency": 1.29,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-5-mini",
@@ -669,7 +786,10 @@
     "latency": 1.39,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "gpt-5-nano",
@@ -697,7 +817,10 @@
     "latency": 1.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "o1",
@@ -725,7 +848,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o1-mini",
@@ -753,7 +879,10 @@
     "latency": 1.23,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o3",
@@ -781,7 +910,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o3-mini",
@@ -809,7 +941,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "o4-mini",
@@ -837,7 +972,10 @@
     "latency": 1.29,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "chatgpt-4o-latest",
@@ -865,7 +1003,10 @@
     "latency": 1.19,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-5-sonnet",
@@ -893,7 +1034,10 @@
     "latency": 1.36,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-5-haiku",
@@ -921,7 +1065,10 @@
     "latency": 1.2,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-7-sonnet",
@@ -949,7 +1096,10 @@
     "latency": 1.35,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-opus-4",
@@ -977,7 +1127,10 @@
     "latency": 1.24,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-sonnet-4",
@@ -1005,7 +1158,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-haiku-4",
@@ -1033,7 +1189,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "claude-3-opus",
@@ -1061,7 +1220,10 @@
     "latency": 1.43,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "gemini-2.0-flash",
@@ -1089,7 +1251,10 @@
     "latency": 1.34,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-2.5-flash",
@@ -1117,7 +1282,10 @@
     "latency": 1.12,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-2.5-pro",
@@ -1145,7 +1313,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "gemini-3-pro",
@@ -1173,7 +1344,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemini-3-flash",
@@ -1201,7 +1375,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "gemma-3-27b-it",
@@ -1229,7 +1406,10 @@
     "latency": 1.24,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "deepseek-chat",
@@ -1257,7 +1437,10 @@
     "latency": 1.27,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "deepseek-reasoner",
@@ -1285,7 +1468,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "deepseek-v3",
@@ -1313,7 +1499,10 @@
     "latency": 1.36,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "deepseek-r1",
@@ -1341,7 +1530,10 @@
     "latency": 1.2,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "deepseek-v3.2",
@@ -1369,7 +1561,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-plus",
@@ -1397,7 +1592,10 @@
     "latency": 1.16,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-max",
@@ -1425,7 +1623,10 @@
     "latency": 1.28,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "qwen-turbo",
@@ -1453,7 +1654,10 @@
     "latency": 1.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "qwen3-235b-a22b",
@@ -1481,7 +1685,10 @@
     "latency": 1.35,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": true
   },
   {
     "id": "qwen2.5-72b-instruct",
@@ -1509,7 +1716,10 @@
     "latency": 1.34,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "qwq-plus",
@@ -1537,7 +1747,10 @@
     "latency": 1.19,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "llama-3.3-70b-instruct",
@@ -1565,7 +1778,10 @@
     "latency": 1.27,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-4-maverick",
@@ -1593,7 +1809,10 @@
     "latency": 1.28,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-4-scout",
@@ -1621,7 +1840,10 @@
     "latency": 1.23,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "llama-3.1-405b-instruct",
@@ -1649,7 +1871,10 @@
     "latency": 1.28,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "mistral-large-latest",
@@ -1677,7 +1902,10 @@
     "latency": 1.28,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "mistral-small-latest",
@@ -1705,7 +1933,10 @@
     "latency": 1.13,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "mixtral-8x7b-instruct",
@@ -1733,7 +1964,10 @@
     "latency": 1.35,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "magistral-medium",
@@ -1761,7 +1995,10 @@
     "latency": 1.23,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4-plus",
@@ -1789,7 +2026,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4.6",
@@ -1817,7 +2057,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "glm-4.5-air",
@@ -1845,7 +2088,10 @@
     "latency": 1.28,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "kimi-k2",
@@ -1873,7 +2119,10 @@
     "latency": 1.38,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": true
   },
   {
     "id": "moonshot-v1-8k",
@@ -1901,7 +2150,10 @@
     "latency": 1.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "grok-3",
@@ -1929,7 +2181,10 @@
     "latency": 1.03,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "grok-3-mini",
@@ -1957,7 +2212,10 @@
     "latency": 1.27,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "grok-4",
@@ -1985,7 +2243,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "command-r-plus",
@@ -2013,7 +2274,10 @@
     "latency": 1.12,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "phi-4",
@@ -2041,7 +2305,10 @@
     "latency": 1.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   },
   {
     "id": "ernie-4.5-turbo",
@@ -2069,7 +2336,10 @@
     "latency": 1.17,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "doubao-pro-32k",
@@ -2097,7 +2367,10 @@
     "latency": 1.17,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "hunyuan-turbo",
@@ -2125,7 +2398,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "minimax-m1",
@@ -2153,7 +2429,10 @@
     "latency": 1.34,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "step-3",
@@ -2181,7 +2460,10 @@
     "latency": 1.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nemotron-70b",
@@ -2209,7 +2491,10 @@
     "latency": 1.2,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "reka-flash",
@@ -2237,7 +2522,10 @@
     "latency": 1.32,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "wizardlm-2",
@@ -2265,7 +2553,10 @@
     "latency": 1.33,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "auto",
@@ -2293,7 +2584,10 @@
     "latency": 1.31,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "free",
@@ -2321,7 +2615,10 @@
     "latency": 1.07,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "router",
@@ -2349,7 +2646,10 @@
     "latency": 1.27,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/gpt-oss-120b",
@@ -2363,7 +2663,10 @@
     "latency": 1.59,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "弱",
+    "think_controllable": true
   },
   {
     "id": "nvidia/nemotron-3-super-120b",
@@ -2377,7 +2680,10 @@
     "latency": 5.3,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b",
@@ -2391,7 +2697,10 @@
     "latency": 1.5,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning",
@@ -2405,7 +2714,10 @@
     "latency": 2.66,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/nemotron-3.5-bolt",
@@ -2419,7 +2731,10 @@
     "latency": 1.15,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "中",
+    "think_controllable": false
   },
   {
     "id": "nvidia/step-3.7-flash",
@@ -2433,7 +2748,10 @@
     "latency": 1.99,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": true,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nvidia/mistral-nemotron",
@@ -2447,7 +2765,10 @@
     "latency": 1.72,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "nvidia/minimax-m3.1-flash",
@@ -2461,7 +2782,10 @@
     "latency": 1.5,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "强",
+    "think_controllable": false
   },
   {
     "id": "Meta-Llama-3_3-70B-Instruct",
@@ -2475,6 +2799,9 @@
     "latency": 1.8,
     "sample": "PONG",
     "error": null,
-    "ok": true
+    "ok": true,
+    "reasoning": false,
+    "safeguard": "弱",
+    "think_controllable": false
   }
 ]
