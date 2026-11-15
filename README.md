@@ -37,16 +37,22 @@ Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥�
 
 | 项目 | 结果 |
 |---|---|
-| 可调用模型条目 | **100** |
-| 逐条真实发请求、真出字 | **100 / 100** |
-| 公益站点 | 5 家（Pollinations / OVHcloud / LLM7.io / Kilo Gateway / llmfreeapikey） |
-| 其中真正不同的独立模型 | 约 24 个 |
-| 认证 | 全部匿名，无需 Key |
+| 可调用 ID（**不等于模型种类**） | **264** |
+| 逐条真实发请求、真出字 | **264 / 264** |
+| 其中免 key 直连的原生模型 ID | 39 个（跨站可能有重复底座） |
+| 其中名字兼容映射（同一底座） | 218 个，**非独立模型** |
+| 另收录免费额度真模型（需注册免费 Key） | **77 个**（见 `catalog_free_tier.json` 与网页独立分区） |
+| 公益站点 | 6 家（Pollinations / OVHcloud / LLM7.io / Kilo Gateway / BlockRun.ai / llmfreeapikey） |
+| 认证 | 上方 264 条全部匿名，无需 Key；免费额度分区需自备该站免费 Key |
 
-> 说明：全网「匿名免 key + 长期稳定」的公益大模型端点数量有限，凑不出 100 个互不相同的模型。
-> 因此清单 = 各站实测能出字的原生 ID + 官方别名 + 标准模型名兼容映射 + 自动路由。
+> **全网复查（2026-11-15）：** 重新拉取并实测 27 个公开推理服务的 `/models` 清单，合计约 3,800 个真实模型 ID（Api.Airforce 781、Requesty 750、Vercel AI Gateway 507、Pollinations 441、Nous 398、UnoRouter 316、OrcaRouter 216、DeepInfra 178…）。免费不是一个口径，分三层：
+> ① **匿名免 key 直连** —— 6 家公益站，约 30 个独立模型，本目录标「独立模型」，填任意 Key 即可调；
+> ② **免费额度但需注册免费 Key** —— OpenRouter `:free`、Api.Airforce、Pollinations 新域名、Kilo、BlockRun、NVIDIA NIM、Groq、Cerebras、Gemini、Mistral、Cloudflare、Ollama Cloud、Zhipu 等。已从各站 `/models` 里按官方免费标记（`tier:free` / `isFree` / `pricing=0` / `billing_mode=free`）筛出 96 条、跨站去重 **77 个真模型**，排除 embedding / 图像 / TTS 与社区自定义条目，收录在 `catalog_free_tier.json` 与网页「免费额度真模型」独立分区。**需自备该站免费 Key，本网关不代管，未逐条匿名实测**；无 Key 实测 27 站全部 401/402/429；
+> ③ **标准模型名兼容映射** —— 从上述真实清单取主流系列名，经 llmfreeapikey 兼容层逐条实测出字，本目录标「兼容别名」。**注意：该站 /models 只返回 1 个模型 `free-ai`，且传入任意名字（含不存在的名字）都返回同一底座的回答，所以这 218 条是名字、不是 218 个模型。**
+>
+> 第 ① 层只有几十个，不是找得不够，而是无限免费推理本身不可持续。**264 是可调用 ID 数，不是模型种类数**；严格按不同底层模型计数只有 39 个原生 ID（且跨站可能重复）。
 > **每一条都真实发过一次对话请求并成功返回内容**，没有编造地址、没把失效链接标成可用。
-> 网页里每条都标了类型（独立模型 / 官方别名 / 兼容别名 / 自动路由）和真实上游。
+> 网页里每条都标了类型（独立模型 / 官方别名 / 兼容别名 / 自动路由）和真实上游，并按系列分组展示。
 
 兼容映射的作用：很多软件只允许填 `gpt-4o`、`claude-3-5-sonnet` 这类标准名字，
 网关把这些名字映射到实测可用的公益底座，于是不改代码也能直接用。
@@ -116,5 +122,5 @@ docker run -p 8000:8000 freeai
 |---|---|
 | `gateway.py` | 聚合网关（Flask），统一 /v1 协议 + 故障转移 + CORS |
 | `index.html` | 网页控制台：接入凭证面板、卡片式模型清单、一键复制、在线测试 |
-| `catalog.json` / `catalog_web.json` | 100 条模型的完整实测数据 / 网页展示数据 |
+| `catalog.json` / `catalog_web.json` | 264 条可调用 ID 的完整实测数据 / 网页展示数据 |
 | `requirements.txt` / `render.yaml` / `Dockerfile` | 部署配置 |
