@@ -1,0 +1,1104 @@
+[
+ {
+  "id": "nemotron-3.5-lightning",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "blockrun",
+   "kilo",
+   "openrouter",
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3.5-lightning",
+   "nvidia/nemotron-3.5-lightning:free"
+  ],
+  "owned_by": "NVIDIA",
+  "hf": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+  "ctx": 262144,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "north-mini-code",
+  "series": "Cohere Command",
+  "sites": [
+   "blockrun",
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "cohere/north-mini-code:free",
+   "cohere/north-mini-code"
+  ],
+  "owned_by": "",
+  "hf": "CohereLabs/North-Mini-Code-1.0",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3-nano-omni-30b-a3b-reasoning",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "blockrun",
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+   "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"
+  ],
+  "owned_by": "",
+  "hf": "nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "particle-1",
+  "series": "Liquid / 其它新锐",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "particle-ai/particle-1:free"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3.5-super-vl",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3.5-super-vl:free"
+  ],
+  "owned_by": "",
+  "hf": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3-ultra-550b-a55b",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3-ultra-550b-a55b:free"
+  ],
+  "owned_by": "",
+  "hf": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "minimax-m3.1-flash",
+  "series": "MiniMax 系列",
+  "sites": [
+   "blockrun",
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "minimax/minimax-m3.1-flash",
+   "nvidia/minimax-m3.1-flash"
+  ],
+  "owned_by": "MiniMax",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ling-3.2-flash",
+  "series": "其它模型",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "inclusionai/ling-3.2-flash:free"
+  ],
+  "owned_by": "",
+  "hf": "inclusionAI/Ling-3.2-flash",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "lfm-3-1.7b",
+  "series": "Liquid / 其它新锐",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "liquid/lfm-3-1.7b:free"
+  ],
+  "owned_by": "",
+  "hf": "LiquidAI/LFM3-1.7B",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-oss-20b",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "airforce",
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "gpt-oss-20b",
+   "openai/gpt-oss-20b"
+  ],
+  "owned_by": "openai",
+  "hf": "",
+  "ctx": 131072,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "glyph-cluster",
+  "series": "Liquid / 其它新锐",
+  "sites": [
+   "kilo",
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "stealth/glyph-cluster"
+  ],
+  "owned_by": "Stealth",
+  "hf": "",
+  "ctx": 256000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "free",
+  "series": "自动路由 / 通用",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "openrouter/free",
+   "kilo-auto/free"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ernie-5.5-flash-preview",
+  "series": "百度文心 ERNIE",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "baidu/ernie-5.5-flash-preview:free"
+  ],
+  "owned_by": "",
+  "hf": "baidu/ERNIE-5.5-Flash-Preview",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "dots-3-note-preview",
+  "series": "Liquid / 其它新锐",
+  "sites": [
+   "kilo",
+   "openrouter"
+  ],
+  "rawIds": [
+   "dots-studio/dots-3-note-preview:free"
+  ],
+  "owned_by": "",
+  "hf": "dots-studio/dots3-note-prev",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "voxtral-small-latest",
+  "series": "其它模型",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "voxtral-small-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "voxtral-small-2507",
+  "series": "其它模型",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "voxtral-small-2507"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "open-mistral-nemo-2407",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "open-mistral-nemo-2407"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "open-mistral-nemo",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "open-mistral-nemo"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3.5-bolt",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "blockrun"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3.5-bolt"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3-ultra-550b",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "blockrun"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3-ultra-550b"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3-ultra",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3-ultra"
+  ],
+  "owned_by": "NVIDIA",
+  "hf": "",
+  "ctx": 262144,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "nemotron-3-super-120b",
+  "series": "NVIDIA 系列",
+  "sites": [
+   "blockrun"
+  ],
+  "rawIds": [
+   "nvidia/nemotron-3-super-120b"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "muse-spark-open",
+  "series": "其它模型",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "meta/muse-spark-open"
+  ],
+  "owned_by": "Meta",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "muse-glimmer-30b",
+  "series": "其它模型",
+  "sites": [
+   "blockrun"
+  ],
+  "rawIds": [
+   "nvidia/muse-glimmer-30b"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-tiny-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-tiny-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-tiny-2407",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-tiny-2407"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-large-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-large-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-large-4",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-large-4"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-large-3",
+  "series": "Mistral 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "mistralai/mistral-large-3"
+  ],
+  "owned_by": "Mistral",
+  "hf": "",
+  "ctx": 256000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-large-2512",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-large-2512"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-code-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-code-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "mistral-code-fim-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "mistral-code-fim-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-8b-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-8b-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-8b-2512",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-8b-2512"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-3b-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-3b-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-3b-2512",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-3b-2512"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-14b-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-14b-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "ministral-14b-2512",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "ministral-14b-2512"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "minimax-m3",
+  "series": "MiniMax 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "minimax/minimax-m3"
+  ],
+  "owned_by": "MiniMax",
+  "hf": "",
+  "ctx": 524288,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "midijourney-large",
+  "series": "其它模型",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "pollinations/midijourney-large"
+  ],
+  "owned_by": "Pollinations",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "midijourney",
+  "series": "其它模型",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "pollinations/midijourney"
+  ],
+  "owned_by": "Pollinations",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "llama-instant",
+  "series": "Meta Llama 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "llama-instant"
+  ],
+  "owned_by": "meta",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "llama-3.3-70b-instruct",
+  "series": "Meta Llama 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "meta/llama-3.3-70b-instruct"
+  ],
+  "owned_by": "Meta",
+  "hf": "",
+  "ctx": 131072,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "laguna-xs-2.1",
+  "series": "其它模型",
+  "sites": [
+   "blockrun"
+  ],
+  "rawIds": [
+   "poolside/laguna-xs-2.1"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "kimi-k3.1-pro",
+  "series": "Kimi 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "moonshotai/kimi-k3.1-pro"
+  ],
+  "owned_by": "Moonshot AI",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "kimi-k3",
+  "series": "Kimi 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "moonshotai/kimi-k3"
+  ],
+  "owned_by": "Moonshot AI",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "kimi-k2.7-code",
+  "series": "Kimi 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "kimi-k2.7-code"
+  ],
+  "owned_by": "moonshot",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "kimi-k2.6",
+  "series": "Kimi 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "moonshotai/kimi-k2.6"
+  ],
+  "owned_by": "Moonshot AI",
+  "hf": "",
+  "ctx": 262000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "inkling-2-small",
+  "series": "其它模型",
+  "sites": [
+   "openrouter"
+  ],
+  "rawIds": [
+   "thinkingmachines/inkling-2-small:free"
+  ],
+  "owned_by": "",
+  "hf": "thinkingmachines/Inkling-2-Small",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "grok-4.6",
+  "series": "xAI Grok 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "x-ai/grok-4.6"
+  ],
+  "owned_by": "xAI",
+  "hf": "",
+  "ctx": 200000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "grok-4.3",
+  "series": "xAI Grok 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "x-ai/grok-4.3"
+  ],
+  "owned_by": "xAI",
+  "hf": "",
+  "ctx": 200000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "grok-4.20",
+  "series": "xAI Grok 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "x-ai/grok-4.20"
+  ],
+  "owned_by": "xAI",
+  "hf": "",
+  "ctx": 262144,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-6.1-terra",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-6.1-terra"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-6.1-sol",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-6.1-sol"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-6-sol",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-6-sol"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-6-luna",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-6-luna"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-6-astra",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-6-astra"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.6-terra",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.6-terra"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.6-sol",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.6-sol"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.6-luna",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.6-luna"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.5",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.5"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.4-nano",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.4-nano"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 400000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.4-mini",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.4-mini"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 400000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.4",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.4"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 1050000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5.3-codex",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5.3-codex"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 400000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gpt-5-nano",
+  "series": "OpenAI GPT 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "openai/gpt-5-nano"
+  ],
+  "owned_by": "OpenAI",
+  "hf": "",
+  "ctx": 400000,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "glm-5.3-flash",
+  "series": "智谱 GLM 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "z-ai/glm-5.3-flash"
+  ],
+  "owned_by": "Z.ai",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "glm-5.3",
+  "series": "智谱 GLM 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "z-ai/glm-5.3"
+  ],
+  "owned_by": "Z.ai",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gemma3-270m",
+  "series": "Google Gemini",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "gemma3-270m:free"
+  ],
+  "owned_by": "google",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gemma-4-31b-it",
+  "series": "Google Gemini",
+  "sites": [
+   "openrouter"
+  ],
+  "rawIds": [
+   "google/gemma-4-31b-it:free"
+  ],
+  "owned_by": "",
+  "hf": "google/gemma-4-31B-it",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "gemma-4-26b-a4b-it",
+  "series": "Google Gemini",
+  "sites": [
+   "openrouter"
+  ],
+  "rawIds": [
+   "google/gemma-4-26b-a4b-it:free"
+  ],
+  "owned_by": "",
+  "hf": "google/gemma-4-26B-A4B-it",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "flint-v1.0",
+  "series": "其它模型",
+  "sites": [
+   "openrouter"
+  ],
+  "rawIds": [
+   "recursive/flint-v1.0:free"
+  ],
+  "owned_by": "",
+  "hf": "RecursiveSI/flint",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "deepseek-v4.1-flash",
+  "series": "DeepSeek 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "deepseek/deepseek-v4.1-flash"
+  ],
+  "owned_by": "DeepSeek",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "deepseek-v4-flash",
+  "series": "DeepSeek 系列",
+  "sites": [
+   "pollinations_gen"
+  ],
+  "rawIds": [
+   "deepseek/deepseek-v4-flash"
+  ],
+  "owned_by": "DeepSeek",
+  "hf": "",
+  "ctx": 1048576,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "codestral-latest",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "codestral-latest"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "codestral-2508",
+  "series": "Mistral 系列",
+  "sites": [
+   "airforce"
+  ],
+  "rawIds": [
+   "codestral-2508"
+  ],
+  "owned_by": "mistralai",
+  "hf": "",
+  "ctx": 4096,
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ },
+ {
+  "id": "beam-free",
+  "series": "Liquid / 其它新锐",
+  "sites": [
+   "kilo"
+  ],
+  "rawIds": [
+   "reflection/beam-free"
+  ],
+  "owned_by": "",
+  "hf": "",
+  "ctx": "",
+  "note": "各站 /models 官方标记免费（tier:free / isFree / pricing=0 / billing_mode=free）"
+ }
+]
