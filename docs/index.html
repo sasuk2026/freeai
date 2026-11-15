@@ -80,6 +80,8 @@ button.cp{flex:none;min-width:62px}
 .filters input{flex:1;min-width:180px}
 .filters input:focus,.filters select:focus{border-color:var(--acc)}
 .cnt{color:var(--dim);font-size:12px;margin-left:auto}
+.tgl{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--dim);cursor:pointer;user-select:none;white-space:nowrap}
+.tgl input{accent-color:var(--acc)}
 .snap{color:var(--dim);font-size:11.5px;line-height:1.7;margin:2px 0 4px}
 
 /* model cards */
@@ -91,6 +93,7 @@ button.cp{flex:none;min-width:62px}
 .st{position:absolute;right:13px;top:14px;font-size:10.5px;padding:3px 9px;border-radius:6px;font-weight:700;white-space:nowrap}
 .st.ok{background:#123a2a;color:#7fe3b4;border:1px solid #1c5a40}
 .st.think{background:#3a2e1a;color:#ffc878;border:1px solid #5c4620}
+.st.off{background:#2a2a2a;color:#9aa0a6;border:1px solid #444}
 .idrow{display:flex;align-items:center;gap:6px;background:#0b1120;border:1px solid #222e46;
   border-radius:8px;padding:7px 8px 7px 10px;margin-bottom:10px;cursor:pointer}
 .idrow:hover{border-color:var(--acc)}
@@ -108,7 +111,8 @@ button.cp{flex:none;min-width:62px}
 .tag.type{background:#1a2740;color:#9fc0ff}
 .tag.sg3{background:#3a1820;color:#ff9bb0;border:1px solid #5c2438}
 .tag.sg2{background:#3a3218;color:#ffd98a;border:1px solid #5c4c24}
-.tag.sg1{background:#16331f;color:#8fe3b0;border:1px solid #1c5a34}
+.tag.sg1{background:#16331f;color:#8fe3b4;border:1px solid #1c5a34}
+.tag.off{background:#2a2a2a;color:#aab0b6;border:1px solid #4a4a4a}
 .tag.tc{background:#15324a;color:#7fd4ff;border:1px solid #1c4a6a}
 .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11px;margin-top:auto;padding-top:4px}
 .meta b{color:var(--sub);font-weight:600}
@@ -222,6 +226,7 @@ footer{text-align:center;color:var(--dim);font-size:11.5px;margin-top:30px;line-
     </select>
     <select id="fSafe" onchange="render(true)"><option value="">全部审核</option><option value="强">审核·强</option><option value="中">审核·中</option><option value="弱">审核·弱</option></select>
     <select id="fThink" onchange="render(true)"><option value="">思考·不限</option><option value="ctl">思考可关</option><option value="unc">思考不可关</option><option value="nr">非推理模型</option></select>
+    <label class="tgl"><input type="checkbox" id="fShowDisabled" onchange="render(true)"> 显示暂时不可用</label>
     <span class="cnt" id="cnt"></span>
   </div>
   <div class="cards" id="cards"></div>
@@ -265,7 +270,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "openai",
@@ -284,7 +290,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-oss",
@@ -304,7 +311,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gpt-oss-20b",
@@ -324,7 +332,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "ovh-reasoning",
@@ -344,7 +353,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gpt-oss-120b",
@@ -365,7 +375,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "gpt-oss-20b",
@@ -386,7 +397,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Qwen3.5-397B-A17B",
@@ -406,7 +418,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Qwen3.6-27B",
@@ -426,7 +439,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Qwen3.8-27B",
@@ -446,7 +460,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Qwen3.5-9B",
@@ -466,7 +481,8 @@ const DATA = [
     "reasoning": true,
     "safeguard": "强",
     "think_controllable": true,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -486,7 +502,8 @@ const DATA = [
     "reasoning": false,
     "safeguard": "强",
     "think_controllable": false,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "Qwen2.5-VL-72B-Instruct",
@@ -507,7 +524,8 @@ const DATA = [
     "reasoning": false,
     "safeguard": "强",
     "think_controllable": false,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   },
   {
     "id": "DeepSeek-V4-Flash-0731",
@@ -526,7 +544,8 @@ const DATA = [
     "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. r",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "codestral-latest",
@@ -545,7 +564,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "glm-5.3-flash",
@@ -564,7 +584,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "mistral-Nemo-Instruct-2407",
@@ -583,7 +604,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "minimax-m2.7",
@@ -602,7 +624,8 @@ const DATA = [
     "sample": "PONG<minimax:tool_call> <minimax:tool_call> <error> The user",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "kilo-auto/free",
@@ -621,7 +644,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "openrouter/free",
@@ -640,7 +664,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -660,7 +685,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3.5-super-vl:free",
@@ -681,7 +707,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning:free",
@@ -701,7 +728,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -722,7 +750,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "baidu/ernie-5.5-flash-preview:free",
@@ -742,7 +771,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "liquid/lfm-3-1.7b:free",
@@ -761,7 +791,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "particle-ai/particle-1:free",
@@ -780,7 +811,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "dots-studio/dots-3-note-preview:free",
@@ -799,7 +831,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "cohere/north-mini-code:free",
@@ -819,7 +852,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "stealth/glyph-cluster",
@@ -838,7 +872,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "reflection/beam-free",
@@ -857,7 +892,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "free-ai",
@@ -876,7 +912,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4o",
@@ -895,7 +932,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4o-mini",
@@ -914,7 +952,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4-turbo",
@@ -933,7 +972,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4.1",
@@ -952,7 +992,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4.1-mini",
@@ -971,7 +1012,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-4.1-nano",
@@ -990,7 +1032,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-5",
@@ -1009,7 +1052,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-5-mini",
@@ -1028,7 +1072,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gpt-5-nano",
@@ -1047,7 +1092,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "o1",
@@ -1066,7 +1112,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "o1-mini",
@@ -1085,7 +1132,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "o3",
@@ -1104,7 +1152,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "o3-mini",
@@ -1123,7 +1172,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "o4-mini",
@@ -1142,7 +1192,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "chatgpt-4o-latest",
@@ -1161,7 +1212,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-3-5-sonnet",
@@ -1180,7 +1232,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-3-5-haiku",
@@ -1199,7 +1252,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-3-7-sonnet",
@@ -1218,7 +1272,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "claude-opus-4",
@@ -1237,7 +1292,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-sonnet-4",
@@ -1256,7 +1312,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-haiku-4",
@@ -1275,7 +1332,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "claude-3-opus",
@@ -1294,7 +1352,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "gemini-2.0-flash",
@@ -1313,7 +1372,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gemini-2.5-flash",
@@ -1332,7 +1392,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gemini-2.5-pro",
@@ -1351,7 +1412,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gemini-3-pro",
@@ -1370,7 +1432,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gemini-3-flash",
@@ -1389,7 +1452,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "gemma-3-27b-it",
@@ -1408,7 +1472,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "deepseek-chat",
@@ -1427,7 +1492,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "deepseek-reasoner",
@@ -1446,7 +1512,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "deepseek-v3",
@@ -1465,7 +1532,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "deepseek-r1",
@@ -1484,7 +1552,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "deepseek-v3.2",
@@ -1503,7 +1572,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "qwen-plus",
@@ -1522,7 +1592,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "qwen-max",
@@ -1541,7 +1612,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "qwen-turbo",
@@ -1560,7 +1632,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "qwen3-235b-a22b",
@@ -1579,7 +1652,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "qwen2.5-72b-instruct",
@@ -1598,7 +1672,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "qwq-plus",
@@ -1617,7 +1692,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "llama-3.3-70b-instruct",
@@ -1636,7 +1712,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "llama-4-maverick",
@@ -1655,7 +1732,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "llama-4-scout",
@@ -1674,7 +1752,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "llama-3.1-405b-instruct",
@@ -1693,7 +1772,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "mistral-large-latest",
@@ -1712,7 +1792,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "mistral-small-latest",
@@ -1731,7 +1812,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "mixtral-8x7b-instruct",
@@ -1750,7 +1832,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "magistral-medium",
@@ -1769,7 +1852,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "glm-4-plus",
@@ -1788,7 +1872,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "glm-4.6",
@@ -1807,7 +1892,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "glm-4.5-air",
@@ -1826,7 +1912,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "kimi-k2",
@@ -1845,7 +1932,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "moonshot-v1-8k",
@@ -1864,7 +1952,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "grok-3",
@@ -1883,7 +1972,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "grok-3-mini",
@@ -1902,7 +1992,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "grok-4",
@@ -1921,7 +2012,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "command-r-plus",
@@ -1940,7 +2032,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "phi-4",
@@ -1959,7 +2052,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "弱",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "ernie-4.5-turbo",
@@ -1978,7 +2072,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "doubao-pro-32k",
@@ -1997,7 +2092,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "hunyuan-turbo",
@@ -2016,7 +2112,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "minimax-m1",
@@ -2035,7 +2132,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "step-3",
@@ -2054,7 +2152,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nemotron-70b",
@@ -2073,7 +2172,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "reka-flash",
@@ -2092,7 +2192,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "wizardlm-2",
@@ -2111,7 +2212,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "auto",
@@ -2130,7 +2232,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "free",
@@ -2149,7 +2252,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "router",
@@ -2168,7 +2272,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/gpt-oss-120b",
@@ -2188,7 +2293,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "弱",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3-super-120b",
@@ -2208,7 +2314,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b",
@@ -2229,7 +2336,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "中",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3.5-lightning",
@@ -2249,7 +2357,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/nemotron-3.5-bolt",
@@ -2269,7 +2378,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "中",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/step-3.7-flash",
@@ -2289,7 +2399,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": true,
     "safeguard": "强",
-    "think_controllable": true
+    "think_controllable": true,
+    "disabled": false
   },
   {
     "id": "nvidia/mistral-nemotron",
@@ -2309,7 +2420,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "nvidia/minimax-m3.1-flash",
@@ -2329,7 +2441,8 @@ const DATA = [
     "sample": "PONG",
     "reasoning": false,
     "safeguard": "强",
-    "think_controllable": false
+    "think_controllable": false,
+    "disabled": false
   },
   {
     "id": "Meta-Llama-3_3-70B-Instruct",
@@ -2350,7 +2463,8 @@ const DATA = [
     "reasoning": false,
     "safeguard": "强",
     "think_controllable": false,
-    "sg_source": "来源标记"
+    "sg_source": "来源标记",
+    "disabled": false
   }
 ];
 
@@ -2496,7 +2610,9 @@ function filtered(){
   const s=document.getElementById('fSite').value,t=document.getElementById('fType').value,
         sort=document.getElementById('fSort').value,
         sf=document.getElementById('fSafe').value,tf=document.getElementById('fThink').value;
+  const showDisabled=document.getElementById('fShowDisabled').checked;
   let rows=DATA.filter(x=>
+    (showDisabled||!x.disabled)&&
     (!q||(x.id+' '+x.name+' '+x.siteLabel+' '+x.note).toLowerCase().includes(q))&&
     (!s||x.site===s)&&(!t||x.type===t)&&
     (!sf||(x.safeguard||'')===sf)&&
@@ -2513,14 +2629,15 @@ function filtered(){
 }
 function cardHTML(x){
   const think=x.caps.indexOf('推理')>=0;
-  const st=x.ok?'<span class="st ok">实测可用</span>':(think?'<span class="st think">推理受限</span>':'<span class="st think">限流</span>');
+  const st=x.disabled?'<span class="st off">暂时不可用</span>':(x.ok?'<span class="st ok">实测可用</span>':(think?'<span class="st think">推理受限</span>':'<span class="st think">限流</span>'));
   const caps=x.caps.map(c=>'<span class="tag '+(CAPCLS[c]||'chat')+'">'+esc(c)+'</span>').join('');
   const tcls=TYPECLS[x.type]||'chat';
   const sg=typeof x.safeguard==='string'?x.safeguard:'未知';
   const sgcls=sg==='强'?'sg3':(sg==='中'?'sg2':'sg1');
   const sgTag='<span class="tag '+sgcls+'">审核 '+sg+'</span>';
   const tcTag=x.think_controllable?'<span class="tag tc">思考可关</span>':(x.reasoning?'<span class="tag warn">思考不可关</span>':'');
-  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+sgTag+tcTag+
+  const offTag=x.disabled?'<span class="tag off">暂时不可用</span>':'';
+  const tags=caps+'<span class="tag '+tcls+'">'+esc(x.type)+'</span>'+sgTag+tcTag+offTag+
     (x.id.endsWith(':free')?'<span class="tag warn">⚠ 可能用于训练</span>':'');
   const ctx=x.ctx?'<span><b>'+esc(x.ctx)+'</b></span>':'';
   const lat=x.latency!=null?'<span>实测响应 <b class="rate">'+x.latency+'s</b></span>':'';
