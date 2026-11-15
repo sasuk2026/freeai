@@ -98,8 +98,9 @@
   "error": null,
   "ok": true,
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "gpt-oss-20b",
@@ -115,8 +116,9 @@
   "error": null,
   "ok": true,
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.5-397B-A17B",
@@ -133,7 +135,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.6-27B",
@@ -149,8 +152,9 @@
   "error": null,
   "ok": true,
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.8-27B",
@@ -166,8 +170,9 @@
   "error": null,
   "ok": true,
   "reasoning": true,
-  "safeguard": "弱",
-  "think_controllable": true
+  "safeguard": "强",
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen3.5-9B",
@@ -184,7 +189,8 @@
   "ok": true,
   "reasoning": true,
   "safeguard": "强",
-  "think_controllable": true
+  "think_controllable": true,
+  "sg_source": "来源标记"
  },
  {
   "id": "Mistral-Small-3.2-24B-Instruct-2506",
@@ -200,8 +206,9 @@
   "error": null,
   "ok": true,
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  },
  {
   "id": "Qwen2.5-VL-72B-Instruct",
@@ -217,8 +224,9 @@
   "error": null,
   "ok": true,
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  },
  {
   "id": "DeepSeek-V4-Flash-0731",
@@ -2801,7 +2809,8 @@
   "error": null,
   "ok": true,
   "reasoning": false,
-  "safeguard": "弱",
-  "think_controllable": false
+  "safeguard": "强",
+  "think_controllable": false,
+  "sg_source": "来源标记"
  }
 ]
