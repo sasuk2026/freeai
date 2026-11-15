@@ -188,6 +188,30 @@ def apply_think(body, model_id, think):
         body["reasoning"] = {"enabled": False}
 
 
+def sse_strip(line_bytes, strip_reasoning):
+    """处理一行 SSE：strip_reasoning=True 时剥掉 delta 里的 reasoning 字段，
+    保证客户端选「关思考」时无论上游听不听 enable_thinking 都看不到思维链。"""
+    s = line_bytes.strip()
+    if not s:
+        return None
+    if s.startswith(b"data:"):
+        payload = s[5:].strip()
+        if payload == b"[DONE]":
+            return b"data: [DONE]\n\n"
+        if strip_reasoning:
+            try:
+                o = json.loads(payload)
+                for ch in o.get("choices", []):
+                    d = ch.get("delta", {})
+                    for k in ("reasoning", "reasoning_content", "reasoning_details"):
+                        d.pop(k, None)
+                return b"data: " + json.dumps(o, ensure_ascii=False).encode() + b"\n\n"
+            except Exception:
+                return s + b"\n\n"
+        return s + b"\n\n"
+    return s + b"\n\n"
+
+
 def call_upstream(c, body):
     url = c["base"] + c["path"] if c["path"] else c["base"]
     payload = dict(body)
@@ -232,6 +256,9 @@ def chat():
     # 思考模式开关（网关自定义参数，取出后翻译，不作为参数名污染上游）
     think = body.pop("think", None)
     apply_think(body, entry["id"], think)
+    # 客户端明确「关思考」时，网关在转发层剥掉上游的 reasoning 字段，
+    # 保证「关」在任何上游都真能隐藏思维链（部分上游不认 enable_thinking）。
+    strip_reasoning = (think is False)
 
     # 流式：逐上游尝试；一旦某上游开始吐数据就转发；若该上游中途断开，自动切到下一个上游继续，
     #       期间用 SSE 注释心跳保活，避免代理层无数据超时掐断连接。
@@ -240,22 +267,33 @@ def chat():
 
         def gen():
             last = time.time()
+            buf = b""
             for c in chain:
                 try:
                     r, _ = call_upstream(c, body)
                     if r.status_code != 200:
                         continue
-                    for chunk in r.iter_content(chunk_size=1024):
+                    for chunk in r.iter_content(chunk_size=512):
                         if chunk:
                             last = time.time()
-                            yield chunk
+                            buf += chunk
+                            while b"\n" in buf:
+                                line, buf = buf.split(b"\n", 1)
+                                out = sse_strip(line, strip_reasoning)
+                                if out:
+                                    yield out
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
+                    if buf.strip():
+                        out = sse_strip(buf, strip_reasoning)
+                        if out:
+                            yield out
                     return  # 该上游正常结束（已收到 [DONE]），成功完成
                 except Exception:
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     last = time.time()
+                    buf = b""
                     continue
             yield b": all upstreams failed\n\n"
 
@@ -283,6 +321,9 @@ def chat():
             if not content or looks_bad(content):
                 errors.append(f'{c["site"]}:empty_or_limited')
                 continue
+            if strip_reasoning:  # 关思考：剥掉非流式响应里的思维链
+                for k in ("reasoning", "reasoning_content", "reasoning_details"):
+                    msg.pop(k, None)
             j["model"] = mid                      # 对外保持用户填的模型名
             j["hub_upstream"] = c["site"]        # 标注真实上游，便于排障
             j["hub_latency"] = lat
