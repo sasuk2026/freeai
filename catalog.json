@@ -1,2807 +1,2807 @@
 [
-  {
-    "id": "openai-fast",
+ {
+  "id": "openai-fast",
+  "site": "pollinations",
+  "upstream_base": "https://text.pollinations.ai/openai",
+  "upstream_path": "",
+  "upstream_model": "openai-fast",
+  "type": "官方主ID",
+  "note": "GPT-OSS 20B 推理",
+  "http": 200,
+  "latency": 2.42,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "openai",
+  "site": "pollinations",
+  "upstream_base": "https://text.pollinations.ai/openai",
+  "upstream_path": "",
+  "upstream_model": "openai",
+  "type": "官方别名",
+  "note": "GPT-OSS 20B 推理",
+  "http": 200,
+  "latency": 2.27,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-oss",
+  "site": "pollinations",
+  "upstream_base": "https://text.pollinations.ai/openai",
+  "upstream_path": "",
+  "upstream_model": "gpt-oss",
+  "type": "官方别名",
+  "note": "GPT-OSS 20B 推理",
+  "http": 200,
+  "latency": 2.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "gpt-oss-20b",
+  "site": "pollinations",
+  "upstream_base": "https://text.pollinations.ai/openai",
+  "upstream_path": "",
+  "upstream_model": "gpt-oss-20b",
+  "type": "官方别名",
+  "note": "GPT-OSS 20B 推理",
+  "http": 200,
+  "latency": 0.78,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "ovh-reasoning",
+  "site": "pollinations",
+  "upstream_base": "https://text.pollinations.ai/openai",
+  "upstream_path": "",
+  "upstream_model": "ovh-reasoning",
+  "type": "官方别名",
+  "note": "GPT-OSS 20B 推理",
+  "http": 200,
+  "latency": 2.02,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "gpt-oss-120b",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-oss-120b",
+  "type": "独立模型",
+  "note": "OpenAI GPT-OSS 120B · 131K",
+  "http": 200,
+  "latency": 1.37,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "gpt-oss-20b",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-oss-20b",
+  "type": "独立模型",
+  "note": "OpenAI GPT-OSS 20B · 131K",
+  "http": 200,
+  "latency": 1.88,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "Qwen3.5-397B-A17B",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Qwen3.5-397B-A17B",
+  "type": "独立模型",
+  "note": "Qwen3.5 397B MoE · 262K",
+  "http": 200,
+  "latency": 7.62,
+  "sample": "\n\nPONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "Qwen3.6-27B",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Qwen3.6-27B",
+  "type": "独立模型",
+  "note": "Qwen3.6 27B · 262K",
+  "http": 200,
+  "latency": 1.34,
+  "sample": "\n\nPONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "Qwen3.8-27B",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Qwen3.8-27B",
+  "type": "独立模型",
+  "note": "Qwen3.8 27B · 262K",
+  "http": 200,
+  "latency": 13.5,
+  "sample": "\n\nPONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "Qwen3.5-9B",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Qwen3.5-9B",
+  "type": "独立模型",
+  "note": "Qwen3.5 9B · 262K",
+  "http": 200,
+  "latency": 5.57,
+  "sample": "\n\nPONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "Mistral-Small-3.2-24B-Instruct-2506",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Mistral-Small-3.2-24B-Instruct-2506",
+  "type": "独立模型",
+  "note": "Mistral Small 3.2 24B · 131K",
+  "http": 200,
+  "latency": 0.83,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "Qwen2.5-VL-72B-Instruct",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Qwen2.5-VL-72B-Instruct",
+  "type": "独立模型",
+  "note": "Qwen2.5 VL 72B 视觉 · 32K",
+  "http": 200,
+  "latency": 1.4,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "DeepSeek-V4-Flash-0731",
+  "site": "llm7",
+  "upstream_base": "https://api.llm7.io/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "DeepSeek-V4-Flash-0731",
+  "type": "独立模型",
+  "note": "DeepSeek V4 Flash · 400K",
+  "http": 200,
+  "latency": 46.0,
+  "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. responsePONG. responsePONG. responsePONG.",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "codestral-latest",
+  "site": "llm7",
+  "upstream_base": "https://api.llm7.io/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "codestral-latest",
+  "type": "独立模型",
+  "note": "Mistral Codestral 代码",
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "glm-5.3-flash",
+  "site": "llm7",
+  "upstream_base": "https://api.llm7.io/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "glm-5.3-flash",
+  "type": "独立模型",
+  "note": "智谱 GLM-5.3 Flash",
+  "http": 200,
+  "latency": 3.87,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "mistral-Nemo-Instruct-2407",
+  "site": "llm7",
+  "upstream_base": "https://api.llm7.io/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "mistral-Nemo-Instruct-2407",
+  "type": "独立模型",
+  "note": "Mistral Nemo 12B",
+  "http": 200,
+  "latency": 2.9,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "minimax-m2.7",
+  "site": "llm7",
+  "upstream_base": "https://api.llm7.io/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "minimax-m2.7",
+  "type": "独立模型",
+  "note": "MiniMax M2.7",
+  "http": 200,
+  "latency": 4.72,
+  "sample": "PONG<minimax:tool_call>\n<minimax:tool_call>\n<error>\nThe user's request: \"Reply with exactly: PONG\". ",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "kilo-auto/free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "kilo-auto/free",
+  "type": "自动路由",
+  "note": "Kilo 自动选免费模型",
+  "http": 200,
+  "latency": 1.57,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "openrouter/free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "openrouter/free",
+  "type": "自动路由",
+  "note": "OpenRouter 免费池路由",
+  "http": 200,
+  "latency": 1.23,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "type": "独立模型",
+  "note": "Nemotron 3 Ultra 550B",
+  "http": 200,
+  "latency": 1.78,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/nemotron-3.5-super-vl:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3.5-super-vl:free",
+  "type": "独立模型",
+  "note": "Nemotron 3.5 Super VL",
+  "http": 200,
+  "latency": 1.5,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/nemotron-3.5-lightning:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3.5-lightning:free",
+  "type": "独立模型",
+  "note": "Nemotron 3.5 Lightning",
+  "http": 200,
+  "latency": 1.85,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+  "type": "独立模型",
+  "note": "Nemotron 3 Nano Omni 30B",
+  "http": 200,
+  "latency": 1.38,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "baidu/ernie-5.5-flash-preview:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "baidu/ernie-5.5-flash-preview:free",
+  "type": "独立模型",
+  "note": "百度 ERNIE 5.5 Flash",
+  "http": 200,
+  "latency": 1.77,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "liquid/lfm-3-1.7b:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "liquid/lfm-3-1.7b:free",
+  "type": "独立模型",
+  "note": "Liquid LFM 3 1.7B",
+  "http": 200,
+  "latency": 1.55,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "particle-ai/particle-1:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "particle-ai/particle-1:free",
+  "type": "独立模型",
+  "note": "Particle-1",
+  "http": 200,
+  "latency": 1.7,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "dots-studio/dots-3-note-preview:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "dots-studio/dots-3-note-preview:free",
+  "type": "独立模型",
+  "note": "dots-3-note",
+  "http": 200,
+  "latency": 2.19,
+  "sample": "\n\nPONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "cohere/north-mini-code:free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "cohere/north-mini-code:free",
+  "type": "独立模型",
+  "note": "Cohere North Mini Code",
+  "http": 200,
+  "latency": 1.11,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "stealth/glyph-cluster",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "stealth/glyph-cluster",
+  "type": "独立模型",
+  "note": "Stealth Glyph Cluster",
+  "http": 200,
+  "latency": 1.92,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "reflection/beam-free",
+  "site": "kilo",
+  "upstream_base": "https://api.kilo.ai/api/gateway",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "reflection/beam-free",
+  "type": "独立模型",
+  "note": "Reflection Beam Free",
+  "http": 200,
+  "latency": 1.0,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "free-ai",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "free-ai",
+  "type": "独立模型",
+  "note": "llmfreeapikey 公益通用模型 · 32K",
+  "http": 200,
+  "latency": 1.48,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4o",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4o",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
     "site": "pollinations",
-    "upstream_base": "https://text.pollinations.ai/openai",
-    "upstream_path": "",
-    "upstream_model": "openai-fast",
-    "type": "官方主ID",
-    "note": "GPT-OSS 20B 推理",
-    "http": 200,
-    "latency": 2.42,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "openai",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.66,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4o-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4o-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
     "site": "pollinations",
-    "upstream_base": "https://text.pollinations.ai/openai",
-    "upstream_path": "",
-    "upstream_model": "openai",
-    "type": "官方别名",
-    "note": "GPT-OSS 20B 推理",
-    "http": 200,
-    "latency": 2.27,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-oss",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.23,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4-turbo",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4-turbo",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
     "site": "pollinations",
-    "upstream_base": "https://text.pollinations.ai/openai",
-    "upstream_path": "",
-    "upstream_model": "gpt-oss",
-    "type": "官方别名",
-    "note": "GPT-OSS 20B 推理",
-    "http": 200,
-    "latency": 2.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "gpt-oss-20b",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.42,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4.1",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4.1",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
     "site": "pollinations",
-    "upstream_base": "https://text.pollinations.ai/openai",
-    "upstream_path": "",
-    "upstream_model": "gpt-oss-20b",
-    "type": "官方别名",
-    "note": "GPT-OSS 20B 推理",
-    "http": 200,
-    "latency": 0.78,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "ovh-reasoning",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.18,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4.1-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4.1-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
     "site": "pollinations",
-    "upstream_base": "https://text.pollinations.ai/openai",
-    "upstream_path": "",
-    "upstream_model": "ovh-reasoning",
-    "type": "官方别名",
-    "note": "GPT-OSS 20B 推理",
-    "http": 200,
-    "latency": 2.02,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-oss-120b",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-oss-120b",
-    "type": "独立模型",
-    "note": "OpenAI GPT-OSS 120B · 131K",
-    "http": 200,
-    "latency": 1.37,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "gpt-oss-20b",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-oss-20b",
-    "type": "独立模型",
-    "note": "OpenAI GPT-OSS 20B · 131K",
-    "http": 200,
-    "latency": 1.88,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "Qwen3.5-397B-A17B",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Qwen3.5-397B-A17B",
-    "type": "独立模型",
-    "note": "Qwen3.5 397B MoE · 262K",
-    "http": 200,
-    "latency": 7.62,
-    "sample": "\n\nPONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "Qwen3.6-27B",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Qwen3.6-27B",
-    "type": "独立模型",
-    "note": "Qwen3.6 27B · 262K",
-    "http": 200,
-    "latency": 1.34,
-    "sample": "\n\nPONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "Qwen3.8-27B",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Qwen3.8-27B",
-    "type": "独立模型",
-    "note": "Qwen3.8 27B · 262K",
-    "http": 200,
-    "latency": 13.5,
-    "sample": "\n\nPONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "Qwen3.5-9B",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Qwen3.5-9B",
-    "type": "独立模型",
-    "note": "Qwen3.5 9B · 262K",
-    "http": 200,
-    "latency": 5.57,
-    "sample": "\n\nPONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "Mistral-Small-3.2-24B-Instruct-2506",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Mistral-Small-3.2-24B-Instruct-2506",
-    "type": "独立模型",
-    "note": "Mistral Small 3.2 24B · 131K",
-    "http": 200,
-    "latency": 0.83,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "Qwen2.5-VL-72B-Instruct",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Qwen2.5-VL-72B-Instruct",
-    "type": "独立模型",
-    "note": "Qwen2.5 VL 72B 视觉 · 32K",
-    "http": 200,
-    "latency": 1.4,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "DeepSeek-V4-Flash-0731",
-    "site": "llm7",
-    "upstream_base": "https://api.llm7.io/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "DeepSeek-V4-Flash-0731",
-    "type": "独立模型",
-    "note": "DeepSeek V4 Flash · 400K",
-    "http": 200,
-    "latency": 46.0,
-    "sample": "PONG.PONG.PONG.PONG. responsePONG.PONG.PONG. responsePONG. responsePONG. responsePONG. responsePONG.",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "codestral-latest",
-    "site": "llm7",
-    "upstream_base": "https://api.llm7.io/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "codestral-latest",
-    "type": "独立模型",
-    "note": "Mistral Codestral 代码",
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "glm-5.3-flash",
-    "site": "llm7",
-    "upstream_base": "https://api.llm7.io/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "glm-5.3-flash",
-    "type": "独立模型",
-    "note": "智谱 GLM-5.3 Flash",
-    "http": 200,
-    "latency": 3.87,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "mistral-Nemo-Instruct-2407",
-    "site": "llm7",
-    "upstream_base": "https://api.llm7.io/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "mistral-Nemo-Instruct-2407",
-    "type": "独立模型",
-    "note": "Mistral Nemo 12B",
-    "http": 200,
-    "latency": 2.9,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "minimax-m2.7",
-    "site": "llm7",
-    "upstream_base": "https://api.llm7.io/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "minimax-m2.7",
-    "type": "独立模型",
-    "note": "MiniMax M2.7",
-    "http": 200,
-    "latency": 4.72,
-    "sample": "PONG<minimax:tool_call>\n<minimax:tool_call>\n<error>\nThe user's request: \"Reply with exactly: PONG\". ",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "kilo-auto/free",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.41,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-4.1-nano",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-4.1-nano",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "kilo-auto/free",
-    "type": "自动路由",
-    "note": "Kilo 自动选免费模型",
-    "http": 200,
-    "latency": 1.57,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "openrouter/free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.41,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-5",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-5",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "openrouter/free",
-    "type": "自动路由",
-    "note": "OpenRouter 免费池路由",
-    "http": 200,
-    "latency": 1.23,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.29,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-5-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-5-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "type": "独立模型",
-    "note": "Nemotron 3 Ultra 550B",
-    "http": 200,
-    "latency": 1.78,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3.5-super-vl:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.39,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "gpt-5-nano",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gpt-5-nano",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3.5-super-vl:free",
-    "type": "独立模型",
-    "note": "Nemotron 3.5 Super VL",
-    "http": 200,
-    "latency": 1.5,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3.5-lightning:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "o1",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "o1",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3.5-lightning:free",
-    "type": "独立模型",
-    "note": "Nemotron 3.5 Lightning",
-    "http": 200,
-    "latency": 1.85,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "o1-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "o1-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-    "type": "独立模型",
-    "note": "Nemotron 3 Nano Omni 30B",
-    "http": 200,
-    "latency": 1.38,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "baidu/ernie-5.5-flash-preview:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.23,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "o3",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "o3",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "baidu/ernie-5.5-flash-preview:free",
-    "type": "独立模型",
-    "note": "百度 ERNIE 5.5 Flash",
-    "http": 200,
-    "latency": 1.77,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "liquid/lfm-3-1.7b:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "o3-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "o3-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "liquid/lfm-3-1.7b:free",
-    "type": "独立模型",
-    "note": "Liquid LFM 3 1.7B",
-    "http": 200,
-    "latency": 1.55,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "particle-ai/particle-1:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "o4-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "o4-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "particle-ai/particle-1:free",
-    "type": "独立模型",
-    "note": "Particle-1",
-    "http": 200,
-    "latency": 1.7,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "dots-studio/dots-3-note-preview:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.29,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "chatgpt-4o-latest",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "chatgpt-4o-latest",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "dots-studio/dots-3-note-preview:free",
-    "type": "独立模型",
-    "note": "dots-3-note",
-    "http": 200,
-    "latency": 2.19,
-    "sample": "\n\nPONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "cohere/north-mini-code:free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.19,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-3-5-sonnet",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-3-5-sonnet",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "cohere/north-mini-code:free",
-    "type": "独立模型",
-    "note": "Cohere North Mini Code",
-    "http": 200,
-    "latency": 1.11,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "stealth/glyph-cluster",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.36,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-3-5-haiku",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-3-5-haiku",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "stealth/glyph-cluster",
-    "type": "独立模型",
-    "note": "Stealth Glyph Cluster",
-    "http": 200,
-    "latency": 1.92,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "reflection/beam-free",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.2,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-3-7-sonnet",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-3-7-sonnet",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
     "site": "kilo",
-    "upstream_base": "https://api.kilo.ai/api/gateway",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "reflection/beam-free",
-    "type": "独立模型",
-    "note": "Reflection Beam Free",
-    "http": 200,
-    "latency": 1.0,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "free-ai",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "free-ai",
-    "type": "独立模型",
-    "note": "llmfreeapikey 公益通用模型 · 32K",
-    "http": 200,
-    "latency": 1.48,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4o",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4o",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.66,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4o-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4o-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.23,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4-turbo",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4-turbo",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.42,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4.1",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4.1",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.18,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4.1-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4.1-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.41,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-4.1-nano",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-4.1-nano",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.41,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-5",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-5",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.29,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-5-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-5-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.39,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "gpt-5-nano",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gpt-5-nano",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "o1",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "o1",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "o1-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "o1-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.23,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "o3",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "o3",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "o3-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "o3-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "o4-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "o4-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.29,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "chatgpt-4o-latest",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "chatgpt-4o-latest",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.19,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-3-5-sonnet",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-3-5-sonnet",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.36,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-3-5-haiku",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-3-5-haiku",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.2,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-3-7-sonnet",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-3-7-sonnet",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.35,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-opus-4",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-opus-4",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.24,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-sonnet-4",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-sonnet-4",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-haiku-4",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-haiku-4",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "claude-3-opus",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "claude-3-opus",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.43,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "gemini-2.0-flash",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemini-2.0-flash",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.34,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "gemini-2.5-flash",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemini-2.5-flash",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.12,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "gemini-2.5-pro",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemini-2.5-pro",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "gemini-3-pro",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemini-3-pro",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "gemini-3-flash",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemini-3-flash",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "gemma-3-27b-it",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "gemma-3-27b-it",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.24,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "deepseek-chat",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "deepseek-chat",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.27,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "deepseek-reasoner",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "deepseek-reasoner",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "deepseek-v3",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "deepseek-v3",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.36,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "deepseek-r1",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "deepseek-r1",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.2,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "deepseek-v3.2",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "deepseek-v3.2",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "qwen-plus",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwen-plus",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.16,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "qwen-max",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwen-max",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.28,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "qwen-turbo",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwen-turbo",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "qwen3-235b-a22b",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwen3-235b-a22b",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.35,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": true
-  },
-  {
-    "id": "qwen2.5-72b-instruct",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwen2.5-72b-instruct",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.34,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "qwq-plus",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "qwq-plus",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.19,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "llama-3.3-70b-instruct",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "llama-3.3-70b-instruct",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.27,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "llama-4-maverick",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "llama-4-maverick",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.28,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "llama-4-scout",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "llama-4-scout",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.23,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "llama-3.1-405b-instruct",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "llama-3.1-405b-instruct",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.28,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "mistral-large-latest",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "mistral-large-latest",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.28,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "mistral-small-latest",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "mistral-small-latest",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.13,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "mixtral-8x7b-instruct",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "mixtral-8x7b-instruct",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.35,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "magistral-medium",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "magistral-medium",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.23,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "glm-4-plus",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "glm-4-plus",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "glm-4.6",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "glm-4.6",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "glm-4.5-air",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "glm-4.5-air",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.28,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "kimi-k2",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "kimi-k2",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.38,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": true
-  },
-  {
-    "id": "moonshot-v1-8k",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "moonshot-v1-8k",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "grok-3",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "grok-3",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.03,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "grok-3-mini",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "grok-3-mini",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.27,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "grok-4",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "grok-4",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "command-r-plus",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "command-r-plus",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.12,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "phi-4",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "phi-4",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  },
-  {
-    "id": "ernie-4.5-turbo",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "ernie-4.5-turbo",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.17,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "doubao-pro-32k",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "doubao-pro-32k",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.17,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "hunyuan-turbo",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "hunyuan-turbo",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "minimax-m1",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "minimax-m1",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.34,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "step-3",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "step-3",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "nemotron-70b",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nemotron-70b",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.2,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "reka-flash",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "reka-flash",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.32,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "wizardlm-2",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "wizardlm-2",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.33,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "auto",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "auto",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.31,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "free",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "free",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.07,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "router",
-    "site": "llmfree",
-    "upstream_base": "https://api.llmfreeapikey.com/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "router",
-    "type": "兼容别名",
-    "note": "标准模型名映射 → 公益通用底座",
-    "fallback": [
-      {
-        "site": "kilo",
-        "base": "https://api.kilo.ai/api/gateway",
-        "path": "/chat/completions",
-        "model": "openrouter/free"
-      },
-      {
-        "site": "pollinations",
-        "base": "https://text.pollinations.ai/openai",
-        "path": "",
-        "model": "openai-fast"
-      }
-    ],
-    "http": 200,
-    "latency": 1.27,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/gpt-oss-120b",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/gpt-oss-120b",
-    "type": "独立模型",
-    "note": "OpenAI GPT-OSS 120B 开源 MoE",
-    "http": 200,
-    "latency": 1.59,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "弱",
-    "think_controllable": true
-  },
-  {
-    "id": "nvidia/nemotron-3-super-120b",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3-super-120b",
-    "type": "独立模型",
-    "note": "NVIDIA Nemotron 3 Super 120B MoE",
-    "http": 200,
-    "latency": 5.3,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3-ultra-550b",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3-ultra-550b",
-    "type": "独立模型",
-    "note": "NVIDIA Nemotron 3 Ultra 550B MoE · 1M 上下文（当前最大）",
-    "http": 200,
-    "latency": 1.5,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3.5-lightning",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3.5-lightning",
-    "type": "独立模型",
-    "note": "NVIDIA Nemotron 3.5 Lightning · 1M 上下文",
-    "http": 200,
-    "latency": 2.66,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/nemotron-3.5-bolt",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/nemotron-3.5-bolt",
-    "type": "独立模型",
-    "note": "NVIDIA Nemotron 3.5 Bolt 快模型",
-    "http": 200,
-    "latency": 1.15,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "中",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/step-3.7-flash",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/step-3.7-flash",
-    "type": "独立模型",
-    "note": "Step AI 3.7 Flash 推理模型",
-    "http": 200,
-    "latency": 1.99,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": true,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/mistral-nemotron",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/mistral-nemotron",
-    "type": "独立模型",
-    "note": "Mistral × NVIDIA Nemotron 大模型",
-    "http": 200,
-    "latency": 1.72,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "nvidia/minimax-m3.1-flash",
-    "site": "blockrun",
-    "upstream_base": "https://blockrun.ai/api/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "nvidia/minimax-m3.1-flash",
-    "type": "独立模型",
-    "note": "MiniMax M3.1 Flash · 1M 上下文 · 推理",
-    "http": 200,
-    "latency": 1.5,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "强",
-    "think_controllable": false
-  },
-  {
-    "id": "Meta-Llama-3_3-70B-Instruct",
-    "site": "ovhcloud",
-    "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
-    "upstream_path": "/chat/completions",
-    "upstream_model": "Meta-Llama-3_3-70B-Instruct",
-    "type": "独立模型",
-    "note": "Meta Llama 3.3 70B Instruct · OVHcloud",
-    "http": 200,
-    "latency": 1.8,
-    "sample": "PONG",
-    "error": null,
-    "ok": true,
-    "reasoning": false,
-    "safeguard": "弱",
-    "think_controllable": false
-  }
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.35,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "claude-opus-4",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-opus-4",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.24,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-sonnet-4",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-sonnet-4",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-haiku-4",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-haiku-4",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "claude-3-opus",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "claude-3-opus",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.43,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "gemini-2.0-flash",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemini-2.0-flash",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.34,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "gemini-2.5-flash",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemini-2.5-flash",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.12,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "gemini-2.5-pro",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemini-2.5-pro",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "gemini-3-pro",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemini-3-pro",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "gemini-3-flash",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemini-3-flash",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "gemma-3-27b-it",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "gemma-3-27b-it",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.24,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "deepseek-chat",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "deepseek-chat",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.27,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "deepseek-reasoner",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "deepseek-reasoner",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "deepseek-v3",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "deepseek-v3",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.36,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "deepseek-r1",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "deepseek-r1",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.2,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "deepseek-v3.2",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "deepseek-v3.2",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "qwen-plus",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwen-plus",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.16,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "qwen-max",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwen-max",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.28,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "qwen-turbo",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwen-turbo",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "qwen3-235b-a22b",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwen3-235b-a22b",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.35,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "qwen2.5-72b-instruct",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwen2.5-72b-instruct",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.34,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "qwq-plus",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "qwq-plus",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.19,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "llama-3.3-70b-instruct",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "llama-3.3-70b-instruct",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.27,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "llama-4-maverick",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "llama-4-maverick",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.28,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "llama-4-scout",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "llama-4-scout",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.23,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "llama-3.1-405b-instruct",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "llama-3.1-405b-instruct",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.28,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "mistral-large-latest",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "mistral-large-latest",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.28,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "mistral-small-latest",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "mistral-small-latest",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.13,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "mixtral-8x7b-instruct",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "mixtral-8x7b-instruct",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.35,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "magistral-medium",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "magistral-medium",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.23,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "glm-4-plus",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "glm-4-plus",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "glm-4.6",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "glm-4.6",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "glm-4.5-air",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "glm-4.5-air",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.28,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "kimi-k2",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "kimi-k2",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.38,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "moonshot-v1-8k",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "moonshot-v1-8k",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "grok-3",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "grok-3",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.03,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "grok-3-mini",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "grok-3-mini",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.27,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "grok-4",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "grok-4",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "command-r-plus",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "command-r-plus",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.12,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "phi-4",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "phi-4",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ },
+ {
+  "id": "ernie-4.5-turbo",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "ernie-4.5-turbo",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.17,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "doubao-pro-32k",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "doubao-pro-32k",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.17,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "hunyuan-turbo",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "hunyuan-turbo",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "minimax-m1",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "minimax-m1",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.34,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "step-3",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "step-3",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "nemotron-70b",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nemotron-70b",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.2,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "reka-flash",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "reka-flash",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.32,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "wizardlm-2",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "wizardlm-2",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.33,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "auto",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "auto",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.31,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "free",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "free",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.07,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "router",
+  "site": "llmfree",
+  "upstream_base": "https://api.llmfreeapikey.com/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "router",
+  "type": "兼容别名",
+  "note": "标准模型名映射 → 公益通用底座",
+  "fallback": [
+   {
+    "site": "kilo",
+    "base": "https://api.kilo.ai/api/gateway",
+    "path": "/chat/completions",
+    "model": "openrouter/free"
+   },
+   {
+    "site": "pollinations",
+    "base": "https://text.pollinations.ai/openai",
+    "path": "",
+    "model": "openai-fast"
+   }
+  ],
+  "http": 200,
+  "latency": 1.27,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/gpt-oss-120b",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/gpt-oss-120b",
+  "type": "独立模型",
+  "note": "OpenAI GPT-OSS 120B 开源 MoE",
+  "http": 200,
+  "latency": 1.59,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "弱",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/nemotron-3-super-120b",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3-super-120b",
+  "type": "独立模型",
+  "note": "NVIDIA Nemotron 3 Super 120B MoE",
+  "http": 200,
+  "latency": 5.3,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/nemotron-3-ultra-550b",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3-ultra-550b",
+  "type": "独立模型",
+  "note": "NVIDIA Nemotron 3 Ultra 550B MoE · 1M 上下文（当前最大）",
+  "http": 200,
+  "latency": 1.5,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "中",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/nemotron-3.5-lightning",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3.5-lightning",
+  "type": "独立模型",
+  "note": "NVIDIA Nemotron 3.5 Lightning · 1M 上下文",
+  "http": 200,
+  "latency": 2.66,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/nemotron-3.5-bolt",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/nemotron-3.5-bolt",
+  "type": "独立模型",
+  "note": "NVIDIA Nemotron 3.5 Bolt 快模型",
+  "http": 200,
+  "latency": 1.15,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "中",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/step-3.7-flash",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/step-3.7-flash",
+  "type": "独立模型",
+  "note": "Step AI 3.7 Flash 推理模型",
+  "http": 200,
+  "latency": 1.99,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": true,
+  "safeguard": "强",
+  "think_controllable": true
+ },
+ {
+  "id": "nvidia/mistral-nemotron",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/mistral-nemotron",
+  "type": "独立模型",
+  "note": "Mistral × NVIDIA Nemotron 大模型",
+  "http": 200,
+  "latency": 1.72,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "nvidia/minimax-m3.1-flash",
+  "site": "blockrun",
+  "upstream_base": "https://blockrun.ai/api/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "nvidia/minimax-m3.1-flash",
+  "type": "独立模型",
+  "note": "MiniMax M3.1 Flash · 1M 上下文 · 推理",
+  "http": 200,
+  "latency": 1.5,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "强",
+  "think_controllable": false
+ },
+ {
+  "id": "Meta-Llama-3_3-70B-Instruct",
+  "site": "ovhcloud",
+  "upstream_base": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  "upstream_path": "/chat/completions",
+  "upstream_model": "Meta-Llama-3_3-70B-Instruct",
+  "type": "独立模型",
+  "note": "Meta Llama 3.3 70B Instruct · OVHcloud",
+  "http": 200,
+  "latency": 1.8,
+  "sample": "PONG",
+  "error": null,
+  "ok": true,
+  "reasoning": false,
+  "safeguard": "弱",
+  "think_controllable": false
+ }
 ]
