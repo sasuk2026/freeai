@@ -81,6 +81,7 @@ def check_auth():
 
 
 def model_list():
+    # 暂时不可用的模型（disabled=true）不对外暴露，避免客户端调到死上游
     return [{"id": e["id"], "object": "model", "created": 1794268800,
              "owned_by": e["site"],
              "type": e.get("type"), "note": e.get("note", ""),
@@ -88,7 +89,7 @@ def model_list():
              "reasoning": bool(e.get("reasoning")),
              "think_controllable": bool(e.get("think_controllable")),
              "safeguard": e.get("safeguard", "未知")}
-            for e in CATALOG]
+            for e in CATALOG if not e.get("disabled")]
 
 
 def build_chain(entry):
@@ -99,7 +100,7 @@ def build_chain(entry):
         chain.append({"site": fb["site"], "base": fb["base"], "path": fb["path"], "model": fb["model"]})
     # 全局热备：任意请求失败后依次尝试这些已实测可用的通用上游
     for gid in ("openai-fast", "kilo-auto/free", "free-ai"):
-        if gid in INDEX and gid != entry["id"]:
+        if gid in INDEX and gid != entry["id"] and not INDEX[gid].get("disabled"):
             ge = INDEX[gid]
             chain.append({"site": ge["site"], "base": ge["upstream_base"],
                           "path": ge["upstream_path"], "model": ge["upstream_model"]})
@@ -269,6 +270,11 @@ def chat():
     body = request.get_json(force=True, silent=True) or {}
     mid = body.get("model", "auto")
     entry = INDEX.get(mid) or INDEX.get("auto") or CATALOG[0]
+
+    # 暂时不可用的模型：明确告知，避免客户端无谓重试死上游
+    if entry.get("disabled"):
+        return jsonify({"error": {"message": f"model '{mid}' is temporarily unavailable",
+                                  "type": "model_unavailable"}}), 503
 
     # 思考模式开关（网关自定义参数，取出后翻译，不作为参数名污染上游）
     think = normalize_think(body.pop("think", None))
