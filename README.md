@@ -3,14 +3,20 @@
 把散落在各处的**公开、匿名免 key、OpenAI 兼容**的公益大模型端点，聚合成一个统一地址。
 不用注册、不用自己的 API Key，改一个 `base_url` 就能在任意 OpenAI 客户端里调用。
 
-## 已上线 🚀
+## 已上线 🚀 · 前后端分离
 
-| 项目 | 值 |
-|---|---|
-| 网站 / 控制台 | **https://freeai-f9v0.onrender.com** |
-| OpenAI 调用地址 (Base URL) | **`https://freeai-f9v0.onrender.com/v1`** |
-| API Key（密钥） | **`sk-freeai`**（上游免 key，任意非空值均可） |
-| 部署 | Render Web Service `freeai`，源仓库 `sasuk2026/freeai`，自动部署已开启 |
+| 层 | 承载 | 地址 |
+|---|---|---|
+| 前端网页控制台 | **GitHub Pages**（纯静态，仓库 `docs/`） | **https://sasuk2026.github.io/freeai/** |
+| 后端 API 网关 | **Render** Web Service `freeai` | **https://freeai-f9v0.onrender.com** |
+| OpenAI 调用地址 (Base URL) | 由后端提供，前端面板自动填入 | **`https://freeai-f9v0.onrender.com/v1`** |
+| API Key（密钥） | 上游免 key，任意非空值均可 | **`sk-freeai`** |
+
+前端是单文件静态页，通过 CORS 跨域调用 Render 后端；**模型调用全部由 freeAI 后端转发**到各公益上游。
+100 条实测清单数据内嵌在前端 HTML 里，因此 Pages 站点无需后端也能浏览；只有「在线试一句」和
+真正的 OpenAI 客户端调用需要后端在线。后端仓库 `sasuk2026/freeai`，Render 自动部署已开启。
+
+> Render 免费层闲置约 15 分钟会休眠，冷启动需 30-60 秒，首次在线测试可能要重试一次。
 
 ```python
 from openai import OpenAI
@@ -23,7 +29,8 @@ print(r.choices[0].message.content)
 ```
 
 网页顶部有「OpenAI 接入凭证」面板，Base URL 与 API Key 都能一键复制，并给出
-Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥自动填成线上值）。
+Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥自动填成后端线上值）。
+**在别的地方调用时，填的是 Render 后端地址，不是 github.io 前端地址。**
 
 ## 实测结论（2026-11-15）
 
