@@ -52,9 +52,13 @@ def options_preflight():
 
 
 HEADERS = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
-# 连接超时（握手）与读取超时（首字节 + 流式读取）分开，避免慢模型被掐断
-CONNECT_TIMEOUT = int(os.environ.get("HUB_CONNECT_TIMEOUT", "15"))
-TIMEOUT = int(os.environ.get("HUB_TIMEOUT", "180"))
+# 连接超时（握手）与单上游读取超时分开。
+# 关键：单上游读取超时必须短——公益站挂起时若傻等 180s，客户端(常 60s)早就断开了。
+# 缩短后可在客户端超时前快速切到下一个上游。
+CONNECT_TIMEOUT = int(os.environ.get("HUB_CONNECT_TIMEOUT", "8"))
+READ_TIMEOUT = int(os.environ.get("HUB_READ_TIMEOUT", "22"))      # 单上游首字节/每次读取上限
+STREAM_READ_TIMEOUT = int(os.environ.get("HUB_STREAM_READ_TIMEOUT", "25"))  # 流式首字节/读取上限(有心跳保活,不必太长)
+CHAIN_BUDGET = int(os.environ.get("HUB_CHAIN_BUDGET", "48"))      # 整条链总时间预算(秒)，保证及时给答复
 # 流式模式下，若上游超过这么久没推任何数据，主动发一条 SSE 注释心跳，防止代理层（Render/Cloudflare）无数据超时掐断
 HEARTBEAT_IDLE = int(os.environ.get("HUB_HEARTBEAT_IDLE", "15"))
 
@@ -254,13 +258,14 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
     return s + b"\n\n"
 
 
-def call_upstream(c, body):
+def call_upstream(c, body, read_timeout=None):
     url = c["base"] + c["path"] if c["path"] else c["base"]
     payload = dict(body)
     payload["model"] = c["model"]
+    rt = read_timeout if read_timeout else (STREAM_READ_TIMEOUT if body.get("stream") else READ_TIMEOUT)
     t0 = time.time()
     r = requests.post(url, json=payload, headers=HEADERS,
-                      timeout=(CONNECT_TIMEOUT, TIMEOUT),
+                      timeout=(CONNECT_TIMEOUT, rt),
                       stream=bool(body.get("stream")))
     return r, round(time.time() - t0, 2)
 
@@ -357,11 +362,18 @@ def chat():
                                  "X-Upstream": "multi",
                                  "X-Accel-Buffering": "no"})
 
-    # 非流式：逐上游尝试，出字即返回；单上游失败自动换下一个
+    # 非流式：逐上游尝试，出字即返回；单上游失败自动换下一个。
+    # 整条链有总时间预算，越靠后的上游越快放弃，保证在客户端超时前给出答复。
     errors = []
+    deadline = time.time() + CHAIN_BUDGET
     for c in build_chain(entry):
+        left = deadline - time.time()
+        if left <= 1:
+            errors.append("chain_budget_exhausted")
+            break
+        rt = max(3, min(READ_TIMEOUT, int(left)))
         try:
-            r, lat = call_upstream(c, body)
+            r, lat = call_upstream(c, body, read_timeout=rt)
             if r.status_code != 200:
                 errors.append(f'{c["site"]}:{r.status_code}')
                 continue
