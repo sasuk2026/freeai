@@ -115,15 +115,23 @@ def check_auth():
 
 def model_list():
     # 暂时不可用的模型（disabled=true）不对外暴露，避免客户端调到死上游
-    return [{"id": e["id"], "object": "model", "created": 1794268800,
+    out = []
+    for e in CATALOG:
+        if e.get("disabled"):
+            continue
+        m = {"id": e["id"], "object": "model", "created": 1794268800,
              "owned_by": e["site"],
              "type": e.get("type"), "note": e.get("note", ""),
              "verified": bool(e.get("ok")),
              "reasoning": bool(e.get("reasoning")),
              "think_controllable": bool(e.get("think_controllable")),
              "safeguard": e.get("safeguard", "未知"),
-            "adapter": e.get("adapter")}
-            for e in CATALOG if not e.get("disabled")]
+             "adapter": e.get("adapter")}
+        # 参数量（按官方模型名标注，仅真模型有；名字兼容别名不标，避免假名字冒充大模型）
+        if e.get("params"):
+            m["params"] = e["params"]
+        out.append(m)
+    return out
 
 
 def build_chain(entry):
@@ -287,6 +295,70 @@ def normalize_think(val):
         return None
     if isinstance(val, (int, float)):
         return bool(val)
+    return None
+
+
+def detect_think(body, explicit=None):
+    """从客户端请求里推断「关/开思考」意图，兼容各类 APP 的标准写法。
+
+    返回 True=强制思考 / False=强制关闭 / None=不干预。
+    优先级：网关自定义 think > OpenAI reasoning_effort > enable_thinking >
+            chat_template_kwargs.enable_thinking > reasoning.enabled >
+            Google thinking_config.thinking_budget。
+    只有明确表达「关」或「开」才返回值，否则 None（保持模型默认行为）。
+    """
+    # 1) 网关自有参数最高优先级
+    if explicit is not None:
+        v = normalize_think(explicit)
+        if v is not None:
+            return v
+
+    # 2) OpenAI / OpenRouter 风格：reasoning_effort
+    if "reasoning_effort" in body:
+        val = body.get("reasoning_effort")
+        s = str(val).strip().lower() if val is not None else ""
+        if s in ("none", "off", "minimal", "0", "false", "disable", "disabled"):
+            return False
+        if s in ("low", "medium", "high", "xhigh", "auto", "on", "enable", "enabled"):
+            return True
+
+    # 3) 常见的 enable_thinking 顶层布尔
+    if "enable_thinking" in body:
+        v = normalize_think(body.get("enable_thinking"))
+        if v is not None:
+            return v
+
+    # 4) Qwen / vLLM 风格：chat_template_kwargs.enable_thinking
+    ctk = body.get("chat_template_kwargs")
+    if isinstance(ctk, dict) and "enable_thinking" in ctk:
+        v = normalize_think(ctk.get("enable_thinking"))
+        if v is not None:
+            return v
+
+    # 5) reasoning: {"enabled": bool}
+    rs = body.get("reasoning")
+    if isinstance(rs, dict) and "enabled" in rs:
+        v = normalize_think(rs.get("enabled"))
+        if v is not None:
+            return v
+    # 也兼容 reasoning 直接是布尔
+    if isinstance(rs, bool):
+        return rs
+
+    # 6) Google Gemini 风格：thinking_config.thinking_budget == 0 表示关
+    tc = body.get("thinking_config")
+    if isinstance(tc, dict):
+        if "include_thoughts" in tc:
+            v = normalize_think(tc.get("include_thoughts"))
+            if v is not None:
+                return v
+        if "thinking_budget" in tc:
+            try:
+                if int(tc.get("thinking_budget")) == 0:
+                    return False
+            except (ValueError, TypeError):
+                pass
+
     return None
 
 
@@ -610,8 +682,14 @@ def chat():
         return jsonify({"error": {"message": f"model '{mid}' is temporarily unavailable",
                                   "type": "model_unavailable"}}), 503
 
-    # 思考模式开关（网关自定义参数，取出后翻译，不作为参数名污染上游）
-    think = normalize_think(body.pop("think", None))
+    # 思考模式开关：兼容网关自定义 think 与各类 APP 的标准参数
+    # （reasoning_effort / enable_thinking / chat_template_kwargs / reasoning / thinking_config）
+    explicit_think = body.pop("think", None)
+    think = detect_think(body, explicit_think)
+    # 清掉 APP 带来的标准思考参数，避免原样透传污染上游；统一由 apply_think 翻译
+    for _k in ("reasoning_effort", "enable_thinking", "reasoning", "thinking_config",
+               "include_thoughts", "chat_template_kwargs"):
+        body.pop(_k, None)
     apply_think(body, entry["id"], think)
     # 客户端明确「关思考」时，网关在转发层剥掉上游的 reasoning 字段，
     # 保证「关」在任何上游都真能隐藏思维链（部分上游不认 enable_thinking）。
