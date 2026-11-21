@@ -14,7 +14,7 @@
 | API Key（密钥） | 上游免 key，任意非空值均可 | **`sk-freeai`** |
 
 前端是单文件静态页，通过 CORS 跨域调用 Render 后端；**模型调用全部由 freeAI 后端转发**到各公益上游。
-100 条实测清单数据内嵌在前端 HTML 里，因此 Pages 站点无需后端也能浏览；只有「在线试一句」和
+299 条实测清单数据内嵌在前端 HTML 里，因此 Pages 站点无需后端也能浏览；只有「在线试一句」和
 真正的 OpenAI 客户端调用需要后端在线。后端仓库 `sasuk2026/freeai`，Render 自动部署已开启。
 
 > Render 免费层闲置约 15 分钟会休眠，冷启动需 30-60 秒，首次在线测试可能要重试一次。
@@ -33,36 +33,30 @@ print(r.choices[0].message.content)
 Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥自动填成后端线上值）。
 **在别的地方调用时，填的是 Render 后端地址，不是 github.io 前端地址。**
 
-## 实测结论（2026-11-15）
+## 实测结论（2026-11-16）
 
 | 项目 | 结果 |
 |---|---|
-| 可调用 ID（**不等于模型种类**） | **264** |
-| 逐条真实发请求、真出字 | **264 / 264** |
-| 其中免 key 直连的原生模型 ID | 39 个（跨站可能有重复底座） |
-| 其中名字兼容映射（同一底座） | 218 个，**非独立模型** |
-| 另收录免费额度真模型（需注册免费 Key） | **77 个**（见 `catalog_free_tier.json` 与网页独立分区） |
-| DeepSeek 系列真模型 ID（30 站 `/models` 聚合去重） | **57 个**（28 跨站互证 / 16 核心主模型 / 5 官方免费标记，见 `catalog_deepseek.json` 与网页 3.6 分区） |
-| 公益站点 | 8 家（上述 6 家 + AI Horde 匿名算力 / Yqcloud 阶跃星辰） |
-| **匿名免 key、零配置、互不相同的真模型**（本轮新增） | **33 个**（AI Horde 32 + StepFun 1），见 `catalog_anon_real.json` 与网页「3.4」分区 |
-| 认证 | 上方 264 条全部匿名，无需 Key；免费额度分区需自备该站免费 Key |
+| 可调用 ID（**不等于模型种类**） | **299** |
+| 逐条真实发请求、真出字 | **298 / 299**（1 个 AI Horde 模型吐乱码，标「暂时不可用」） |
+| **匿名免 key、零配置、互不相同的真模型** | **34 个**（AI Horde 33 + 阶跃星辰 Step 1），**已并入主清单**，带绿色「★ 免 Key 真模型」标签与专属系列 |
+| **大参数真模型（≥20B，免 Key）** | **27 个**，最大 **550B**：550B×2 / 501B / 397B / 128B / 120B×3 / 72B / 70B…，网页「3.4 大参数真模型」专区集中置顶，卡片带参数量徽章，可按「只看大模型」筛选 |
+| 免 key 直连的原生 OpenAI 兼容 ID | 39 个（跨站可能有重复底座） |
+| 名字兼容映射（同一底座） | 218 个，**非独立模型** |
+| 公益站点 | 8 家（6 家 OpenAI 兼容公益站 + AI Horde / Yqcloud） |
+| 认证 | **全部匿名，无需任何 Key** |
 
-> **全网复查（2026-11-15）：** 重新拉取并实测 27 个公开推理服务的 `/models` 清单，合计约 3,800 个真实模型 ID（Api.Airforce 781、Requesty 750、Vercel AI Gateway 507、Pollinations 441、Nous 398、UnoRouter 316、OrcaRouter 216、DeepInfra 178…）。免费不是一个口径，分三层：
-> ① **匿名免 key 直连** —— 6 家公益站，约 30 个独立模型，本目录标「独立模型」，填任意 Key 即可调；
-> ② **免费额度但需注册免费 Key** —— OpenRouter `:free`、Api.Airforce、Pollinations 新域名、Kilo、BlockRun、NVIDIA NIM、Groq、Cerebras、Gemini、Mistral、Cloudflare、Ollama Cloud、Zhipu 等。已从各站 `/models` 里按官方免费标记（`tier:free` / `isFree` / `pricing=0` / `billing_mode=free`）筛出 96 条、跨站去重 **77 个真模型**，排除 embedding / 图像 / TTS 与社区自定义条目，收录在 `catalog_free_tier.json` 与网页「免费额度真模型」独立分区。**需自备该站免费 Key，本网关不代管，未逐条匿名实测**；无 Key 实测 27 站全部 401/402/429；
-> ③ **标准模型名兼容映射** —— 从上述真实清单取主流系列名，经 llmfreeapikey 兼容层逐条实测出字，本目录标「兼容别名」。**注意：该站 /models 只返回 1 个模型 `free-ai`，且传入任意名字（含不存在的名字）都返回同一底座的回答，所以这 218 条是名字、不是 218 个模型。**
+> **本目录只收录「不需要任何 Key」的端点。** 需要注册才能领免费 Key 的站点（OpenRouter `:free`、Groq、Cerebras、Gemini、Api.Airforce、NVIDIA NIM…）真模型虽有数百个，但**一概不收** —— 都有 Key 了，这个网站就没有意义。此前收录的 77 个「免费额度真模型」清单、57 个 DeepSeek 真 ID 清单，连同 `catalog_free_tier.json` / `catalog_deepseek.json` 两个数据文件与网页分区，已按要求全部删除。
 >
-> ④ **匿名层补挖结果（2026-11-15 串行慢测）** —— 对 Pollinations 老端点逐个问身份（每次间隔 46 秒绕开限流）：18 个候选里只有 `openai-fast` / `gpt-oss-20b` 真出字，二者已在目录内且自报均为 "ChatGPT, OpenAI"；其余 16 个（`mistral` / `llama` / `deepseek-reasoning` / `gemini` / `claude` / `qwen` 等简名）全部 `404 NOT_FOUND`。并发时看到的 402 只是「每 IP 45 秒 1 次」限流，优先级高于模型名校验，**不能据此推断模型存在**——上一轮该推断已证伪。另测到 `https://api.binjie.fun/api/generateStream`（Yqcloud）普通 POST 免 key 出字，但非 OpenAI 协议、需适配，未收进目录。**因此匿名免 key 层没有新增真模型，39 个原生 ID 仍是全部。**
+> **匿名免 key 真模型（本轮，34 个）：** 此前只统计「原生 OpenAI 兼容的匿名端点」，漏掉了 AI Horde / Yqcloud 这类「免 key 但非 OpenAI 协议、需网关代转」的匿名算力。
+> · **AI Horde**（`https://aihorde.net/api/v2`）：志愿者分布式算力，用官方公开匿名标识 `0000000000`（硬编码在网关，非用户私有 Key）。全量 34 个在线模型实测 **33 个真出字**（本轮重试队列救活 128B Behemoth），服务端返回 `generation.model` 与指定名逐一对应（Qwen3 / Llama 3.2 / Gemma 4 / RWKV7 / Skyfall-31B / Stheno / Wicked-Tutu / Orion…），确为不同底座。
+> · **Yqcloud**（`https://api.binjie.fun/api/generateStream`）：纯文本 POST，自报 "Step, StepFun"，17×23=391、Paris、写俳句全对。
+> · 两者都不是 OpenAI 协议，已在 `gateway.py` 加 `aihorde` / `yqcloud` 适配器代做协议转换（异步队列轮询 / 纯文本 → 标准 `/v1/chat/completions`，含 stream 伪流式与心跳），**用户只填网关地址 + 模型 ID，零配置、无 Key**。这 34 个已并入 `catalog.json` / `catalog_web.json` / 网页主清单，可搜索、按系列分组、点开调用；`/v1/models` 共 299 条。端到端抽样 12 个不同底座 **11 个出字**（1 个队列排队超时如实报 502）。
+> · 局限：志愿者算力节点动态上下线、队列可能排队；个别模型暂时取不到。
 >
-> **上一版「匿名免 key 层只有几十个」的结论已不成立**：此前只统计了原生 OpenAI 兼容的匿名端点，漏掉了 AI Horde / Yqcloud 这类「免 key 但非 OpenAI 协议、需网关代转」的匿名算力。本轮补上并逐条实测后，匿名免 key 真模型达到 39 原生 ID + 33 个新真模型。**264 是可调用 ID 数，不是模型种类数**；3.4 分区的 33 个才是本轮新增的、互不相同的真模型。
-> **每一条都真实发过一次对话请求并成功返回内容**，没有编造地址、没把失效链接标成可用。
-> ⑥ **匿名免 key 真模型突破（2026-11-16）** —— 换方向挖「免 key 但非 OpenAI 协议」的上游：
-> · **AI Horde**（`https://aihorde.net/api/v2`）：志愿者分布式算力，用官方公开匿名标识 `0000000000`（硬编码在网关，非用户私有 Key）。全量 34 个在线模型实测 **32 个真出字**，服务端返回 `generation.model` 与指定名逐一对应（Qwen3 / Llama 3.2 / Gemma 4 / RWKV7 / Skyfall-31B / Stheno / Wicked-Tutu / Orion / Rocinante…），确为不同底座。
-> · **Yqcloud**（`https://api.binjie.fun/api/generateStream`）：纯文本 POST，自报 "Step, StepFun"，17×23=391、Paris、写俳句全对，连续 5 次稳定出字。
-> · 两者都不是 OpenAI 协议，已在 `gateway.py` 加 `aihorde` / `yqcloud` 适配器代做协议转换（异步队列轮询 / 纯文本 → 标准 `/v1/chat/completions`，含 stream 伪流式与心跳），**用户只填网关地址 + 模型 ID，零配置、无 Key**。`load_catalog()` 合并 `catalog_anon_real.json`，`/v1/models` 由 264 → 297；端到端抽样 12 个不同底座 **11 个出字**（1 个队列排队超时如实报 502）。
-> · 局限：志愿者算力节点动态上下线、队列可能排队；个别模型暂时取不到。已排除 Duck.ai（451 地区限制）、g4f 网页逆向 provider（多需浏览器 CDP，30 个里 17 个超时）。
-> ⑤ **DeepSeek 专项复查（2026-11-16）** —— 从 30 个站官方 `/models` 清单聚合出去重 **57 个真 DeepSeek 模型 ID**（本轮新拉 Routeway 287 / Infron 495 / NVIDIA NIM 83 / OrcaRouter 215 四个清单），按「跨站互证」收紧口径：28 个至少 2 家站声明、16 个为核心主模型、5 个带官方免费标记；另 29 个仅单站声明（含 `-flex` / `-us` / `abliterated` 等路由站自定义拼写，可信度低）。**这 57 个是各站真实声明的模型 ID，不是上方 12 个 llmfree 名字兼容。** 匿名免 key 层实测无新增：16 次免 key 请求全部 401/403/429，Pollinations 老端点对 4 个 DeepSeek 官方名串行慢测全部 `404 NOT_FOUND`；全网匿名可直连的 DeepSeek 仍只有 LLM7 的 `DeepSeek-V4-Flash-0731` 一条。**57 是去重 ID 数，不是不同底层模型数**（含官方别名、免费变体、不同日期 checkpoint）。需自备 Key，未逐条匿名实测。
-> 网页里每条都标了类型（独立模型 / 官方别名 / 兼容别名 / 自动路由）和真实上游，并按系列分组展示。
+> **标准模型名兼容映射（218 个名字）：** 从各站真实清单取主流系列名，经 llmfreeapikey 兼容层实测出字。**注意：该站 /models 只返回 1 个模型 `free-ai`，且传入任意名字（含瞎编的）都返回同一底座的回答，所以这 218 条是名字、不是 218 个模型。** 别名只用于让只认标准名字的软件免改代码。
+>
+> **299 是可调用 ID 数，不是模型种类数**；带绿色标签的 34 个才是互不相同的免 key 真模型。每一条都真实发过对话请求并成功返回内容，没有编造地址、没把失效链接标成可用。网页里每条都标了类型和真实上游，并按系列分组展示。
 
 兼容映射的作用：很多软件只允许填 `gpt-4o`、`claude-3-5-sonnet` 这类标准名字，
 网关把这些名字映射到实测可用的公益底座，于是不改代码也能直接用。
@@ -76,6 +70,8 @@ Python / cURL / Node.js / 客户端软件 四种调用示例（地址与密钥�
 | LLM7.io | `https://api.llm7.io/v1` | 匿名 turbo 档，DeepSeek V4 Flash、GLM 等 |
 | Kilo Gateway | `https://api.kilo.ai/api/gateway` | 免费池 13 个模型 + 自动路由，Nemotron 550B 等 |
 | llmfreeapikey | `https://api.llmfreeapikey.com/v1` | 纯免 key、CORS 全开、接受任意模型名 |
+| AI Horde | `https://aihorde.net/api/v2` | 志愿者匿名算力，34 个开源真模型，网关代转异步队列 |
+| Yqcloud | `https://api.binjie.fun/api/generateStream` | 阶跃星辰 Step，免 key 纯文本 POST，网关代转 |
 
 ## 快速开始（本地）
 
@@ -111,7 +107,15 @@ curl https://freeai-f9v0.onrender.com/v1/chat/completions \
 ## 部署
 
 仓库已带 `render.yaml` 和 `Dockerfile`，Render 上以 Docker Web Service 方式运行，
-推到 `main` 分支会自动触发部署。
+推到 `main` 分支 normally 会自动触发部署。**若推送后线上没更新**（自动部署偶尔不触发），
+用 Render API 手动触发（服务 ID `srv-dbshjaui0phs73d5o14g`）：
+
+```bash
+curl -X POST -H "Authorization: Bearer $RENDER_API_KEY" \
+  https://api.render.com/v1/services/srv-dbshjaui0phs73d5o14g/deploys
+```
+
+部署状态查 `GET /v1/services/<id>/deploys/<deployId>`，到 `live` 即生效（约 20-60 秒）。
 
 ```bash
 docker build -t freeai .
@@ -132,8 +136,6 @@ docker run -p 8000:8000 freeai
 |---|---|
 | `gateway.py` | 聚合网关（Flask），统一 /v1 协议 + 故障转移 + CORS |
 | `index.html` | 网页控制台：接入凭证面板、卡片式模型清单、一键复制、在线测试 |
-| `catalog.json` / `catalog_web.json` | 264 条可调用 ID 的完整实测数据 / 网页展示数据 |
-| `catalog_deepseek.json` | 57 个 DeepSeek 系列真模型 ID（30 站 `/models` 聚合、去重、标免费标记与可信度口径） |
-| `catalog_anon_real.json` | 33 个匿名免 key 真模型（AI Horde 32 + StepFun 1），含 `adapter` 字段供网关识别 |
-| `gateway.py` | 新增 `aihorde` / `yqcloud` 协议适配器，代做协议转换与匿名鉴权 |
+| `catalog.json` / `catalog_web.json` | 299 条可调用 ID 的完整实测数据 / 网页展示数据（含 34 个匿名免 key 真模型、27 个大参数真模型 `params` 标注） |
+| `catalog_anon_real.json` | 34 个匿名免 key 真模型原始清单（AI Horde 33 + StepFun 1），含 `adapter` 字段；已并入 `catalog.json` 主清单，本文件为原始清单备查 |
 | `requirements.txt` / `render.yaml` / `Dockerfile` | 部署配置 |
