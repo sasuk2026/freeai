@@ -363,9 +363,13 @@ def detect_think(body, explicit=None):
 
 
 def final_usage_chunk(mid, stream_id=None, pt=1, ct=1):
-    """生成严格客户端(灵犀等)可接受的「终态 usage」chunk。
-    关键点：total_tokens 必须 > 0 —— 灵犀把 0 当成 invalid/omitted terminal usage。
-    id 尽量复用本流的 stream_id，避免与前面 content chunk 不一致被判非法。"""
+    """生成严格客户端(灵犀等)可接受的「终态 usage」chunk —— 完全遵循 OpenAI 规范：
+      · choices 必须是【空数组】[]：usage chunk 不携带任何 choice/finish_reason，
+        这是官方 streaming 规范(usage 单独一块、choices 恒为空)。灵犀这类严格
+        校验器见到 usage 块里塞了 finish_reason 会判 'invalid terminal usage'。
+      · total_tokens > 0：0 会被判 omitted/invalid。
+      · id 复用本流 stream_id，保证与前面 content chunk 一致。
+      · 该 chunk 之后紧跟唯一一个 data: [DONE]。"""
     try:
         pt = max(1, int(pt or 0))
     except (TypeError, ValueError):
@@ -378,7 +382,7 @@ def final_usage_chunk(mid, stream_id=None, pt=1, ct=1):
          "object": "chat.completion.chunk",
          "created": int(time.time()),
          "model": mid,
-         "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+         "choices": [],
          "usage": {"prompt_tokens": pt, "completion_tokens": ct,
                    "total_tokens": pt + ct}}
     return b"data: " + json.dumps(u, ensure_ascii=False).encode() + b"\n\n"
@@ -604,13 +608,16 @@ def _anon_result(entry, body):
     return _call_horde(entry, msgs, body.get("max_tokens"))
 
 
-def _anon_completion(mid, text, site, real_model):
+def _anon_completion(mid, text, site, real_model, prompt_text=""):
+    pt = max(1, len(str(prompt_text)) // 3)
+    ct = max(1, len(text or "") )
     return {"id": "chatcmpl-anon", "object": "chat.completion",
             "created": int(time.time()), "model": mid,
             "choices": [{"index": 0,
                          "message": {"role": "assistant", "content": text},
                          "finish_reason": "stop"}],
-            "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            "usage": {"prompt_tokens": pt, "completion_tokens": ct,
+                      "total_tokens": pt + ct},
             "hub_upstream": site, "hub_real_model": real_model}
 
 
@@ -678,7 +685,8 @@ def _serve_adapter(entry, body, mid):
         HEALTH[mid]["last_ok"] = True
         HEALTH[mid]["latency"] = lat
         HEALTH[mid]["fails"] = 0
-    return jsonify(_anon_completion(mid, text, site, real_model))
+    return jsonify(_anon_completion(mid, text, site, real_model,
+                                   body.get("messages", "")))
 
 
 
@@ -866,6 +874,14 @@ def chat():
             j["model"] = mid                      # 对外保持用户填的模型名
             j["hub_upstream"] = c["site"]        # 标注真实上游，便于排障
             j["hub_latency"] = lat
+            # usage 兜底：上游缺失或全 0 时按内容补一个非零 usage，避免严格客户端
+            # 判 'invalid/omitted terminal usage'（与流式同口径）。
+            u = j.get("usage")
+            if not isinstance(u, dict) or not (u.get("total_tokens") or 0):
+                pt = max(1, len(str(body.get("messages", ""))) // 3)
+                ct = max(1, len(str(content)))
+                j["usage"] = {"prompt_tokens": pt, "completion_tokens": ct,
+                              "total_tokens": pt + ct}
             with LOCK:
                 HEALTH[mid]["last_ok"] = True
                 HEALTH[mid]["latency"] = lat
