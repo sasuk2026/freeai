@@ -373,8 +373,12 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
     if s.startswith(b"data:"):
         payload = s[5:].strip()
         if payload == b"[DONE]":
-            return b"data: [DONE]\n\n"
-        if strip_reasoning or model_alias:
+            # 上游自带的 DONE 一律吞掉，最终由网关统一输出唯一一个规范 DONE，
+            # 避免「双 DONE」让严格客户端(如灵犀)提前结束解析、误报 usage_missing。
+            return None
+        # 需要改写(关思考/改模型名)或检测到 usage 行时，解析后规范化
+        need = strip_reasoning or model_alias or (b"usage" in payload)
+        if need:
             try:
                 o = json.loads(payload)
                 if model_alias:
@@ -384,6 +388,12 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
                         d = ch.get("delta", {})
                         for k in ("reasoning", "reasoning_content", "reasoning_details"):
                             d.pop(k, None)
+                # 规范化 usage-only chunk：补规范 choices/id，兼容严格要求 usage 的客户端
+                if o.get("usage") and not o.get("choices"):
+                    o["choices"] = [{"index": 0, "delta": {}, "finish_reason": "stop"}]
+                    _id = str(o.get("id") or "")
+                    if not _id.startswith("chatcmpl"):
+                        o["id"] = "chatcmpl-" + str(int(time.time() * 1000))
                 return b"data: " + json.dumps(o, ensure_ascii=False).encode() + b"\n\n"
             except Exception:
                 return s + b"\n\n"
@@ -706,6 +716,20 @@ def chat():
         chain = build_chain(entry)
 
         def gen():
+            usage_seen = [False]   # 是否转发过 usage 行（严格客户端必需）
+
+            def finish():
+                """统一收尾：缺 usage 就补一个规范 usage chunk，再输出唯一 DONE。"""
+                parts = []
+                if not usage_seen[0]:
+                    uc = {"id": "chatcmpl-" + str(int(time.time()*1000)),
+                          "object": "chat.completion.chunk", "created": int(time.time()),
+                          "model": mid, "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+                          "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
+                    parts.append(b"data: " + json.dumps(uc, ensure_ascii=False).encode() + b"\n\n")
+                parts.append(b"data: [DONE]\n\n")
+                return parts
+
             for c in chain:
                 last = time.time()
                 buf = b""
@@ -726,6 +750,8 @@ def chat():
                                 line, buf = buf.split(b"\n", 1)
                                 if sse_has_content(line):
                                     got_content = True   # 拒答文本也算有效回答，绝不切换
+                                if b"usage" in line:
+                                    usage_seen[0] = True
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     yield out
@@ -735,13 +761,16 @@ def chat():
                     if buf.strip():
                         if sse_has_content(buf):
                             got_content = True
+                        if b"usage" in buf:
+                            usage_seen[0] = True
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
                             yield out
                     if got_content:
                         # 有效回答已交付(哪怕是模型自己的拒答)：立即结束，绝不串到别的模型，
                         # 也不再触发救急层 —— 这是「选啥是啥」+「不收敛成统一拒答」的关键。
-                        yield b"data: [DONE]\n\n"
+                        for p in finish():
+                            yield p
                         return
                     # 200 但空流/只有 reasoning/报错 JSON：视为技术失败，切下一个
                     yield (": upstream %s empty, switching...\n\n" % c["site"]).encode()
@@ -749,7 +778,8 @@ def chat():
                 except Exception:
                     # 中途断流：若已吐出过内容就当作完成(避免拼接两个上游的输出)，否则切换
                     if got_content:
-                        yield b"data: [DONE]\n\n"
+                        for p in finish():
+                            yield p
                         return
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     buf = b""
