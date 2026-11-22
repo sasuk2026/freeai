@@ -17,7 +17,8 @@
     "reasoning": false,
     "safeguard": "弱",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 20
   },
   {
     "id": "openai",
@@ -79,7 +80,8 @@
     "reasoning": true,
     "safeguard": "弱",
     "think_controllable": true,
-    "disabled": false
+    "disabled": false,
+    "params": 20
   },
   {
     "id": "ovh-reasoning",
@@ -122,7 +124,8 @@
     "safeguard": "强",
     "think_controllable": true,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 120
   },
   {
     "id": "gpt-oss-20b",
@@ -144,7 +147,8 @@
     "safeguard": "强",
     "think_controllable": true,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 20
   },
   {
     "id": "Qwen3.5-397B-A17B",
@@ -165,7 +169,8 @@
     "safeguard": "强",
     "think_controllable": true,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 397
   },
   {
     "id": "Qwen3.6-27B",
@@ -186,7 +191,8 @@
     "safeguard": "强",
     "think_controllable": true,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 27
   },
   {
     "id": "Qwen3.8-27B",
@@ -207,7 +213,8 @@
     "safeguard": "强",
     "think_controllable": true,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 27
   },
   {
     "id": "Qwen3.5-9B",
@@ -249,7 +256,8 @@
     "safeguard": "强",
     "think_controllable": false,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 24
   },
   {
     "id": "Qwen2.5-VL-72B-Instruct",
@@ -271,7 +279,8 @@
     "safeguard": "强",
     "think_controllable": false,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 72
   },
   {
     "id": "DeepSeek-V4-Flash-0731",
@@ -432,7 +441,8 @@
     "reasoning": false,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 550
   },
   {
     "id": "nvidia/nemotron-3.5-super-vl:free",
@@ -497,7 +507,8 @@
     "reasoning": true,
     "safeguard": "弱",
     "think_controllable": true,
-    "disabled": false
+    "disabled": false,
+    "params": 30
   },
   {
     "id": "baidu/ernie-5.5-flash-preview:free",
@@ -627,7 +638,7 @@
     "site": "kilo",
     "siteLabel": "Kilo 公共网关",
     "type": "独立模型",
-    "note": "Reflection Beam Free",
+    "note": "Reflection Beam 1.0 · 501B A23B MoE（Kilo 官方标注 beam-1.0-501b-a23b）· 全网最大免 Key 真模型之一",
     "ok": true,
     "caps": [
       "工具"
@@ -639,7 +650,8 @@
     "reasoning": false,
     "safeguard": "强",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 501
   },
   {
     "id": "free-ai",
@@ -2040,7 +2052,8 @@
     "reasoning": true,
     "safeguard": "弱",
     "think_controllable": true,
-    "disabled": false
+    "disabled": false,
+    "params": 120
   },
   {
     "id": "nvidia/nemotron-3-super-120b",
@@ -2061,7 +2074,8 @@
     "reasoning": false,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 120
   },
   {
     "id": "nvidia/nemotron-3-ultra-550b",
@@ -2083,7 +2097,8 @@
     "reasoning": false,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 550
   },
   {
     "id": "nvidia/nemotron-3.5-lightning",
@@ -2210,7 +2225,8 @@
     "safeguard": "强",
     "think_controllable": false,
     "sg_source": "来源标记",
-    "disabled": false
+    "disabled": false,
+    "params": 70
   },
   {
     "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
@@ -2231,7 +2247,8 @@
     "reasoning": true,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 30
   },
   {
     "id": "cohere/north-mini-code",
@@ -2292,7 +2309,8 @@
     "reasoning": false,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 30
   },
   {
     "id": "gpt-oss:20b",
@@ -2312,7 +2330,8 @@
     "reasoning": false,
     "safeguard": "中",
     "think_controllable": false,
-    "disabled": false
+    "disabled": false,
+    "params": 20
   },
   {
     "id": "deepseek-v4.1-flash",
@@ -5327,5 +5346,749 @@
     "safeguard": "中",
     "think_controllable": false,
     "disabled": false
+  },
+  {
+    "id": "horde/aphrodite/TheDrummer/Skyfall-31B-v4.2",
+    "name": "Skyfall-31B-v4.2",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 6 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\n\n### Instruction:\nN Cats = 2, T Ho",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 31
+  },
+  {
+    "id": "horde/koboldcpp/Angelic_Eclipse-12B",
+    "name": "Angelic_Eclipse-12B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Cydonia-24B-v4zg-Q4_K_M",
+    "name": "Cydonia-24B-v4zg-Q4_K_M",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 24
+  },
+  {
+    "id": "horde/koboldcpp/debug-gemma-4-E2B-Queen-it-qat-q4_0-unquantized.i1-Q4_K_M",
+    "name": "debug-gemma-4-E2B-Queen-it-qat-q4_0-unquantized.i1-Q4_K_M",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/G4-MeroMero-26B-A4B-it-uncensored-heretic",
+    "name": "G4-MeroMero-26B-A4B-it-uncensored-heretic",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 3 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 26
+  },
+  {
+    "id": "horde/koboldcpp/gemma-3-270m-it-F16",
+    "name": "gemma-3-270m-it-F16",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 2 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/gemma-4-31B-it-heretic",
+    "name": "gemma-4-31B-it-heretic",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 5 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 31
+  },
+  {
+    "id": "horde/koboldcpp/gemma-4-E4B-it",
+    "name": "gemma-4-E4B-it",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 2 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Gemma-4-E4B-it-Ultra-Uncensored-Heretic",
+    "name": "Gemma-4-E4B-it-Ultra-Uncensored-Heretic",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": false,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": true,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M",
+    "name": "Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 2 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/L3-8B-Stheno-v3.2",
+    "name": "L3-8B-Stheno-v3.2",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 5 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n### Instruction:\nYou are the server",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/L3-8B-Stheno-v3.2-Q4_K_S",
+    "name": "L3-8B-Stheno-v3.2-Q4_K_S",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n### Instruction:\nReply with a word ",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Llama-3.2-3B-Instruct",
+    "name": "Llama-3.2-3B-Instruct",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\n### Note:\nNo further interaction i",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Llama-3.2-3B-Instruct-Q4_K_M",
+    "name": "Llama-3.2-3B-Instruct-Q4_K_M",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\n---\n\n### Note:\nThis is a classic e",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Llama-3-Lumimaid-8B-v0.1",
+    "name": "Llama-3-Lumimaid-8B-v0.1",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n### Instruction:\nReply with the sin",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/mini-magnum-12b-v1.1",
+    "name": "mini-magnum-12b-v1.1",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/NemoMix-Unleashed-12B-Q6_K",
+    "name": "NemoMix-Unleashed-12B-Q6_K",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Orion-26B-A4B-v1.1",
+    "name": "Orion-26B-A4B-v1.1",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 2 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 26
+  },
+  {
+    "id": "horde/koboldcpp/Qwen3-0.6B",
+    "name": "Qwen3-0.6B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "pong\n\n### Response:\npong\n\n### Response:\n",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Qwen3-14B",
+    "name": "Qwen3-14B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "Okay, the user wants me to reply with ju",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Qwen3-1.7B",
+    "name": "Qwen3-1.7B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\nThe user has provided a simple ins",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Qwen3.5-4B",
+    "name": "Qwen3.5-4B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\n### Instruction:\nWhat is the capit",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Qwen_Qwen3-0.6B-IQ4_XS",
+    "name": "Qwen_Qwen3-0.6B-IQ4_XS",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG\n\n### Question:\nI want to know about",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Qwen/Qwen3.5-0.8B",
+    "name": "Qwen3.5-0.8B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "```\nPONG\n```\n\n> **Note:** Only output th",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Rocinante-X-12B",
+    "name": "Rocinante-X-12B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/Rocinante-X-12B-v1",
+    "name": "Rocinante-X-12B-v1",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 4 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/koboldcpp/TheDrummer_Rocinante-XL-16B-v1-Q5_K_S",
+    "name": "TheDrummer_Rocinante-XL-16B-v1-Q5_K_S",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/llamacpp/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive",
+    "name": "Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 35
+  },
+  {
+    "id": "horde/lmstudio/Qwen3.5-9B",
+    "name": "Qwen3.5-9B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 2 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/Nimbz/Gemma-4-Dark-Orthia-31B",
+    "name": "Gemma-4-Dark-Orthia-31B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 6 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 31
+  },
+  {
+    "id": "horde/Qwen/Qwen3.5-4B",
+    "name": "Qwen3.5-4B",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 13 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/ReadyArt/Wicked-Tutu-31B-Final",
+    "name": "Wicked-Tutu-31B-Final",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 4 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 31
+  },
+  {
+    "id": "horde/RWKV/RWKV7-2.9B-20260805",
+    "name": "RWKV7-2.9B-20260805",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 匿名真模型 · 1 个在线节点 · 网关代转异步队列，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde"
+  },
+  {
+    "id": "horde/sonar/TheDrummer/Behemoth-128B-v3-4.25bpw-h6-exl3",
+    "name": "Behemoth-128B-v3-4.25bpw-h6-exl3",
+    "site": "aihorde",
+    "siteLabel": "AI Horde 匿名算力",
+    "type": "独立模型",
+    "note": "AI Horde 128B 巨模型 · 本轮重试队列后实测出字（2 个在线节点）· 网关代转，零 Key",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://aihorde.net/api/v2",
+    "sample": "PONG",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "aihorde",
+    "params": 128
+  },
+  {
+    "id": "stepfun-step",
+    "name": "Step（阶跃星辰）",
+    "site": "yqcloud",
+    "siteLabel": "Yqcloud 匿名镜像",
+    "type": "独立模型",
+    "note": "阶跃星辰 Step · 免 key 纯文本 POST · 由网关代转，零 Key 直接调用",
+    "ok": true,
+    "caps": [
+      "对话"
+    ],
+    "ctx": null,
+    "latency": null,
+    "upstream": "https://api.binjie.fun",
+    "sample": "Step, StepFun / 17*23=391 / Paris / haiku",
+    "reasoning": false,
+    "safeguard": "未知",
+    "think_controllable": false,
+    "disabled": false,
+    "adapter": "yqcloud"
   }
 ]
