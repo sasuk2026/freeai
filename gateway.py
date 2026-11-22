@@ -247,7 +247,9 @@ REASONING_KEYS = ('reasoning', '-r1', 'r1-', '-think', 'thinking', 'kimi-k', 'st
                   'step-3.', 'glm-5-think', 'o1', 'o3', 'claude-3-7', 'claude-3.5-sonnet',
                   'deepseek-r', 'qwq', 'qwen3-thinking', 'nemotron-3-nano-omni',
                   'minimax-m2.7', 'dots-3', 'ernie', 'hunyuan', 'glm-5', 'kimi-k2',
-                  'qwen3-max', 'qwen3.5', 'qwen3', 'gpt-oss', 'nemotron-3.5')
+                  'qwen3-max', 'qwen3.5', 'qwen3', 'gpt-oss', 'nemotron-3.5',
+                  'nemotron-3-ultra', 'nemotron-3-super', 'nemotron-3-nano',
+                  'nemotron-3.')
 
 
 def is_reasoning(model_id):
@@ -324,8 +326,11 @@ def apply_think(body, model_id, think):
         _mt = int(body.get("max_tokens") or 0)
     except (TypeError, ValueError):
         _mt = 0
-    if 0 < _mt < 512:
-        body["max_tokens"] = 512
+    # 抬升额度：大推理模型(550B/120B)思维链极长，512 连思维链都写不完，正文永远
+    # 出不来(finish:length, content 为空) → 客户端看到「只吐思维链/空答案」。
+    # 统一抬到 2048(封顶)，保证思维链+正文都有空间；链预算(48s)负责防止拖太久。
+    if 0 < _mt < 2048:
+        body["max_tokens"] = 2048
     if think is None:
         return
     ctrl = think_controllable(model_id)
