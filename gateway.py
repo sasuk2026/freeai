@@ -362,11 +362,34 @@ def detect_think(body, explicit=None):
     return None
 
 
+def final_usage_chunk(mid, stream_id=None, pt=1, ct=1):
+    """生成严格客户端(灵犀等)可接受的「终态 usage」chunk。
+    关键点：total_tokens 必须 > 0 —— 灵犀把 0 当成 invalid/omitted terminal usage。
+    id 尽量复用本流的 stream_id，避免与前面 content chunk 不一致被判非法。"""
+    try:
+        pt = max(1, int(pt or 0))
+    except (TypeError, ValueError):
+        pt = 1
+    try:
+        ct = max(1, int(ct or 0))
+    except (TypeError, ValueError):
+        ct = 1
+    u = {"id": stream_id or ("chatcmpl-" + str(int(time.time() * 1000))),
+         "object": "chat.completion.chunk",
+         "created": int(time.time()),
+         "model": mid,
+         "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+         "usage": {"prompt_tokens": pt, "completion_tokens": ct,
+                   "total_tokens": pt + ct}}
+    return b"data: " + json.dumps(u, ensure_ascii=False).encode() + b"\n\n"
+
+
 def sse_strip(line_bytes, strip_reasoning, model_alias=None):
     """处理一行 SSE：
     · strip_reasoning=True 时剥掉 delta 里的 reasoning 字段（关思考）。
     · model_alias 给定时，把上游返回的 model 字段改写成用户所选的模型名，
-      避免兜底到别的上游后客户端看到「路由到别的模型」。"""
+      避免兜底到别的上游后客户端看到「路由到别的模型」。
+    · 上游自带 usage 一律吞掉，统一由网关在收尾生成规范 usage（total>0、id 一致）。"""
     s = line_bytes.strip()
     if not s:
         return None
@@ -388,12 +411,10 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
                         d = ch.get("delta", {})
                         for k in ("reasoning", "reasoning_content", "reasoning_details"):
                             d.pop(k, None)
-                # 规范化 usage-only chunk：补规范 choices/id，兼容严格要求 usage 的客户端
-                if o.get("usage") and not o.get("choices"):
-                    o["choices"] = [{"index": 0, "delta": {}, "finish_reason": "stop"}]
-                    _id = str(o.get("id") or "")
-                    if not _id.startswith("chatcmpl"):
-                        o["id"] = "chatcmpl-" + str(int(time.time() * 1000))
+                # 上游 usage 相关 chunk 全部吞掉：形状/数值/id 由网关统一接管，
+                # 杜绝 total_tokens=0、空 choices、id 不一致等导致的 usage_missing。
+                if o.get("usage"):
+                    return None
                 return b"data: " + json.dumps(o, ensure_ascii=False).encode() + b"\n\n"
             except Exception:
                 return s + b"\n\n"
@@ -616,6 +637,7 @@ def _serve_adapter(entry, body, mid):
                                     "delta": {"content": "[匿名上游暂时不可用，请稍后重试或换一个模型]"},
                                     "finish_reason": "stop"}]}
                 yield b"data: " + json.dumps(err, ensure_ascii=False).encode() + b"\n\n"
+                yield final_usage_chunk(mid, "chatcmpl-anon", 1, 24)
                 yield b"data: [DONE]\n\n"
                 return
             head = {"id": "chatcmpl-anon", "object": "chat.completion.chunk",
@@ -630,6 +652,9 @@ def _serve_adapter(entry, body, mid):
                     "created": int(time.time()), "model": mid,
                     "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}]}
             yield b"data: " + json.dumps(tail, ensure_ascii=False).encode() + b"\n\n"
+            yield final_usage_chunk(mid, "chatcmpl-anon",
+                                    max(1, len(str(body.get("messages", ""))) // 3),
+                                    max(1, len(text)))
             yield b"data: [DONE]\n\n"
         return Response(stream_with_context(gen()), content_type="text/event-stream",
                         headers={"Cache-Control": "no-cache", "X-Upstream": site,
@@ -716,19 +741,31 @@ def chat():
         chain = build_chain(entry)
 
         def gen():
-            usage_seen = [False]   # 是否转发过 usage 行（严格客户端必需）
+            state = {"id": None, "pt": 0, "ct": 0}   # 本流的 id / 估算 token，供终态 usage 用
+
+            def note(out):
+                """从转发的 chunk 抓取 stream_id 并累计输出字符，usage 数值才有意义。"""
+                if not out or not out.startswith(b"data:"):
+                    return
+                try:
+                    o = json.loads(out[5:].strip())
+                except Exception:
+                    return
+                if state["id"] is None and str(o.get("id", "")).startswith("chatcmpl"):
+                    state["id"] = o["id"]
+                for ch in (o.get("choices") or []):
+                    d = ch.get("delta") or {}
+                    c = d.get("content") or d.get("reasoning") or d.get("reasoning_content")
+                    if isinstance(c, str):
+                        state["ct"] += len(c)
 
             def finish():
-                """统一收尾：缺 usage 就补一个规范 usage chunk，再输出唯一 DONE。"""
-                parts = []
-                if not usage_seen[0]:
-                    uc = {"id": "chatcmpl-" + str(int(time.time()*1000)),
-                          "object": "chat.completion.chunk", "created": int(time.time()),
-                          "model": mid, "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
-                          "usage": {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}}
-                    parts.append(b"data: " + json.dumps(uc, ensure_ascii=False).encode() + b"\n\n")
-                parts.append(b"data: [DONE]\n\n")
-                return parts
+                """统一收尾：规范的 usage(total>0, id 与本流一致) + 唯一 DONE。
+                无论正常完成、断流、还是全失败，都必然走这里 —— 严格客户端不会再报
+                usage_missing。"""
+                pt = max(1, state["pt"] or len(str(body.get("messages", ""))) // 3)
+                ct = max(1, state["ct"])
+                return [final_usage_chunk(mid, state["id"], pt, ct), b"data: [DONE]\n\n"]
 
             for c in chain:
                 last = time.time()
@@ -750,10 +787,9 @@ def chat():
                                 line, buf = buf.split(b"\n", 1)
                                 if sse_has_content(line):
                                     got_content = True   # 拒答文本也算有效回答，绝不切换
-                                if b"usage" in line:
-                                    usage_seen[0] = True
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
+                                    note(out)
                                     yield out
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
@@ -761,10 +797,9 @@ def chat():
                     if buf.strip():
                         if sse_has_content(buf):
                             got_content = True
-                        if b"usage" in buf:
-                            usage_seen[0] = True
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
+                            note(out)
                             yield out
                     if got_content:
                         # 有效回答已交付(哪怕是模型自己的拒答)：立即结束，绝不串到别的模型，
@@ -784,13 +819,15 @@ def chat():
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     buf = b""
                     continue
-            # 自身层 + 救急层全部技术失败：补一条可读提示 + [DONE]，避免客户端悬挂等待
+            # 自身层 + 救急层全部技术失败：可读提示 + 规范 usage + 唯一 DONE
             err = {"id": "hub_err", "object": "chat.completion.chunk", "model": mid,
                    "choices": [{"index": 0,
                                 "delta": {"content": "[上游暂时全部不可用，请稍后重试或换一个模型]"},
                                 "finish_reason": "stop"}]}
+            state["ct"] += len("[上游暂时全部不可用，请稍后重试或换一个模型]")
             yield b"data: " + json.dumps(err, ensure_ascii=False).encode() + b"\n\n"
-            yield b"data: [DONE]\n\n"
+            for p in finish():
+                yield p
 
         return Response(stream_with_context(gen()),
                         content_type="text/event-stream",
