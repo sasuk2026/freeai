@@ -313,6 +313,22 @@ def detect_think(body, explicit=None):
         if v is not None:
             return v
 
+    # 1.5) 灵犀(kdocs lingxi)风格：顶层 thinking 字段
+    #      取值 auto/enabled/disabled（也可能布尔/字符串 true/false）。
+    #      这是「关思考关不掉 + 两百多模型全不可用」的真凶：过去既没识别也没
+    #      清理，thinking:"disabled" 被原样透传给不认该字段的上游 → 全部失败。
+    if "thinking" in body:
+        tv = body.get("thinking")
+        ts = str(tv).strip().lower() if tv is not None else ""
+        if ts in ("disabled", "off", "none", "false", "0", "disable", "close"):
+            return False
+        if ts in ("enabled", "on", "true", "1", "enable", "open"):
+            return True
+        # "auto" 或其它：不干预，跟随模型默认
+        v = normalize_think(tv)
+        if v is not None:
+            return v
+
     # 2) OpenAI / OpenRouter 风格：reasoning_effort
     if "reasoning_effort" in body:
         val = body.get("reasoning_effort")
@@ -726,12 +742,16 @@ def chat():
                                   "type": "model_unavailable"}}), 503
 
     # 思考模式开关：兼容网关自定义 think 与各类 APP 的标准参数
-    # （reasoning_effort / enable_thinking / chat_template_kwargs / reasoning / thinking_config）
+    # （think / thinking[灵犀] / reasoning_effort / enable_thinking /
+    #   chat_template_kwargs / reasoning / thinking_config）
     explicit_think = body.pop("think", None)
+    # 灵犀的 thinking 也走 detect_think 识别（必须在 pop 之前让 detect 看到）
     think = detect_think(body, explicit_think)
-    # 清掉 APP 带来的标准思考参数，避免原样透传污染上游；统一由 apply_think 翻译
-    for _k in ("reasoning_effort", "enable_thinking", "reasoning", "thinking_config",
-               "include_thoughts", "chat_template_kwargs"):
+    # 清掉 APP 带来的标准思考参数，避免原样透传污染上游；统一由 apply_think 翻译。
+    # thinking 必须清理：灵犀的 thinking:"disabled" 若透传给不认它的上游会导致全失败。
+    for _k in ("thinking", "reasoning_effort", "enable_thinking", "reasoning",
+               "thinking_config", "include_thoughts", "chat_template_kwargs",
+               "stream_options"):
         body.pop(_k, None)
     apply_think(body, entry["id"], think)
     # 客户端明确「关思考」时，网关在转发层剥掉上游的 reasoning 字段，
