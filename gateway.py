@@ -68,6 +68,11 @@ HEARTBEAT_IDLE = int(os.environ.get("HUB_HEARTBEAT_IDLE", "15"))
 # 流式「内容空闲收尾」：已吐出正文后，若这么久没再吐新正文，就主动结束该上游、
 # 用已有内容交付。专治上游吐一句就挂起只发心跳的假活连接——否则会一直卡到客户端超时。
 CONTENT_IDLE = int(os.environ.get("HUB_CONTENT_IDLE", "6"))
+# 请求瘦身：某些 APP(灵犀 Agent)会把整段代码库塞进 messages(实测 25万字符)且
+# max_tokens 要 65536，公益上游直接 400/断流 → 全失败；而普通客户端请求仅几百字符。
+# 为兼容这类超大请求，入站时做保护性收缩：max_tokens 钳到上限、超长单条消息折叠中间。
+MAX_OUT_TOKENS = int(os.environ.get("HUB_MAX_OUT_TOKENS", "8192"))
+MAX_MSG_CHARS = int(os.environ.get("HUB_MAX_MSG_CHARS", "24000"))
 
 # 可安全切换/重试的「技术性失败」HTTP 状态：模型并没有给出回答，换端点不会串掉用户意图。
 # 注意：200 + 拒答文本(I'm sorry / can't comply)【不在此列】——那是模型自己的回答，必须如实返回。
@@ -264,6 +269,40 @@ def think_controllable(model_id):
     if "gemini" in m:
         return True
     return False
+
+
+def trim_request(body):
+    """入站请求瘦身：兼容灵犀 Agent 这类超大规模请求（整段代码库塞进 messages、
+    max_tokens 要到 65536）。公益上游对这种体量会 400/断流 → 全失败，而普通
+    客户端请求仅几百字符完全不受影响。策略：
+      · max_tokens 钳到 MAX_OUT_TOKENS（8192）——再大上游也用不满，徒增 400 风险；
+      · 单条 message.content 超 MAX_MSG_CHARS（24000）时折叠中间，保留头尾。
+    只收缩、不改语义；短请求完全不动。"""
+    # 1) max_tokens 上限钳制
+    try:
+        mt = int(body.get("max_tokens") or 0)
+    except (TypeError, ValueError):
+        mt = 0
+    if mt > MAX_OUT_TOKENS:
+        body["max_tokens"] = MAX_OUT_TOKENS
+    # 2) 超长单条消息折叠
+    msgs = body.get("messages")
+    if not isinstance(msgs, list):
+        return
+    for m in msgs:
+        if not isinstance(m, dict):
+            continue
+        c = m.get("content")
+        if isinstance(c, str) and len(c) > MAX_MSG_CHARS:
+            head = c[:MAX_MSG_CHARS // 2]
+            tail = c[-(MAX_MSG_CHARS // 2):]
+            m["content"] = head + "\n\n...[中间内容过长已省略]...\n\n" + tail
+        elif isinstance(c, list):  # 多模态 content:[{type:text,text:...}]
+            for part in c:
+                if isinstance(part, dict) and isinstance(part.get("text"), str) \
+                        and len(part["text"]) > MAX_MSG_CHARS:
+                    t = part["text"]
+                    part["text"] = t[:MAX_MSG_CHARS // 2] + "\n\n...[中间内容过长已省略]...\n\n" + t[-(MAX_MSG_CHARS // 2):]
 
 
 def apply_think(body, model_id, think):
@@ -778,9 +817,15 @@ def chat():
     mid = body.get("model", "auto")
     entry = INDEX.get(mid) or INDEX.get("auto") or CATALOG[0]
 
+    # 诊断：先记录原始请求规模（瘦身前），便于观察灵犀这类超大请求
+    _raw_len = len(str(body.get("messages", "")))
+    _raw_mt = body.get("max_tokens")
+    # 入站瘦身：兼容超大规模请求（灵犀 Agent 25万字符 + 65536 token 撑爆上游）
+    trim_request(body)
+
     # 诊断记录：记录本次请求的模型/思考参数/max_tokens/消息规模，逐跳过程由 gen 追加
     _diag = {"ts": time.strftime("%H:%M:%S"), "model": mid, "stream": bool(body.get("stream")),
-             "max_tokens": body.get("max_tokens"), "msg_len": len(str(body.get("messages", ""))),
+             "max_tokens": _raw_mt, "msg_len": _raw_len,
              "think": None, "hops": [], "result": None}
     diag_add(_diag)
 
