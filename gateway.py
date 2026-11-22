@@ -513,7 +513,7 @@ def sse_strip(line_bytes, strip_reasoning, model_alias=None):
     return s + b"\n\n"
 
 
-def sse_has_content(line_bytes):
+def sse_has_content(line_bytes, count_reasoning=True):
     """判断一行 SSE 是否吐出了【非空 content】。用于区分：
     · 有效回答(含模型自己的拒答 I'm sorry / can't comply) → True，必须如实返回、绝不切换上游
     · 空流 / 只有 reasoning / 只有 role 首块 / 报错 JSON → False，视为技术失败可切换
@@ -531,9 +531,21 @@ def sse_has_content(line_bytes):
     if o.get("error"):
         return False
     for ch in o.get("choices", []) or []:
-        c = (ch.get("delta", {}) or {}).get("content")
-        if c:
+        d = ch.get("delta", {}) or {}
+        # content 是正文；reasoning_content/reasoning 是思维链。
+        # 关键：推理模型(o/gpt-oss/nemotron/Qwen 等)会先吐一长段思维链再吐正文，
+        # 并发或 max_tokens 偏小时正文来得更晚。若只认 content，思维链吐满一屏仍被
+        # 判「空流」→ 切上游 → 全失败（实测并发下 12/16 误杀，全是这种）。
+        # 思维链也证明「上游活着且正在作答」，必须算有效信号，绝不切走。
+        if d.get("content"):
             return True
+        # 思维链：仅当会被转发给客户端时才算有效信号。若 strip_reasoning=True
+        # (客户端明确关思考)，reasoning 会被 sse_strip 剥掉，算它有内容会导致
+        # 交付一个空回答——这种「只有思维链」仍应判空流切上游。
+        if count_reasoning:
+            for k in ("reasoning_content", "reasoning", "reasoning_details"):
+                if d.get(k):
+                    return True
     return False
 
 
@@ -920,8 +932,8 @@ def chat():
                             buf += chunk
                             while b"\n" in buf:
                                 line, buf = buf.split(b"\n", 1)
-                                if sse_has_content(line):
-                                    got_content = True   # 拒答文本也算有效回答，绝不切换
+                                if sse_has_content(line, count_reasoning=not strip_reasoning):
+                                    got_content = True   # 拒答文本/思维链都算有效回答，绝不切换
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     note(out)
@@ -930,7 +942,7 @@ def chat():
                             yield b": keepalive\n\n"
                             last = time.time()
                     if buf.strip():
-                        if sse_has_content(buf):
+                        if sse_has_content(buf, count_reasoning=not strip_reasoning):
                             got_content = True
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
