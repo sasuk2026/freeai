@@ -111,6 +111,20 @@ HEALTH = {e["id"]: {"last_ok": bool(e.get("ok")), "latency": e.get("latency", 0)
           for e in CATALOG}
 LOCK = threading.Lock()
 
+# 诊断环形缓冲：记录最近若干次请求的逐跳过程，供 /diag 读取排障（内存中，重启即清）
+DIAG = []
+DIAG_LOCK = threading.Lock()
+DIAG_MAX = 60
+
+def diag_add(rec):
+    try:
+        with DIAG_LOCK:
+            DIAG.append(rec)
+            if len(DIAG) > DIAG_MAX:
+                del DIAG[:len(DIAG) - DIAG_MAX]
+    except Exception:
+        pass
+
 
 def check_auth():
     if not ACCESS_TOKEN:
@@ -733,6 +747,14 @@ def v1_models():
     return jsonify({"object": "list", "data": model_list()})
 
 
+@app.route("/diag", methods=["GET"])
+def diag():
+    """诊断端点：查看最近若干次请求的逐跳过程（无需鉴权，仅本机排障用）。"""
+    with DIAG_LOCK:
+        snap = list(DIAG)
+    return jsonify({"count": len(snap), "records": snap[-30:]})
+
+
 @app.route("/health", methods=["GET"])
 @app.route("/healthz", methods=["GET"])
 def health():
@@ -756,6 +778,12 @@ def chat():
     mid = body.get("model", "auto")
     entry = INDEX.get(mid) or INDEX.get("auto") or CATALOG[0]
 
+    # 诊断记录：记录本次请求的模型/思考参数/max_tokens/消息规模，逐跳过程由 gen 追加
+    _diag = {"ts": time.strftime("%H:%M:%S"), "model": mid, "stream": bool(body.get("stream")),
+             "max_tokens": body.get("max_tokens"), "msg_len": len(str(body.get("messages", ""))),
+             "think": None, "hops": [], "result": None}
+    diag_add(_diag)
+
     # 暂时不可用的模型：明确告知，避免客户端无谓重试死上游
     if entry.get("disabled"):
         return jsonify({"error": {"message": f"model '{mid}' is temporarily unavailable",
@@ -774,6 +802,8 @@ def chat():
                "stream_options"):
         body.pop(_k, None)
     apply_think(body, entry["id"], think)
+    _diag["think"] = think
+    _diag["max_tokens"] = body.get("max_tokens")   # 抬升后的实际值
     # 客户端明确「关思考」时，网关在转发层剥掉上游的 reasoning 字段，
     # 保证「关」在任何上游都真能隐藏思维链（部分上游不认 enable_thinking）。
     # 用规范化后的值判断，避免 APP 传字符串 "false" 时被漏判为「不剥离」。
@@ -832,8 +862,9 @@ def chat():
                 pending = []
                 try:
                     # 流式不重试(retries=0)：限流时立刻切下一个，比在单个上游退避等待更快拿到正文。
-                    r, _ = call_upstream(c, body, retries=0)
+                    r, hop_lat = call_upstream(c, body, retries=0)
                     if r.status_code != 200:      # 技术失败(402/429/5xx) → 切下一个(含救急层)
+                        _diag["hops"].append(f'{c["site"]}:{r.status_code}({hop_lat}s)')
                         try:
                             r.close()
                         except Exception:
@@ -883,6 +914,8 @@ def chat():
                             note(out)
                             pending.append(out)
                     if got_content:
+                        _diag["hops"].append(f'{c["site"]}:OK(ct={state["ct"]})')
+                        _diag["result"] = "ok:" + c["site"]
                         # 有效回答已交付(哪怕是模型自己的拒答)：清空剩余缓冲后结束，
                         # 绝不串到别的模型，也不再触发救急层。
                         for p in pending:
@@ -892,22 +925,27 @@ def chat():
                             yield p
                         return
                     # 200 但空流/只有 reasoning/报错 JSON：整段丢弃(不转发垃圾 chunk)，切下一个
+                    _diag["hops"].append(f'{c["site"]}:EMPTY')
                     pending = []
                     yield (": upstream %s empty, switching...\n\n" % c["site"]).encode()
                     continue
-                except Exception:
+                except Exception as _ex:
                     # 中途断流：若已吐出过内容就当作完成(避免拼接两个上游的输出)，否则切换
                     if got_content:
+                        _diag["hops"].append(f'{c["site"]}:DROP_OK(ct={state["ct"]})')
+                        _diag["result"] = "drop_ok:" + c["site"]
                         for p in pending:
                             yield p
                         for p in finish():
                             yield p
                         return
+                    _diag["hops"].append(f'{c["site"]}:DROP({str(_ex)[:30]})')
                     pending = []
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     buf = b""
                     continue
             # 自身层 + 救急层全部技术失败：可读提示 + 规范 usage + 唯一 DONE
+            _diag["result"] = "ALL_FAILED"
             err = {"id": "hub_err", "object": "chat.completion.chunk", "model": mid,
                    "choices": [{"index": 0,
                                 "delta": {"content": "[上游暂时全部不可用，请稍后重试或换一个模型]"},
