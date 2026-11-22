@@ -851,15 +851,11 @@ def chat():
             for c in chain:
                 # 预算耗尽：不再切新上游，尽早收尾（否则客户端先超时）。
                 if time.time() >= chain_deadline:
-                    yield (": chain budget reached, finishing early\n\n").encode()
+                    yield (": chain budget reached\n\n").encode()
                     break
                 last = time.time()
                 buf = b""
                 got_content = False       # 该上游是否吐出过有效回答(含拒答)
-                # 缓冲机制：先暂存该上游的 chunk，确认它真的吐出正文(got_content)后才放行。
-                # 否则空流(只有 role 首块/空 delta/思维链)会被转发给客户端，切上游后变成
-                # 两段流拼接 → 严格客户端(灵犀)解析混乱 → usage_missing / 报错。
-                pending = []
                 try:
                     # 流式不重试(retries=0)：限流时立刻切下一个，比在单个上游退避等待更快拿到正文。
                     r, hop_lat = call_upstream(c, body, retries=0)
@@ -870,20 +866,10 @@ def chat():
                         except Exception:
                             pass
                         continue
-                    flushed = False   # 缓冲是否已放行(一旦确认有正文就放行，只放一次)
-                    last_content = time.time()   # 距上次真正吐出正文的时间——内容空闲收尾用
-                    for chunk in r.iter_content(chunk_size=512):
-                        # 读取循环内也检查链预算：上游断断续续吐空块时，iter_content 每块都
-                        # 刷新 last，外层预算管不到这里——必须在这里兜底，超时立即停读，
-                        # 用已有正文收尾，避免拖到客户端(灵犀60s)先超时。
-                        if time.time() >= chain_deadline:
-                            break
-                        # 决定性问题：上游吐一句正文后就挂起，只发心跳/空块但再也不吐正文。
-                        # iter_content 被这些空块不断续命、永不超时，网关就一直卡着，客户端
-                        # 表现成「吐一段字→一直转→不可用」。这里用「内容空闲计时器」兜底：
-                        # 已经拿到正文后，若 CONTENT_IDLE 秒还没新正文，主动收尾，不再傻等。
-                        if flushed and time.time() - last_content > CONTENT_IDLE:
-                            break
+                    # 真流式：收到一行就转发一行，绝不攒着、绝不提前掐断。
+                    # 历史教训：pending 缓冲把流式憋成"卡住→一次性吐"，CONTENT_IDLE
+                    # 把正常句间停顿当挂起掐断成"只吐一段"——两个都是自作主张的坏机制，已移除。
+                    for chunk in r.iter_content(chunk_size=256):
                         if chunk:
                             last = time.time()
                             buf += chunk
@@ -891,18 +877,10 @@ def chat():
                                 line, buf = buf.split(b"\n", 1)
                                 if sse_has_content(line):
                                     got_content = True   # 拒答文本也算有效回答，绝不切换
-                                    last_content = time.time()   # 收到实质正文，刷新内容计时
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     note(out)
-                                    pending.append(out)
-                            # 一旦拿到正文就立即放行缓冲：正文到手即交付，不再等长尾
-                            if got_content and not flushed:
-                                for p in pending:
-                                    yield p
-                                pending = []
-                                flushed = True
-                                last_content = time.time()
+                                    yield out            # 即时转发，真流式
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
@@ -912,21 +890,15 @@ def chat():
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
                             note(out)
-                            pending.append(out)
+                            yield out
                     if got_content:
                         _diag["hops"].append(f'{c["site"]}:OK(ct={state["ct"]})')
                         _diag["result"] = "ok:" + c["site"]
-                        # 有效回答已交付(哪怕是模型自己的拒答)：清空剩余缓冲后结束，
-                        # 绝不串到别的模型，也不再触发救急层。
-                        for p in pending:
-                            yield p
-                        pending = []
                         for p in finish():
                             yield p
                         return
-                    # 200 但空流/只有 reasoning/报错 JSON：整段丢弃(不转发垃圾 chunk)，切下一个
+                    # 200 但空流/只有 reasoning/报错 JSON：切下一个
                     _diag["hops"].append(f'{c["site"]}:EMPTY')
-                    pending = []
                     yield (": upstream %s empty, switching...\n\n" % c["site"]).encode()
                     continue
                 except Exception as _ex:
@@ -934,13 +906,10 @@ def chat():
                     if got_content:
                         _diag["hops"].append(f'{c["site"]}:DROP_OK(ct={state["ct"]})')
                         _diag["result"] = "drop_ok:" + c["site"]
-                        for p in pending:
-                            yield p
                         for p in finish():
                             yield p
                         return
                     _diag["hops"].append(f'{c["site"]}:DROP({str(_ex)[:30]})')
-                    pending = []
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     buf = b""
                     continue
@@ -970,9 +939,11 @@ def chat():
         if left <= 1:
             errors.append("chain_budget_exhausted")
             break
-        rt = max(3, min(READ_TIMEOUT, int(left)))
+        # 非流式也用不重试 + 短超时：公益上游限流时重试 3 次×22s=66s，客户端(灵犀/Rikkahub
+        # 常 60s)早已超时 → 表现成「思考一下就一直转圈/不可用」。快速切上游比死等更可靠。
+        rt = max(3, min(12, int(left)))
         try:
-            r, lat = call_upstream(c, body, read_timeout=rt)
+            r, lat = call_upstream(c, body, read_timeout=rt, retries=0)
             if r.status_code != 200:
                 errors.append(f'{c["site"]}:{r.status_code}')
                 continue
@@ -1004,14 +975,17 @@ def chat():
                 HEALTH[mid]["last_ok"] = True
                 HEALTH[mid]["latency"] = lat
                 HEALTH[mid]["fails"] = 0
+            _diag["result"] = "ok:" + c["site"]
             return jsonify(j)
         except Exception as ex:
             errors.append(f'{c["site"]}:{str(ex)[:60]}')
+            _diag["hops"].append(f'{c["site"]}:EX({str(ex)[:30]})')
             continue
 
     with LOCK:
         HEALTH[mid]["last_ok"] = False
         HEALTH[mid]["fails"] += 1
+    _diag["result"] = "ALL_FAILED"
     return jsonify({"error": {"message": "all upstreams failed", "type": "upstream_error",
                               "tried": errors}}), 502
 
