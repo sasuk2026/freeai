@@ -65,6 +65,9 @@ CHAIN_BUDGET = int(os.environ.get("HUB_CHAIN_BUDGET", "48"))      # 整条链总
 STRICT_MODEL = os.environ.get("HUB_STRICT_MODEL", "0") == "1"
 # 流式模式下，若上游超过这么久没推任何数据，主动发一条 SSE 注释心跳，防止代理层（Render/Cloudflare）无数据超时掐断
 HEARTBEAT_IDLE = int(os.environ.get("HUB_HEARTBEAT_IDLE", "15"))
+# 流式「内容空闲收尾」：已吐出正文后，若这么久没再吐新正文，就主动结束该上游、
+# 用已有内容交付。专治上游吐一句就挂起只发心跳的假活连接——否则会一直卡到客户端超时。
+CONTENT_IDLE = int(os.environ.get("HUB_CONTENT_IDLE", "6"))
 
 # 可安全切换/重试的「技术性失败」HTTP 状态：模型并没有给出回答，换端点不会串掉用户意图。
 # 注意：200 + 拒答文本(I'm sorry / can't comply)【不在此列】——那是模型自己的回答，必须如实返回。
@@ -837,11 +840,18 @@ def chat():
                             pass
                         continue
                     flushed = False   # 缓冲是否已放行(一旦确认有正文就放行，只放一次)
+                    last_content = time.time()   # 距上次真正吐出正文的时间——内容空闲收尾用
                     for chunk in r.iter_content(chunk_size=512):
                         # 读取循环内也检查链预算：上游断断续续吐空块时，iter_content 每块都
                         # 刷新 last，外层预算管不到这里——必须在这里兜底，超时立即停读，
                         # 用已有正文收尾，避免拖到客户端(灵犀60s)先超时。
                         if time.time() >= chain_deadline:
+                            break
+                        # 决定性问题：上游吐一句正文后就挂起，只发心跳/空块但再也不吐正文。
+                        # iter_content 被这些空块不断续命、永不超时，网关就一直卡着，客户端
+                        # 表现成「吐一段字→一直转→不可用」。这里用「内容空闲计时器」兜底：
+                        # 已经拿到正文后，若 CONTENT_IDLE 秒还没新正文，主动收尾，不再傻等。
+                        if flushed and time.time() - last_content > CONTENT_IDLE:
                             break
                         if chunk:
                             last = time.time()
@@ -850,18 +860,18 @@ def chat():
                                 line, buf = buf.split(b"\n", 1)
                                 if sse_has_content(line):
                                     got_content = True   # 拒答文本也算有效回答，绝不切换
+                                    last_content = time.time()   # 收到实质正文，刷新内容计时
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     note(out)
                                     pending.append(out)
                             # 一旦拿到正文就立即放行缓冲：正文到手即交付，不再等长尾
-                            # （550B 大模型 finish 前可能还有许多空心跳块，傻等会把
-                            #   整条链拖过客户端超时 → usage_missing / 全部不可用）。
                             if got_content and not flushed:
                                 for p in pending:
                                     yield p
                                 pending = []
                                 flushed = True
+                                last_content = time.time()
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
