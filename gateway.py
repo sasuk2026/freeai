@@ -279,6 +279,17 @@ def apply_think(body, model_id, think):
         # 通用兜底（OpenAI o-series / OpenRouter reasoning）；对不可控模型尽力而为
         body["reasoning_effort"] = "none"
         body["reasoning"] = {"enabled": False}
+        # 关键修复：很多公益上游(如 blockrun 的 gpt-oss)根本不认上面的关思考参数，
+        # 仍会先吐一大段思维链；若客户端 max_tokens 只有几十，额度全被思维链吃光，
+        # 正文一个字都吐不出来 → finish_reason:length → 网关误判「空流」→ 切链 →
+        # 全链限流时就是「全部不可用」。这里对推理模型关思考时把 max_tokens 抬到
+        # 至少 256(封顶 1024)，给思维链留出预算，保证正文一定吐得出来。
+        try:
+            _mt = int(body.get("max_tokens") or 0)
+        except (TypeError, ValueError):
+            _mt = 0
+        if _mt < 256:
+            body["max_tokens"] = 256
 
 
 def normalize_think(val):
@@ -466,21 +477,23 @@ def sse_has_content(line_bytes):
     return False
 
 
-def call_upstream(c, body, read_timeout=None):
+def call_upstream(c, body, read_timeout=None, retries=None):
     """调用单个上游。对瞬时限流(402/429/5xx)做短退避重试——公益站 402 常是
     瞬时额度，重试即过；这是消除「换模型也没用」的第一道。注意只对【HTTP 状态】
-    重试，绝不对「200 但内容是拒答」重试（那是模型的回答，必须如实返回）。"""
+    重试，绝不对「200 但内容是拒答」重试（那是模型的回答，必须如实返回）。
+    retries 可覆盖重试次数：流式要快速 failover，用 0（不重试，靠切上游顶）。"""
     url = c["base"] + c["path"] if c["path"] else c["base"]
     payload = dict(body)
     payload["model"] = c["model"]
     rt = read_timeout if read_timeout else (STREAM_READ_TIMEOUT if body.get("stream") else READ_TIMEOUT)
     t0 = time.time()
     last = None
-    for attempt in range(UPSTREAM_RETRIES + 1):
+    n_retry = UPSTREAM_RETRIES if retries is None else retries
+    for attempt in range(n_retry + 1):
         last = requests.post(url, json=payload, headers=HEADERS,
                              timeout=(CONNECT_TIMEOUT, rt),
                              stream=bool(body.get("stream")))
-        if last.status_code in RETRY_STATUS and attempt < UPSTREAM_RETRIES:
+        if last.status_code in RETRY_STATUS and attempt < n_retry:
             try:
                 last.close()
             except Exception:
@@ -770,6 +783,9 @@ def chat():
 
         def gen():
             state = {"id": None, "pt": 0, "ct": 0}   # 本流的 id / 估算 token，供终态 usage 用
+            # 流式链总预算：公益上游并发限流时，绝不能在单条链上无限切下去。
+            # 到达预算仍未拿到正文就尽早收尾，避免客户端(灵犀 60s)先超时导致 usage_missing。
+            chain_deadline = time.time() + CHAIN_BUDGET
 
             def note(out):
                 """从转发的 chunk 抓取 stream_id 并累计输出字符，usage 数值才有意义。"""
@@ -796,11 +812,20 @@ def chat():
                 return [final_usage_chunk(mid, state["id"], pt, ct), b"data: [DONE]\n\n"]
 
             for c in chain:
+                # 预算耗尽：不再切新上游，尽早收尾（否则客户端先超时）。
+                if time.time() >= chain_deadline:
+                    yield (": chain budget reached, finishing early\n\n").encode()
+                    break
                 last = time.time()
                 buf = b""
                 got_content = False       # 该上游是否吐出过有效回答(含拒答)
+                # 缓冲机制：先暂存该上游的 chunk，确认它真的吐出正文(got_content)后才放行。
+                # 否则空流(只有 role 首块/空 delta/思维链)会被转发给客户端，切上游后变成
+                # 两段流拼接 → 严格客户端(灵犀)解析混乱 → usage_missing / 报错。
+                pending = []
                 try:
-                    r, _ = call_upstream(c, body)
+                    # 流式不重试(retries=0)：限流时立刻切下一个，比在单个上游退避等待更快拿到正文。
+                    r, _ = call_upstream(c, body, retries=0)
                     if r.status_code != 200:      # 技术失败(402/429/5xx) → 切下一个(含救急层)
                         try:
                             r.close()
@@ -818,7 +843,7 @@ def chat():
                                 out = sse_strip(line, strip_reasoning, mid)
                                 if out:
                                     note(out)
-                                    yield out
+                                    pending.append(out)
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
@@ -828,22 +853,29 @@ def chat():
                         out = sse_strip(buf, strip_reasoning, mid)
                         if out:
                             note(out)
-                            yield out
+                            pending.append(out)
                     if got_content:
-                        # 有效回答已交付(哪怕是模型自己的拒答)：立即结束，绝不串到别的模型，
-                        # 也不再触发救急层 —— 这是「选啥是啥」+「不收敛成统一拒答」的关键。
+                        # 有效回答已交付(哪怕是模型自己的拒答)：先清空缓冲，再结束，
+                        # 绝不串到别的模型，也不再触发救急层 ——「选啥是啥」+「不收敛成统一拒答」。
+                        for p in pending:
+                            yield p
+                        pending = []
                         for p in finish():
                             yield p
                         return
-                    # 200 但空流/只有 reasoning/报错 JSON：视为技术失败，切下一个
+                    # 200 但空流/只有 reasoning/报错 JSON：整段丢弃(不转发垃圾 chunk)，切下一个
+                    pending = []
                     yield (": upstream %s empty, switching...\n\n" % c["site"]).encode()
                     continue
                 except Exception:
                     # 中途断流：若已吐出过内容就当作完成(避免拼接两个上游的输出)，否则切换
                     if got_content:
+                        for p in pending:
+                            yield p
                         for p in finish():
                             yield p
                         return
+                    pending = []
                     yield (": upstream %s dropped, switching...\n\n" % c["site"]).encode()
                     buf = b""
                     continue
