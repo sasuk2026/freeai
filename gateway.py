@@ -919,6 +919,9 @@ def chat():
                 buf = b""
                 got_content = False       # 该上游是否吐出过有效回答(含拒答)
                 try:
+                    # 发起上游请求前先吐心跳：若该上游连接/首字节 hang 住(最长 8+25s)，
+                    # 客户端也已收到字节、不会因首字节/idle 超时而断连。
+                    yield (": connecting %s...\n\n" % c["site"]).encode()
                     # 流式不重试(retries=0)：限流时立刻切下一个，比在单个上游退避等待更快拿到正文。
                     r, hop_lat = call_upstream(c, body, retries=0)
                     if r.status_code != 200:      # 技术失败(402/429/5xx) → 切下一个(含救急层)
@@ -927,6 +930,10 @@ def chat():
                             r.close()
                         except Exception:
                             pass
+                        # 关键：切上游期间必须吐字节保活。否则灵犀等首字节超时直接断连，
+                        # 生成器被停摆、diag 停在 result=null —— 表现就是「模型不回复」。
+                        # 与 EMPTY/DROP 分支一致，用 SSE 注释心跳（标准客户端会忽略）。
+                        yield (": upstream %s %s, switching...\n\n" % (c["site"], r.status_code)).encode()
                         continue
                     # 真流式：收到一行就转发一行，绝不攒着、绝不提前掐断。
                     # 历史教训：pending 缓冲把流式憋成"卡住→一次性吐"，CONTENT_IDLE
