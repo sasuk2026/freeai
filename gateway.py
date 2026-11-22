@@ -73,10 +73,13 @@ RETRY_STATUS = {402, 408, 409, 425, 429, 500, 502, 503, 504}
 UPSTREAM_RETRIES = int(os.environ.get("HUB_UPSTREAM_RETRIES", "2"))
 # 跨站点「技术救急」端点：仅当所选模型的全部自身上游都【技术失败】时才启用。
 # 刻意分散在 4 个不同站点 + 选开源/弱护栏底座，避免限流集中，也避免收敛到带强护栏的商业底座。
-HOTSPARE_IDS = ("gpt-oss",                        # pollinations  弱
-                "nvidia/nemotron-3-ultra-550b",  # blockrun      中
+HOTSPARE_IDS = ("openai-fast",                   # pollination  实测并发最稳,首选救火
+                "gpt-oss",                        # pollinations  弱
+                "kilo-auto/free",                 # kilo          实测稳
                 "Meta-Llama-3_3-70B-Instruct",   # ovhcloud      开源 Llama
                 "glm-5.3-flash")                 # llm7
+# 注意：曾把 blockrun 的 nvidia/nemotron-3-ultra-550b 放进救急层，但它又慢又容易
+# 限流(单跳可达 50s+)，自己就是拖垮整条链的元凶，已移除。救急层只留快而稳的站点。
 
 
 def load_catalog():
@@ -252,11 +255,22 @@ def apply_think(body, model_id, think):
     if isinstance(think, str):
         s = think.strip().lower()
         think = True if s in ("true", "1", "yes", "on") else (False if s in ("false", "0", "no", "off") else None)
-    if think is None:
-        return
     m = (model_id or "").lower()
     if not is_reasoning(model_id):
         # 非推理模型没有思维链，思考开关无意义，原样放行（不污染 body）
+        return
+    # 推理模型(max_tokens 预算)：无论开关思考，都要给思维链留出额度。
+    # 公益上游对 blockrun 550B/120B 这类大推理模型，思维链动辄几百上千 token；
+    # 客户端 max_tokens 常只有几十~二百，全被思维链吃光 → 正文吐不出 → finish:length
+    # → 网关判空流切链 → 多轮 Agent 高频调用下就是「全部不可用」。
+    # 抬到至少 512(封顶 2048)，既保证正文吐得出，又不会无限拉长拖过客户端超时。
+    try:
+        _mt = int(body.get("max_tokens") or 0)
+    except (TypeError, ValueError):
+        _mt = 0
+    if 0 < _mt < 512:
+        body["max_tokens"] = 512
+    if think is None:
         return
     ctrl = think_controllable(model_id)
     if think:
@@ -279,17 +293,7 @@ def apply_think(body, model_id, think):
         # 通用兜底（OpenAI o-series / OpenRouter reasoning）；对不可控模型尽力而为
         body["reasoning_effort"] = "none"
         body["reasoning"] = {"enabled": False}
-        # 关键修复：很多公益上游(如 blockrun 的 gpt-oss)根本不认上面的关思考参数，
-        # 仍会先吐一大段思维链；若客户端 max_tokens 只有几十，额度全被思维链吃光，
-        # 正文一个字都吐不出来 → finish_reason:length → 网关误判「空流」→ 切链 →
-        # 全链限流时就是「全部不可用」。这里对推理模型关思考时把 max_tokens 抬到
-        # 至少 256(封顶 1024)，给思维链留出预算，保证正文一定吐得出来。
-        try:
-            _mt = int(body.get("max_tokens") or 0)
-        except (TypeError, ValueError):
-            _mt = 0
-        if _mt < 256:
-            body["max_tokens"] = 256
+        # max_tokens 预算已在函数开头对所有推理模型统一抬升，此处不再重复。
 
 
 def normalize_think(val):
@@ -832,7 +836,13 @@ def chat():
                         except Exception:
                             pass
                         continue
+                    flushed = False   # 缓冲是否已放行(一旦确认有正文就放行，只放一次)
                     for chunk in r.iter_content(chunk_size=512):
+                        # 读取循环内也检查链预算：上游断断续续吐空块时，iter_content 每块都
+                        # 刷新 last，外层预算管不到这里——必须在这里兜底，超时立即停读，
+                        # 用已有正文收尾，避免拖到客户端(灵犀60s)先超时。
+                        if time.time() >= chain_deadline:
+                            break
                         if chunk:
                             last = time.time()
                             buf += chunk
@@ -844,6 +854,14 @@ def chat():
                                 if out:
                                     note(out)
                                     pending.append(out)
+                            # 一旦拿到正文就立即放行缓冲：正文到手即交付，不再等长尾
+                            # （550B 大模型 finish 前可能还有许多空心跳块，傻等会把
+                            #   整条链拖过客户端超时 → usage_missing / 全部不可用）。
+                            if got_content and not flushed:
+                                for p in pending:
+                                    yield p
+                                pending = []
+                                flushed = True
                         elif time.time() - last > HEARTBEAT_IDLE:
                             yield b": keepalive\n\n"
                             last = time.time()
@@ -855,8 +873,8 @@ def chat():
                             note(out)
                             pending.append(out)
                     if got_content:
-                        # 有效回答已交付(哪怕是模型自己的拒答)：先清空缓冲，再结束，
-                        # 绝不串到别的模型，也不再触发救急层 ——「选啥是啥」+「不收敛成统一拒答」。
+                        # 有效回答已交付(哪怕是模型自己的拒答)：清空剩余缓冲后结束，
+                        # 绝不串到别的模型，也不再触发救急层。
                         for p in pending:
                             yield p
                         pending = []
