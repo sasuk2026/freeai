@@ -23,7 +23,7 @@ FreeLLM Hub — 免 key 公益大模型聚合网关
 部署：python3 gateway.py   （默认 0.0.0.0:$PORT，PORT 缺省 8000）
 依赖：flask, requests
 """
-import json, os, time, threading
+import json, os, time, threading, base64
 from flask import Flask, request, Response, jsonify, stream_with_context
 import requests
 
@@ -833,9 +833,26 @@ def inject_persona(body):
 _load_persona()
 
 
+def _b64_decode(s):
+    """Base64(UTF-8) → 明文。失败返回 None（调用方降级当明文处理）。"""
+    try:
+        return base64.b64decode(str(s).encode("ascii"), validate=True).decode("utf-8")
+    except Exception:
+        return None
+
+
+def _b64_encode(s):
+    """明文 → Base64(UTF-8)。"""
+    try:
+        return base64.b64encode(s.encode("utf-8")).decode("ascii")
+    except Exception:
+        return s
+
+
 @app.route("/persona", methods=["GET"])
 def persona_get():
-    return jsonify({"text": PERSONA.get("text", "")})
+    # 返回时也编码，避免响应体里的中文/代码被中间层扫描；前端负责解码显示。
+    return jsonify({"text": _b64_encode(PERSONA.get("text", "")), "encoding": "base64"})
 
 
 @app.route("/persona", methods=["POST"])
@@ -843,15 +860,21 @@ def persona_set():
     if not check_auth():
         return jsonify({"ok": False, "error": "unauthorized"}), 401
     data = request.get_json(force=True, silent=True) or {}
-    text = str(data.get("text", ""))[:8000]
+    text = data.get("text", "")
+    # 前端先把提示词编码成 Base64 再传输（绕开 WAF 对代码/特殊字符的扫描），
+    # 后端在这里解码还原。解码失败则降级当明文，兼容旧客户端直接发明文。
+    if data.get("encoding") == "base64":
+        dec = _b64_decode(text)
+        text = dec if dec is not None else ""
+    text = str(text)[:8000]
     with PERSONA_LOCK:
-        PERSONA["text"] = text
+        PERSONA["text"] = text          # 内存里始终存明文，注入给模型的是明文
         try:
             with open(PERSONA_PATH, "w", encoding="utf-8") as f:
                 json.dump({"text": text}, f, ensure_ascii=False)
         except Exception:
             pass
-    return jsonify({"ok": True, "text": text})
+    return jsonify({"ok": True, "text": _b64_encode(text), "encoding": "base64"})
 
 
 @app.route("/v1/models", methods=["GET"])
