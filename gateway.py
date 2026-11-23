@@ -806,12 +806,14 @@ def _serve_adapter(entry, body, mid):
 PERSONA_PATH = os.path.join(BASE_DIR, "persona.json")
 PERSONA_LOCK = threading.Lock()
 PERSONA = {"text": ""}
+# 个性化提示词上限：放宽到 20 万字，支持超长人设 / 规则集 / 知识注入（用户实测 1.6 万字）
+PERSONA_MAX = int(os.environ.get("HUB_PERSONA_MAX", "200000"))
 
 def _load_persona():
     try:
         if os.path.exists(PERSONA_PATH):
             with open(PERSONA_PATH, encoding="utf-8") as f:
-                PERSONA["text"] = (json.load(f).get("text") or "")[:8000]
+                PERSONA["text"] = (json.load(f).get("text") or "")[:PERSONA_MAX]
     except Exception:
         PERSONA["text"] = ""
 
@@ -866,7 +868,7 @@ def persona_set():
     if data.get("encoding") == "base64":
         dec = _b64_decode(text)
         text = dec if dec is not None else ""
-    text = str(text)[:8000]
+    text = str(text)[:PERSONA_MAX]
     with PERSONA_LOCK:
         PERSONA["text"] = text          # 内存里始终存明文，注入给模型的是明文
         try:
