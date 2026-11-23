@@ -41,12 +41,13 @@ def add_cors(resp):
     # 允许任意客户端/网页跨域调用本网关
     resp.headers["Access-Control-Allow-Origin"] = "*"
     resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    resp.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
     return resp
 
 
 @app.route("/v1/chat/completions", methods=["OPTIONS"])
 @app.route("/v1/models", methods=["OPTIONS"])
+@app.route("/persona", methods=["OPTIONS"])
 def options_preflight():
     return Response(status=204)
 
@@ -796,6 +797,63 @@ def _serve_adapter(entry, body, mid):
 
 
 
+# ---------------------------------------------------------------------------
+# 个性化提示词（人格 / 语言插件）
+#   控制台输入一次 → 存到服务端文件 → 之后每一次 /v1/chat/completions 请求，
+#   无论来自控制台、灵犀还是任何第三方 APP，都会自动把它作为 system 注入到
+#   messages 最前面。让所有模型都带上同一套自定义人设 / 语言风格 / 规则。
+# ---------------------------------------------------------------------------
+PERSONA_PATH = os.path.join(BASE_DIR, "persona.json")
+PERSONA_LOCK = threading.Lock()
+PERSONA = {"text": ""}
+
+def _load_persona():
+    try:
+        if os.path.exists(PERSONA_PATH):
+            with open(PERSONA_PATH, encoding="utf-8") as f:
+                PERSONA["text"] = (json.load(f).get("text") or "")[:8000]
+    except Exception:
+        PERSONA["text"] = ""
+
+def inject_persona(body):
+    """把个性化提示词作为首条 system message 注入。已有 system 则不覆盖，
+    而是把人设拼到第一条 system 内容前面，保留客户端原有的 system 设定。"""
+    txt = PERSONA.get("text", "")
+    if not txt:
+        return
+    msgs = body.get("messages")
+    if not isinstance(msgs, list):
+        body["messages"] = msgs = []
+    if msgs and isinstance(msgs[0], dict) and msgs[0].get("role") == "system":
+        old = msgs[0].get("content", "")
+        msgs[0]["content"] = txt + ("\n\n" + old if old else "")
+    else:
+        msgs.insert(0, {"role": "system", "content": txt})
+
+_load_persona()
+
+
+@app.route("/persona", methods=["GET"])
+def persona_get():
+    return jsonify({"text": PERSONA.get("text", "")})
+
+
+@app.route("/persona", methods=["POST"])
+def persona_set():
+    if not check_auth():
+        return jsonify({"ok": False, "error": "unauthorized"}), 401
+    data = request.get_json(force=True, silent=True) or {}
+    text = str(data.get("text", ""))[:8000]
+    with PERSONA_LOCK:
+        PERSONA["text"] = text
+        try:
+            with open(PERSONA_PATH, "w", encoding="utf-8") as f:
+                json.dump({"text": text}, f, ensure_ascii=False)
+        except Exception:
+            pass
+    return jsonify({"ok": True, "text": text})
+
+
 @app.route("/v1/models", methods=["GET"])
 def v1_models():
     if not check_auth():
@@ -839,6 +897,10 @@ def chat():
     _raw_mt = body.get("max_tokens")
     # 入站瘦身：兼容超大规模请求（灵犀 Agent 25万字符 + 65536 token 撑爆上游）
     trim_request(body)
+
+    # 注入个性化提示词（控制台设置的人设 / 语言插件）：对所有模型、所有来源的
+    # 请求统一生效。放在瘦身之后注入，避免被折叠逻辑截断。
+    inject_persona(body)
 
     # 诊断记录：记录本次请求的模型/思考参数/max_tokens/消息规模，逐跳过程由 gen 追加
     _diag = {"ts": time.strftime("%H:%M:%S"), "model": mid, "stream": bool(body.get("stream")),
